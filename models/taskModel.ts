@@ -1,34 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export const todoSchema = new mongoose.Schema(
+const myTaskSchema = new Schema(
   {
-    tasks: {
-      current: {
-        title: {
-          type: String,
-          required: [true, "The task must have a title"],
-        },
-        description: {
-          type: String,
-          required: [true, "The task must have a description"],
-        },
-      },
-      history: {
-        title: {
-          type: String,
-          required: [true, "The task must have a title"],
-        },
-        description: {
-          type: String,
-          required: [true, "The task must have a description"],
-        },
-      },
+    userEmail: String,
+    task: {
+      title: String,
+      description: String,
     },
-    completed: Boolean,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-// const Task = mongoose.models.task || mongoose.model("task", todoSchema);
+const MyTask = mongoose.models.MyTask || mongoose.model("MyTask", myTaskSchema);
 
-// export default Task;
+export default MyTask;
