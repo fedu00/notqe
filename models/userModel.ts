@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { todoSchema } from "./taskModel";
+// import { todoSchema } from "./taskModel";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  tasks: todoSchema,
+  // tasks: todoSchema,
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
