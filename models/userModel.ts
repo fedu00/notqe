@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
-// import { todoSchema } from "./taskModel";
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, "Please enter a username"],
-    unique: true,
-  },
   email: {
     type: String,
     required: [true, "Please enter a email address"],
@@ -24,7 +18,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  // tasks: todoSchema,
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
