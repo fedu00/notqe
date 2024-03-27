@@ -1,0 +1,15 @@
+.button {
+  background-color: #ffa868;
+  color: #22252a;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.test_button {
+  color: #eeeee1;
+  background-color: #3e4247;
+}

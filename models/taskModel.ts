@@ -6,6 +6,13 @@ const myTaskSchema = new Schema(
     task: {
       title: String,
       description: String,
+      category: String,
+      importance: Number,
+      dedline: Date,
+      details: {
+        dayInWeek: String,
+        timeOfDay: String,
+      },
     },
   },
   {
