@@ -72,7 +72,6 @@ export default function SignUpPage() {
           showError={showError.password}
         />
         <Button type="submit" text="create account" />
-        <Button text="try test account" test={true} />
       </form>
     </div>
   );
