@@ -3,9 +3,12 @@ import "./login.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Input from "@/components/Input/Input";
+import Button from "@/components/Button/Button";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [showError, setShowError] = useState(false);
   const [user, setuser] = useState({
     email: "",
     password: "",
@@ -17,6 +20,7 @@ export default function LoginPage() {
       const response = await axios.post("/api/users/login", user);
       router.push("/profile");
     } catch (error: any) {
+      setShowError(true);
       console.log("login failed", error.message);
     }
   };
@@ -29,19 +33,29 @@ export default function LoginPage() {
           handleLogin(e);
         }}
       >
-        <input
+        <Input
           type="text"
           placeholder="enter your email"
           value={user.email}
-          onChange={(e) => setuser({ ...user, email: e.target.value })}
+          onChange={(e) => {
+            setuser({ ...user, email: e.target.value });
+            setShowError(false);
+          }}
+          errorMessage="invalid email"
+          showError={showError}
         />
-        <input
+        <Input
           type="text"
           placeholder="enter your password"
           value={user.password}
-          onChange={(e) => setuser({ ...user, password: e.target.value })}
+          onChange={(e) => {
+            setuser({ ...user, password: e.target.value });
+            setShowError(false);
+          }}
+          errorMessage="invalid email"
+          showError={showError}
         />
-        <button type="submit">log in</button>
+        <Button text="log in" type="submit" />
       </form>
     </div>
   );

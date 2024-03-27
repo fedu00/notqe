@@ -6,7 +6,7 @@ interface InputType {
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   placeholder: string;
   errorMessage?: string;
-  showError: boolean;
+  showError?: boolean;
 }
 
 export default function Input({
