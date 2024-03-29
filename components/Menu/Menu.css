@@ -1,0 +1,27 @@
+.menu_container {
+  display: flex;
+  justify-content: space-between;
+  color: #eeeee1;
+  width: 100vw;
+  padding: 24px 48px;
+}
+
+.menu_container ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.menu_container ul li {
+  margin-right: 24px;
+  cursor: pointer;
+}
+
+.menu_container ul li a {
+  color: #eeeee1;
+  text-decoration: none;
+}
+
+.menu_container ul li button {
+  margin-bottom: 0;
+}
