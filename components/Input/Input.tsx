@@ -1,10 +1,9 @@
 import "./Input.css";
-
 interface InputType {
   type: string;
   value: string;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-  placeholder: string;
+  placeholder?: string;
   errorMessage?: string;
   showError?: boolean;
 }

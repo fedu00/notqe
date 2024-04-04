@@ -1,13 +1,25 @@
 "use client";
-import { useState } from "react";
+import "./createTask.css";
+import { useState, useReducer } from "react";
+import Input from "@/components/Input/Input";
+import Button from "@/components/Button/Button";
+import DateInput from "@/components/DateInput/DateInput";
+import Textarea from "@/components/TextArea/Textarea";
+import Select from "@/components/Select/Select";
+
+const CATEGORY_DATA = ["healt", "work", "study", "other"];
+const IMPORTANCE_DATA = ["1", "2", "3", "4", "5"];
 
 export default function CreateTask({ params }: any) {
-  console.log("params", params);
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    category: "",
+    importdance: "",
+    deadline: "",
+  });
 
-  // const [task, setTask] = useState({
-  //   title: "",
-  //   description: "",
-  // });
+  // console.log("task", task);
   // const [userEmail, setUserEmail] = useState("");
 
   // const handleAddNote = async () => {
@@ -27,24 +39,41 @@ export default function CreateTask({ params }: any) {
   // };
   return (
     <div>
-      <h1>no zrob cos!!</h1>
-      <p>łortiortior</p>
-      {/* <button onClick={handleLogout}>logout</button> */}
-      {/* <div>
-        <input
+      <div className="title_container">
+        <h1>Create a new task</h1>
+        <Button onClick={() => {}} text="create task" />
+      </div>
+
+      <div className="create_task_container">
+        <Input
           type="text"
           value={task.title}
           onChange={(e) => setTask({ ...task, title: e.target.value })}
           placeholder="enter title"
         />
-        <input
-          type="text"
+        <Textarea
           value={task.description}
           onChange={(e) => setTask({ ...task, description: e.target.value })}
-          placeholder="enter description"
+          placeholder="description..."
         />
-        <button onClick={handleAddNote}>dodaj notatke</button>
-      </div> */}
+        <Select
+          data={CATEGORY_DATA}
+          onChange={(e) => {
+            setTask({ ...task, category: e.target.value });
+          }}
+        />
+        <Select
+          data={IMPORTANCE_DATA}
+          onChange={(e) => {
+            setTask({ ...task, importdance: e.target.value });
+          }}
+        />
+        <DateInput
+          onChange={(e) => {
+            setTask({ ...task, deadline: e.target.value });
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 import "./globals.css";
+import "./mainPage.css";
 import { Josefin_Sans } from "next/font/google";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
@@ -27,9 +28,9 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className="main_page_container">
       <h1 className={josefin.className}>NOTQE</h1>
-      <div>
+      <div className="button_container">
         <Button
           text="signup"
           onClick={() => {
@@ -42,12 +43,12 @@ export default function Home() {
             router.push("/login");
           }}
         />
-        <Button
-          text="try test account"
-          test={true}
-          onClick={handleLoginTestAccount}
-        />
       </div>
+      <Button
+        text="try test account"
+        test={true}
+        onClick={handleLoginTestAccount}
+      />
     </main>
   );
 }

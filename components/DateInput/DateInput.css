@@ -1,0 +1,41 @@
+.date_input {
+  background-color: #3e4247;
+  padding: 12px 24px;
+  font-size: 20px;
+  color: #eeeee1;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  width: 320px;
+}
+
+.date_input_container {
+  position: relative;
+  width: 320px;
+}
+
+.date_input_container::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  content: "";
+  background-image: url("../../assets/svgIcons/calendarSVG.svg");
+  background-size: 28px 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.test[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}

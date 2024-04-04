@@ -6,8 +6,6 @@ import axios from "axios";
 export default function ProfilePage({ children }: any) {
   const [data, setData] = useState("nothing");
 
-  console.log(data, "datateeee");
-
   useEffect(() => {
     getUserDetails();
   }, []);
