@@ -7,12 +7,12 @@ const myTaskSchema = new Schema(
       title: String,
       description: String,
       category: String,
-      importance: Number,
+      importance: String,
       dedline: Date,
-      details: {
-        dayInWeek: String,
-        timeOfDay: String,
-      },
+      // details: {
+      //   dayInWeek: String,
+      //   timeOfDay: String,
+      // },
     },
   },
   {

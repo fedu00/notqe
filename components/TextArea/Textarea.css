@@ -1,0 +1,22 @@
+.textarea_form {
+  resize: none;
+  background-color: #3e4247;
+  padding: 12px 24px;
+  width: 320px;
+  font-size: 20px;
+  color: #eeeee1;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 32px;
+  /* font-family: "Inter"; */
+}
+.error_message {
+  color: #de4747;
+  font-size: 12px;
+  margin: 0 0 17px 10px;
+}
+
+.error_active {
+  margin: 0;
+}

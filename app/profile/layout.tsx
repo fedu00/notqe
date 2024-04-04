@@ -1,4 +1,5 @@
 import Menu from "@/components/Menu/Menu";
+import "./profile.css";
 
 export default function ProfileLayout({
   children,
@@ -6,7 +7,7 @@ export default function ProfileLayout({
   return (
     <>
       <Menu />
-      {children}
+      <main>{children}</main>
     </>
   );
 }
