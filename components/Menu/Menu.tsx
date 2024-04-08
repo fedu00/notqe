@@ -4,6 +4,7 @@ import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Menu() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Menu() {
     try {
       await axios.get("/api/users/logout");
       console.log("logout successful!!!");
-      router.push("/login");
+      router.push("/");
     } catch (error: any) {
       console.log("logout failed", error.message);
     }
@@ -22,16 +23,20 @@ export default function Menu() {
       <Logo />
       <ul>
         <li>
-          <a href="http://localhost:3000/profile/createTask">create task</a>
+          <Link href={"http://localhost:3000/profile/createTask"}>
+            create task
+          </Link>
         </li>
         <li>
-          <a href="http://localhost:3000/profile/manageTask">manage task</a>
+          <Link href={"http://localhost:3000/profile/manageTask"}>
+            manage task
+          </Link>
         </li>
         <li>
-          <a href="http://localhost:3000/profile/score">score</a>
+          <Link href={"http://localhost:3000/profile/score"}>score</Link>
         </li>
         <li>
-          <a href="http://localhost:3000/profile">profile</a>
+          <Link href={"http://localhost:3000/profile"}>profile</Link>
         </li>
         <li>
           <Button onClick={handleLogout} text="log out" test={true} />
