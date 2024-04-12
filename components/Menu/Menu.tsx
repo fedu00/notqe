@@ -5,14 +5,17 @@ import Button from "../Button/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useUserContext } from "@/context/userContext";
 
 export default function Menu() {
+  const { email, setEmail } = useUserContext();
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
       await axios.get("/api/users/logout");
       console.log("logout successful!!!");
+      setEmail("");
       router.push("/");
     } catch (error: any) {
       console.log("logout failed", error.message);

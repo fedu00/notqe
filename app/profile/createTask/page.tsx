@@ -22,7 +22,7 @@ export default function CreateTask({ params }: any) {
     deadline: "",
   });
 
-  console.log("deadline", task.deadline, typeof task.deadline);
+  console.log("email ------->", email);
 
   const handleAddNote = async () => {
     try {
@@ -55,29 +55,31 @@ export default function CreateTask({ params }: any) {
         <Input
           type="text"
           value={task.title}
-          onChange={(e) => setTask({ ...task, title: e.target.value })}
+          onChange={(event) => setTask({ ...task, title: event.target.value })}
           placeholder="enter title"
         />
         <Textarea
           value={task.description}
-          onChange={(e) => setTask({ ...task, description: e.target.value })}
+          onChange={(event) =>
+            setTask({ ...task, description: event.target.value })
+          }
           placeholder="description..."
         />
         <Select
           data={CATEGORY_DATA}
-          onChange={(e) => {
-            setTask({ ...task, category: e.target.value });
+          onChange={(event) => {
+            setTask({ ...task, category: event.target.value });
           }}
         />
         <Select
           data={IMPORTANCE_DATA}
-          onChange={(e) => {
-            setTask({ ...task, importance: e.target.value });
+          onChange={(event) => {
+            setTask({ ...task, importance: event.target.value });
           }}
         />
         <DateInput
-          onChange={(e) => {
-            setTask({ ...task, deadline: e.target.value });
+          onChange={(event) => {
+            setTask({ ...task, deadline: event.target.value });
           }}
         />
       </div>

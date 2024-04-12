@@ -18,7 +18,7 @@ const UserContext = createContext<ContextUserType>({
 });
 
 export const ContextProvider = ({ children }: any) => {
-  const [email, setEmail] = useState<string>("test");
+  const [email, setEmail] = useState<string>("");
   return (
     <UserContext.Provider value={{ email, setEmail }}>
       {children}
