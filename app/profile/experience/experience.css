@@ -1,0 +1,25 @@
+.experience_container {
+  display: flex;
+}
+
+.tasks-experience_container {
+  height: 100px;
+  margin-right: 20px;
+}
+
+.user_experience_container {
+  margin-left: 30px;
+}
+.lvl {
+  font-size: 72px;
+}
+
+.category_tasks,
+.importance_tasks {
+  display: flex;
+}
+.tasks_on_lvl {
+  margin-top: 10px;
+  text-align: left;
+  padding-left: 16px;
+}
