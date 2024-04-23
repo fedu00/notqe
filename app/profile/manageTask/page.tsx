@@ -26,8 +26,8 @@ export default function ManageTask() {
 
   const selectedTasks = (task: any) => {
     if (currentCategory === "all") {
-      console.log("taaaaaaask", task);
-      console.log("taskIDDDDDDDDDDDDDDD", task._id);
+      // console.log("taaaaaaask", task);
+      // console.log("taskIDDDDDDDDDDDDDDD", task._id);
 
       return <Task key={task._id} id={task._id} task={task.task} />;
     } else if (task.task.category === currentCategory) {

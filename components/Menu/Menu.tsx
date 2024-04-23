@@ -36,7 +36,9 @@ export default function Menu() {
           </Link>
         </li>
         <li>
-          <Link href={"http://localhost:3000/profile/score"}>score</Link>
+          <Link href={"http://localhost:3000/profile/experience"}>
+            experience
+          </Link>
         </li>
         <li>
           <Link href={"http://localhost:3000/profile"}>profile</Link>
