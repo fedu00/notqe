@@ -4,11 +4,14 @@ import { useState, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { useUserContext } from "@/context/userContext";
+import axios from "axios";
 
-// bedzie to samo interface/type co dane pobierane w managetasks
-export default function Task({ task, id }: any) {
+// same interface/type what you can find in manageTasks
+export default function Task({ task, id, userId }: any) {
   const { title, description, category, importance, deadline } = task;
-
+  const { doneTasks, setDoneTasks } = useUserContext();
   const [currentTask, setCurrentTask] = useState({
     title,
     description,
@@ -18,7 +21,6 @@ export default function Task({ task, id }: any) {
   });
   const [showDescription, setShowDescription] = useState<boolean>(false);
   const [edit, setEdit] = useState(false);
-  //to po nizej nie zadziała jak stworzysz duzy opis (na poczatku)
   const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
 
   const textareaRef = useRef(null);
@@ -28,6 +30,46 @@ export default function Task({ task, id }: any) {
   ) => {
     if (event.target.scrollHeight > textareaHeaight) {
       setTextareaHeaight(event.target.scrollHeight);
+    }
+  };
+
+  const selectHowImportantIsTask = (importance) => {
+    switch (importance) {
+      case "5":
+        return "veryImportant";
+      case "4":
+        return "important";
+      case "3":
+        return "medium";
+      case "2":
+        return "lesImportant";
+      case "1":
+        return "noImportant";
+    }
+  };
+
+  const handleFinishTask = async () => {
+    const selectedImportance = selectHowImportantIsTask(importance);
+    setDoneTasks((prevValue) => ({
+      ...prevValue,
+      [selectedImportance]: prevValue[selectedImportance] + 1,
+      [category]: prevValue[category] + 1,
+    }));
+    try {
+      const response = await axios.put("/api/users/login", {
+        userId,
+        doneTasks,
+      });
+
+      const responseDeleteTask = await fetch(
+        `http://localhost:3000/api/usersTasks?id=${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      location.reload();
+    } catch (error: any) {
+      console.log("login failed", error.message);
     }
   };
 
@@ -101,6 +143,7 @@ export default function Task({ task, id }: any) {
           size={"30px"}
           className={showDescription ? "show_description" : ""}
         />
+        <AiFillCheckCircle size={"30px"} onClick={handleFinishTask} />
         <MdEdit
           size={"30px"}
           className={edit ? "edit" : ""}

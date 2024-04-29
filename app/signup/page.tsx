@@ -15,10 +15,12 @@ const josefin = Josefin_Sans({
 export default function SignUpPage() {
   const router = useRouter();
   const [showError, setShowError] = useState({
+    username: false,
     email: false,
     password: false,
   });
   const [user, setUser] = useState({
+    username: "",
     email: "",
     password: "",
   });
@@ -35,7 +37,7 @@ export default function SignUpPage() {
         console.log("signup error", error.message);
       }
     } else {
-      setShowError({ email: true, password: true });
+      setShowError({ username: true, email: true, password: true });
     }
   };
   return (
@@ -49,6 +51,17 @@ export default function SignUpPage() {
           handleSignup(e);
         }}
       >
+        <Input
+          type="text"
+          value={user.username}
+          onChange={(e) => {
+            setUser({ ...user, username: e.target.value });
+            setShowError({ ...showError, username: false });
+          }}
+          placeholder="username"
+          showError={showError.username}
+          errorMessage="wrong username"
+        />
         <Input
           type="text"
           value={user.email}

@@ -8,7 +8,7 @@ import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import { useUserContext } from "@/context/userContext";
 
-const CATEGORY_DATA = ["healt", "work", "study", "other"];
+const CATEGORY_DATA = ["health", "work", "study", "other"];
 const IMPORTANCE_DATA = ["1", "2", "3", "4", "5"];
 
 export default function CreateTask({ params }: any) {
@@ -21,8 +21,6 @@ export default function CreateTask({ params }: any) {
     importance: "",
     deadline: "",
   });
-
-  console.log("email ------->", email);
 
   const handleAddNote = async () => {
     try {

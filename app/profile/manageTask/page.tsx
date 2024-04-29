@@ -3,10 +3,11 @@ import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import { useEffect, useState } from "react";
 import Task from "@/components/Task/Task";
-
-const CATEGORY_DATA = ["all", "healt", "work", "study", "other"];
+import { useUserContext } from "@/context/userContext";
+import { CATEGORY_DATA } from "@/constans/constans";
 
 export default function ManageTask() {
+  const { userId } = useUserContext();
   const [data, setDaya] = useState([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
 
@@ -24,19 +25,18 @@ export default function ManageTask() {
     }
   };
 
-  const selectedTasks = (task: any) => {
+  //nazwa mi nie pasuje, nie mówi co ze ta f zwraca
+  const returnTasks = (task: any) => {
     if (currentCategory === "all") {
-      // console.log("taaaaaaask", task);
-      // console.log("taskIDDDDDDDDDDDDDDD", task._id);
-
-      return <Task key={task._id} id={task._id} task={task.task} />;
+      return (
+        <Task key={task._id} id={task._id} task={task.task} userId={userId} />
+      );
     } else if (task.task.category === currentCategory) {
-      return <Task key={task._id} id={task._id} task={task.task} />;
+      return (
+        <Task key={task._id} id={task._id} task={task.task} userId={userId} />
+      );
     }
   };
-
-  // console.log("dayadayadaya", data);
-  // console.log("currentCategory", currentCategory);
 
   useEffect(() => {
     getTask();
@@ -52,8 +52,8 @@ export default function ManageTask() {
         />
       </div>
       <div className="tasks_container">
-        {/* tutaj zmien typowanie */}
-        {data.map((task: any) => selectedTasks(task))}
+        {/* CHANGE TYPE */}
+        {data.map((task: any) => returnTasks(task))}
       </div>
     </div>
   );
