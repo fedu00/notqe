@@ -2,23 +2,38 @@
 import ProgresBar from "@/components/ProgresBar/ProgresBar";
 import "./experience.css";
 import TaskScore from "@/components/TaskScore/TaskScore";
+import { useUserContext } from "@/context/userContext";
 
 export default function Experience() {
+  const { doneTasks } = useUserContext();
+
+  const {
+    health,
+    other,
+    study,
+    work,
+    noImportant,
+    lesImportant,
+    medium,
+    important,
+    veryImportant,
+  } = doneTasks;
+
   return (
     <div className="experience_container">
       <div className="tasks-experience_container">
         <div className="category_tasks">
-          <TaskScore score={7} title={"health"} selectClass={"healt"} />
-          <TaskScore score={7} title={"work"} selectClass={"work"} />
-          <TaskScore score={7} title={"study"} selectClass={"study"} />
-          <TaskScore score={7} title={"other"} selectClass={"other"} />
+          <TaskScore score={health} title={"health"} selectClass={"health"} />
+          <TaskScore score={work} title={"work"} selectClass={"work"} />
+          <TaskScore score={study} title={"study"} selectClass={"study"} />
+          <TaskScore score={other} title={"other"} selectClass={"other"} />
         </div>
         <div className="importance_tasks">
-          <TaskScore score={1} title={"no important"} />
-          <TaskScore score={6} title={"les important"} />
-          <TaskScore score={11} title={"medium"} />
-          <TaskScore score={9} title={"important"} />
-          <TaskScore score={6} title={"very important"} />
+          <TaskScore score={noImportant} title={"no important"} />
+          <TaskScore score={lesImportant} title={"les important"} />
+          <TaskScore score={medium} title={"medium"} />
+          <TaskScore score={important} title={"important"} />
+          <TaskScore score={veryImportant} title={"very important"} />
         </div>
       </div>
       <div className="user_experience_container">

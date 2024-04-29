@@ -44,3 +44,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  const body = await request.json();
+  const { userId, doneTasks } = body;
+  await User.findByIdAndUpdate(userId, {
+    doneTasks: doneTasks,
+  });
+
+  return NextResponse.json({ message: "user update!" }, { status: 200 });
+}
