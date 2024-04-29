@@ -1,15 +1,10 @@
 "use client";
 import "./globals.css";
 import "./mainPage.css";
-import { Josefin_Sans } from "next/font/google";
 import Button from "@/components/Button/Button";
+import Logo from "@/components/Logo/Logo";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
-const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  weight: "300",
-});
 
 export default function Home() {
   const router = useRouter();
@@ -29,7 +24,7 @@ export default function Home() {
 
   return (
     <main className="main_page_container">
-      <h1 className={josefin.className}>NOTQE</h1>
+      <Logo size={80} />
       <div className="button_container">
         <Button
           text="signup"

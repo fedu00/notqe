@@ -1,10 +1,12 @@
 "use client";
 import "./login.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/helpers/validateEmail";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
+import Logo from "@/components/Logo/Logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,31 +16,40 @@ export default function LoginPage() {
     password: "",
   });
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("/api/users/login", user);
-      router.push("/profile");
-    } catch (error: any) {
+  const handleLogin = async (event: any) => {
+    event.preventDefault();
+
+    const emailValidation = validateEmail(user.email);
+    const passwordValidation = user.password.length >= 4;
+
+    if (emailValidation && passwordValidation) {
+      try {
+        const response = await axios.post("/api/users/login", user);
+        router.push("/profile");
+      } catch (error: any) {
+        setShowError(true);
+        console.log("login failed", error.message);
+      }
+    } else {
       setShowError(true);
-      console.log("login failed", error.message);
     }
   };
 
   return (
     <div className="login-container">
+      <Logo size={80} />
       <h2>Login your account</h2>
       <form
-        onSubmit={(e) => {
-          handleLogin(e);
+        onSubmit={(event) => {
+          handleLogin(event);
         }}
       >
         <Input
           type="text"
           placeholder="enter your email"
           value={user.email}
-          onChange={(e) => {
-            setuser({ ...user, email: e.target.value });
+          onChange={(event) => {
+            setuser({ ...user, email: event.target.value });
             setShowError(false);
           }}
           errorMessage="invalid email"
@@ -48,8 +59,8 @@ export default function LoginPage() {
           type="text"
           placeholder="enter your password"
           value={user.password}
-          onChange={(e) => {
-            setuser({ ...user, password: e.target.value });
+          onChange={(event) => {
+            setuser({ ...user, password: event.target.value });
             setShowError(false);
           }}
           errorMessage="invalid email"
