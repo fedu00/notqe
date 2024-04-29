@@ -1,16 +1,12 @@
 "use client";
 import "./signup.css";
-import Input from "@/components/Input/Input";
-import Button from "@/components/Button/Button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/helpers/validateEmail";
+import Input from "@/components/Input/Input";
+import Button from "@/components/Button/Button";
 import axios from "axios";
-import { Josefin_Sans } from "next/font/google";
-
-const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  weight: "400",
-});
+import Logo from "@/components/Logo/Logo";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -25,9 +21,14 @@ export default function SignUpPage() {
     password: "",
   });
 
-  const handleSignup = async (e: any) => {
-    e.preventDefault();
-    if (user.email.length > 0 && user.password.length > 0) {
+  const handleSignup = async (event: any) => {
+    event.preventDefault();
+
+    const emailValidation: boolean = validateEmail(user.email);
+    const passwordValidation: boolean = user.password.length >= 4;
+    const usernameValidation: boolean = user.username.length >= 4;
+
+    if (emailValidation && passwordValidation && usernameValidation) {
       try {
         const response = await axios.post("/api/users/signup", user);
         console.log("signup success", response);
@@ -42,20 +43,20 @@ export default function SignUpPage() {
   };
   return (
     <div className="signup-container">
-      <h1 className={josefin.className}>NOTQE</h1>
+      <Logo size={80} />
       <h2>Create Account</h2>
       <form
         autoComplete="off"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSignup(e);
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSignup(event);
         }}
       >
         <Input
           type="text"
           value={user.username}
-          onChange={(e) => {
-            setUser({ ...user, username: e.target.value });
+          onChange={(event) => {
+            setUser({ ...user, username: event.target.value });
             setShowError({ ...showError, username: false });
           }}
           placeholder="username"
@@ -65,8 +66,8 @@ export default function SignUpPage() {
         <Input
           type="text"
           value={user.email}
-          onChange={(e) => {
-            setUser({ ...user, email: e.target.value });
+          onChange={(event) => {
+            setUser({ ...user, email: event.target.value });
             setShowError({ ...showError, email: false });
           }}
           placeholder="email"
@@ -76,8 +77,8 @@ export default function SignUpPage() {
         <Input
           type="password"
           value={user.password}
-          onChange={(e) => {
-            setUser({ ...user, password: e.target.value });
+          onChange={(event) => {
+            setUser({ ...user, password: event.target.value });
             setShowError({ ...showError, password: false });
           }}
           errorMessage="wrong password"

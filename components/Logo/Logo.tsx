@@ -11,7 +11,10 @@ interface LogoType {
 
 export default function Logo({ size }: LogoType) {
   return (
-    <h1 style={{ fontSize: size + "px" }} className={josefin.className}>
+    <h1
+      style={{ fontSize: size + "px", color: "#eeeee1" }}
+      className={josefin.className}
+    >
       NOTQE
     </h1>
   );

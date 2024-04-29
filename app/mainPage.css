@@ -7,10 +7,7 @@
   justify-content: center;
 }
 
-.main_page_container h1 {
-  color: #eeeee1;
-  font-size: 80px;
-  font-weight: 100;
+.main_page_container > h1 {
   margin-bottom: 50px;
 }
 
