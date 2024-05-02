@@ -6,7 +6,7 @@
   margin-right: 30px;
 }
 
-.create_task_container {
+.create_task_form_container {
   display: flex;
   flex-direction: column;
 }
@@ -16,6 +16,12 @@ input {
 }
 
 @media (max-width: 800px) {
+  .create_task_page_container {
+    width: 70%;
+  }
+  .create_task_form_container {
+    width: 100%;
+  }
   .title_container {
     flex-direction: column;
     align-items: center;
@@ -24,5 +30,11 @@ input {
     margin-right: 0;
     margin-bottom: 16px;
     font-size: 24px;
+  }
+}
+
+@media (max-width: 500px) {
+  .create_task_page_container {
+    width: 90%;
   }
 }

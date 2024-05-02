@@ -8,7 +8,7 @@ import { CATEGORY_DATA } from "@/constans/constans";
 
 export default function ManageTask() {
   const { userId } = useUserContext();
-  const [data, setDaya] = useState([]);
+  const [data, setData] = useState([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
 
   const getTask = async () => {
@@ -18,14 +18,13 @@ export default function ManageTask() {
         { cache: "no-store" }
       );
       const dataTasks = await response.json();
-      setDaya(dataTasks.myTasks);
+      setData(dataTasks.myTasks);
       return response;
     } catch (error: any) {
       console.log("you can not get tasks", error);
     }
   };
 
-  //nazwa mi nie pasuje, nie mówi co ze ta f zwraca
   const returnTasks = (task: any) => {
     if (currentCategory === "all") {
       return (

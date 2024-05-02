@@ -43,12 +43,12 @@ export default function CreateTask({ params }: any) {
     }
   };
   return (
-    <div>
+    <div className="create_task_page_container">
       <div className="title_container">
         <h1>Create a new task</h1>
         <Button onClick={handleAddNote} text="create task" />
       </div>
-      <div className="create_task_container">
+      <div className="create_task_form_container">
         <Input
           type="text"
           value={task.title}

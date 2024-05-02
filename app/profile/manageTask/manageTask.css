@@ -5,3 +5,28 @@
   border-radius: 5px;
   padding: 20px;
 }
+
+.manage_task_container {
+  max-width: 500px;
+}
+
+@media (max-width: 800px) {
+  .manage_task_container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 600px) {
+  .manage_task_container {
+    width: 85%;
+  }
+  .tasks_container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 450px) {
+  .manage_task_container {
+    width: 90%;
+  }
+}
