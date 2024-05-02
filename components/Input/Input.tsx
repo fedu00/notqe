@@ -17,7 +17,7 @@ export default function Input({
   showError = false,
 }: InputType) {
   return (
-    <div>
+    <div className="input_container">
       <input
         autoComplete="new-password"
         className={`${showError ? "error_active" : ""} input_form`}

@@ -9,3 +9,17 @@ select {
   outline: none;
   margin-bottom: 32px;
 }
+@media (max-width: 800px) {
+  select {
+    font-size: 16px;
+    padding: 8px 18px;
+    width: 280px;
+    margin-bottom: 26px;
+  }
+}
+
+@media (max-width: 400px) {
+  select {
+    width: 240px;
+  }
+}
