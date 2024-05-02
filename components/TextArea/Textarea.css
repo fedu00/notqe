@@ -24,16 +24,10 @@
   .textarea_form {
     font-size: 16px;
     padding: 8px 18px;
-    width: 280px;
+    width: 100%;
     margin-bottom: 26px;
   }
   .error_message {
     margin: 0 0 11px 6px;
-  }
-}
-
-@media (max-width: 400px) {
-  .textarea_form {
-    width: 240px;
   }
 }

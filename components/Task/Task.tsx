@@ -33,7 +33,7 @@ export default function Task({ task, id, userId }: any) {
     }
   };
 
-  const selectHowImportantIsTask = (importance) => {
+  const selectHowImportantIsTask = (importance: string) => {
     switch (importance) {
       case "5":
         return "veryImportant";
@@ -137,19 +137,29 @@ export default function Task({ task, id, userId }: any) {
 
       <div className="task_icons_container">
         <AiFillCaretDown
+          title={showDescription ? "hide description" : "show description"}
           onClick={() => {
             setShowDescription(!showDescription);
           }}
           size={"30px"}
           className={showDescription ? "show_description" : ""}
         />
-        <AiFillCheckCircle size={"30px"} onClick={handleFinishTask} />
+        <AiFillCheckCircle
+          size={"30px"}
+          onClick={handleFinishTask}
+          title="finish task"
+        />
         <MdEdit
           size={"30px"}
+          title="edit task"
           className={edit ? "edit" : ""}
           onClick={handleEditTask}
         />
-        <MdDelete size={"30px"} onClick={handleDeleteTask} />
+        <MdDelete
+          title="delete task"
+          size={"30px"}
+          onClick={handleDeleteTask}
+        />
       </div>
       <div className="task_importance">{importance}</div>
     </div>

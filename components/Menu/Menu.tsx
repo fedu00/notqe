@@ -35,6 +35,7 @@ export default function Menu() {
       <Logo />
       {isMobileSize && (
         <RxHamburgerMenu
+          className="hamburger_menu"
           onClick={() => {
             setShowMenu(!showmenu);
           }}
