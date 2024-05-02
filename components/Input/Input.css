@@ -15,6 +15,24 @@
   margin: 0 0 17px 10px;
 }
 
-.error_active {
+.input_container .error_active {
   margin: 0;
+}
+
+@media (max-width: 800px) {
+  .input_form {
+    font-size: 16px;
+    padding: 8px 18px;
+    width: 280px;
+    margin-bottom: 26px;
+  }
+  .error_message {
+    margin: 0 0 11px 6px;
+  }
+}
+
+@media (max-width: 400px) {
+  .input_form {
+    width: 240px;
+  }
 }

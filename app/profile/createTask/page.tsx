@@ -17,8 +17,8 @@ export default function CreateTask({ params }: any) {
   const [task, setTask] = useState({
     title: "",
     description: "",
-    category: "",
-    importance: "",
+    category: "health",
+    importance: "1",
     deadline: "",
   });
 
@@ -38,7 +38,6 @@ export default function CreateTask({ params }: any) {
         importance: "",
         deadline: "",
       });
-      console.log("response", response);
     } catch (error) {
       console.log(error);
     }

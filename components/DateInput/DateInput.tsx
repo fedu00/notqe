@@ -8,12 +8,7 @@ interface DateInputType {
 export default function DateInput({ onChange }: DateInputType) {
   return (
     <div className="date_input_container">
-      <input
-        className="date_input test"
-        onChange={onChange}
-        type="date"
-        id="date"
-      />
+      <input className="date_input" onChange={onChange} type="date" id="date" />
     </div>
   );
 }

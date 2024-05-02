@@ -3,13 +3,22 @@ import "./Menu.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useUserContext } from "@/context/userContext";
+import { useMediaQuery } from "react-responsive";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useState } from "react";
 
 export default function Menu() {
-  const { email, setEmail } = useUserContext();
+  const { setEmail } = useUserContext();
   const router = useRouter();
+  const [showmenu, setShowMenu] = useState(false);
+  const isMobileSize = useMediaQuery({ query: "(max-width: 800px)" });
+
+  if (!isMobileSize && showmenu) {
+    setShowMenu(false);
+  }
 
   const handleLogout = async () => {
     try {
@@ -24,7 +33,15 @@ export default function Menu() {
   return (
     <div className="menu_container">
       <Logo />
-      <ul>
+      {isMobileSize && (
+        <RxHamburgerMenu
+          onClick={() => {
+            setShowMenu(!showmenu);
+          }}
+          size={40}
+        />
+      )}
+      <ul className={`menu_list ${showmenu ? "show_menu" : ""}`}>
         <li>
           <Link href={"http://localhost:3000/profile/createTask"}>
             create task
