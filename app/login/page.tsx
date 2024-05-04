@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
-      <Logo size={80} />
+      <Logo bigSize={true} />
       <h2>Login your account</h2>
       <form
         onSubmit={(event) => {

@@ -16,3 +16,14 @@
   position: absolute;
   right: -46px;
 }
+
+@media (max-width: 600px) {
+  .progres_bar_background {
+    width: 250px;
+  }
+}
+@media (max-width: 400px) {
+  .progres_bar_background {
+    width: 200px;
+  }
+}

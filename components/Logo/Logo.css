@@ -1,0 +1,17 @@
+h1 {
+  color: #eeeee1;
+}
+
+.big_logo {
+  font-size: 80px;
+}
+
+.small_logo {
+  font-size: 40px;
+}
+
+@media (max-width: 800px) {
+  .big_logo {
+    font-size: 40px;
+  }
+}

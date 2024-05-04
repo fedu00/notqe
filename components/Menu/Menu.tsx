@@ -32,7 +32,7 @@ export default function Menu() {
   };
   return (
     <div className="menu_container">
-      <Logo />
+      <Logo bigSize={false} />
       {isMobileSize && (
         <RxHamburgerMenu
           className="hamburger_menu"

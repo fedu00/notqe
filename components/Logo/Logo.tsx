@@ -1,3 +1,4 @@
+import "./Logo.css";
 import { Josefin_Sans } from "next/font/google";
 
 const josefin = Josefin_Sans({
@@ -6,14 +7,13 @@ const josefin = Josefin_Sans({
 });
 
 interface LogoType {
-  size?: number;
+  bigSize?: boolean;
 }
 
-export default function Logo({ size }: LogoType) {
+export default function Logo({ bigSize = false }: LogoType) {
   return (
     <h1
-      style={{ fontSize: size + "px", color: "#eeeee1" }}
-      className={josefin.className}
+      className={`${josefin.className} ${bigSize ? "big_logo" : "small_logo"}`}
     >
       NOTQE
     </h1>

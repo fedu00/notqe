@@ -3,23 +3,48 @@
 }
 
 .tasks-experience_container {
-  height: 100px;
   margin-right: 20px;
 }
 
-.user_experience_container {
-  margin-left: 30px;
-}
 .lvl {
   font-size: 72px;
+  text-align: center;
+}
+
+.importance_tasks {
+  padding: 10px;
 }
 
 .category_tasks,
 .importance_tasks {
   display: flex;
+  justify-content: center;
 }
 .tasks_on_lvl {
   margin-top: 10px;
   text-align: left;
   padding-left: 16px;
+}
+
+@media (max-width: 1200px) {
+  .experience_container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .tasks-experience_container {
+    margin-right: 0px;
+  }
+  .user_experience_container {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience_container {
+    width: 300px;
+  }
+  .category_tasks,
+  .importance_tasks {
+    flex-wrap: wrap;
+  }
 }
