@@ -7,6 +7,7 @@ import DateInput from "@/components/DateInput/DateInput";
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import { useUserContext } from "@/context/userContext";
+import axios from "axios";
 
 const CATEGORY_DATA = ["health", "work", "study", "other"];
 const IMPORTANCE_DATA = ["1", "2", "3", "4", "5"];
@@ -24,13 +25,10 @@ export default function CreateTask({ params }: any) {
 
   const handleAddNote = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/usersTasks", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ userEmail: email, task: task }),
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/usersTasks",
+        { userEmail: email, task: task }
+      );
       setTask({
         title: "",
         description: "",
