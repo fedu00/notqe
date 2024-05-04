@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <main className="main_page_container">
-      <Logo size={80} />
+      <Logo bigSize={true} />
       <div className="button_container">
         <Button
           text="signup"

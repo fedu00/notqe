@@ -38,7 +38,6 @@ export default function Experience() {
       </div>
       <div className="user_experience_container">
         <p className="lvl">{6} lvl</p>
-
         <ProgresBar percentage={"30%"} />
         <p className="tasks_on_lvl">tasks done on this lvl: 17/56 </p>
         <p></p>

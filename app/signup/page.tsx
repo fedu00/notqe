@@ -43,7 +43,7 @@ export default function SignUpPage() {
   };
   return (
     <div className="signup-container">
-      <Logo size={80} />
+      <Logo bigSize={true} />
       <h2>Create Account</h2>
       <form
         autoComplete="off"

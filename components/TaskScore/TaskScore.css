@@ -10,6 +10,10 @@ p {
   text-align: center;
 }
 
+.task_score_container > h4 {
+  background-color: #3e4247;
+}
+
 .task_score_container p {
   font-size: 32px;
 }
@@ -25,4 +29,19 @@ p {
 }
 .task_score_container .other {
   color: #ffa768c5;
+}
+
+@media (max-width: 800px) {
+  .task_score_container {
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .task_score_container h4 {
+    font-size: 14px;
+  }
+  .task_score_container p {
+    font-size: 24px;
+  }
 }
