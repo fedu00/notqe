@@ -61,11 +61,8 @@ export default function Task({ task, id, userId }: any) {
         doneTasks,
       });
 
-      const responseDeleteTask = await fetch(
-        `http://localhost:3000/api/usersTasks?id=${id}`,
-        {
-          method: "DELETE",
-        }
+      const responseDeleteTask = await axios.delete(
+        `http://localhost:3000/api/usersTasks?id=${id}`
       );
       location.reload();
     } catch (error: any) {
@@ -74,13 +71,9 @@ export default function Task({ task, id, userId }: any) {
   };
 
   const handleDeleteTask = async () => {
-    const response = await fetch(
-      `http://localhost:3000/api/usersTasks?id=${id}`,
-      {
-        method: "DELETE",
-      }
+    const response = await axios.delete(
+      `http://localhost:3000/api/usersTasks?id=${id}`
     );
-    console.log("delete response", response.ok);
     location.reload();
   };
 
@@ -89,20 +82,14 @@ export default function Task({ task, id, userId }: any) {
       setEdit(false);
       setShowDescription(false);
       try {
-        const response = await fetch(
+        const response = await axios.put(
           `http://localhost:3000/api/usersTasks?id=${id}`,
           {
-            method: "PUT",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              userEmail: "test@test.com",
-              task: currentTask,
-            }),
+            userEmail: "test@test.com",
+            task: currentTask,
           }
         );
-        if (!response.ok) {
+        if (!response.statusText) {
           throw new Error("Failed to update topic");
         }
       } catch (error) {

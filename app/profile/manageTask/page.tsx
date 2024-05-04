@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Task from "@/components/Task/Task";
 import { useUserContext } from "@/context/userContext";
 import { CATEGORY_DATA } from "@/constans/constans";
+import axios from "axios";
 
 export default function ManageTask() {
   const { userId } = useUserContext();
@@ -13,11 +14,10 @@ export default function ManageTask() {
 
   const getTask = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/usersTasks?email=test@test.com",
-        { cache: "no-store" }
+      const response = await axios.get(
+        "http://localhost:3000/api/usersTasks?email=test@test.com"
       );
-      const dataTasks = await response.json();
+      const dataTasks = await response.data;
       setData(dataTasks.myTasks);
       return response;
     } catch (error: any) {
