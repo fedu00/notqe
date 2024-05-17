@@ -5,13 +5,16 @@ import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { useUserContext } from "@/context/userContext";
 import axios from "axios";
 
 // same interface/type what you can find in manageTasks
-export default function Task({ task, id, userId }: any) {
+export default function Task({ task, id, userId, handleUpdateTasks }: any) {
+  const jsonDonteTasksData: string =
+    sessionStorage.getItem("userNotqeDoneTasks");
+  const doneTasksData = JSON.parse(jsonDonteTasksData);
+
   const { title, description, category, importance, deadline } = task;
-  const { doneTasks, setDoneTasks } = useUserContext();
+  const [testTasks, setTestTasks] = useState(doneTasksData);
   const [currentTask, setCurrentTask] = useState({
     title,
     description,
@@ -50,21 +53,29 @@ export default function Task({ task, id, userId }: any) {
 
   const handleFinishTask = async () => {
     const selectedImportance = selectHowImportantIsTask(importance);
-    setDoneTasks((prevValue) => ({
-      ...prevValue,
-      [selectedImportance]: prevValue[selectedImportance] + 1,
-      [category]: prevValue[category] + 1,
-    }));
+    const updateDoneTasks = { ...testTasks };
+
+    const increaseCategoryValue = updateDoneTasks[category] + 1;
+    const increaseImportanceValue = updateDoneTasks[selectedImportance] + 1;
+
+    updateDoneTasks[category] = increaseCategoryValue;
+    updateDoneTasks[selectedImportance] = increaseImportanceValue;
+    setTestTasks(updateDoneTasks);
+
+    sessionStorage.setItem(
+      "userNotqeDoneTasks",
+      JSON.stringify(updateDoneTasks)
+    );
     try {
       const response = await axios.put("/api/users/login", {
         userId,
-        doneTasks,
+        doneTasks: updateDoneTasks,
       });
 
       const responseDeleteTask = await axios.delete(
         `http://localhost:3000/api/usersTasks?id=${id}`
       );
-      location.reload();
+      handleUpdateTasks(id);
     } catch (error: any) {
       console.log("login failed", error.message);
     }
@@ -74,7 +85,7 @@ export default function Task({ task, id, userId }: any) {
     const response = await axios.delete(
       `http://localhost:3000/api/usersTasks?id=${id}`
     );
-    location.reload();
+    handleUpdateTasks(id);
   };
 
   const handleEditTask = async () => {

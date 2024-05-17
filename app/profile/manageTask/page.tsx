@@ -3,14 +3,15 @@ import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import { useEffect, useState } from "react";
 import Task from "@/components/Task/Task";
-import { useUserContext } from "@/context/userContext";
 import { CATEGORY_DATA } from "@/constans/constans";
 import axios from "axios";
 
 export default function ManageTask() {
-  const { userId } = useUserContext();
   const [data, setData] = useState([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
+  const [currentTasksData, setCurrentTasksData] = useState([]);
+
+  const userId = sessionStorage.getItem("userNotqeId");
 
   const getTask = async () => {
     try {
@@ -25,21 +26,38 @@ export default function ManageTask() {
     }
   };
 
-  const returnTasks = (task: any) => {
+  useEffect(() => {
     if (currentCategory === "all") {
-      return (
-        <Task key={task._id} id={task._id} task={task.task} userId={userId} />
+      setCurrentTasksData(data);
+    } else {
+      const filteredTasks = data.filter(
+        (task: any) => task.task.category === currentCategory
       );
-    } else if (task.task.category === currentCategory) {
-      return (
-        <Task key={task._id} id={task._id} task={task.task} userId={userId} />
-      );
+      setCurrentTasksData(filteredTasks);
     }
-  };
+  }, [currentCategory, data]);
 
   useEffect(() => {
     getTask();
   }, []);
+
+  //zmien nazwe
+  const handleUpdateTasks = (id: string) => {
+    const newTasksData = currentTasksData.filter((task) => task._id !== id);
+    setCurrentTasksData(newTasksData);
+  };
+
+  const emptyTasksData = currentTasksData.length === 0;
+
+  if (emptyTasksData) {
+    return (
+      <div className="manage_task_container">
+        <div className="title_container">
+          <h1>You don't have any tasks yet :(</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="manage_task_container">
@@ -52,7 +70,15 @@ export default function ManageTask() {
       </div>
       <div className="tasks_container">
         {/* CHANGE TYPE */}
-        {data.map((task: any) => returnTasks(task))}
+        {currentTasksData.map((task: any) => (
+          <Task
+            key={task._id}
+            id={task._id}
+            task={task.task}
+            userId={userId}
+            handleUpdateTasks={handleUpdateTasks}
+          />
+        ))}
       </div>
     </div>
   );

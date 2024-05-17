@@ -2,11 +2,9 @@
 import "./profile.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useUserContext } from "@/context/userContext";
 
-export default function ProfilePage({ children }: any) {
-  const { setUserId, username, setUsername, setEmail, setDoneTasks } =
-    useUserContext();
+export default function ProfilePage() {
+  const [username, setUsername] = useState<string>("unknow");
 
   useEffect(() => {
     getUserDetails();
@@ -14,10 +12,12 @@ export default function ProfilePage({ children }: any) {
 
   const getUserDetails = async () => {
     const response = await axios.get("/api/users/userDetails");
-
-    setUserId(response.data.data._id);
-    setEmail(response.data.data.email);
-    setDoneTasks(response.data.data.doneTasks);
+    sessionStorage.setItem("userNotqeEmail", response.data.data.email);
+    sessionStorage.setItem("userNotqeId", response.data.data._id);
+    sessionStorage.setItem(
+      "userNotqeDoneTasks",
+      JSON.stringify(response.data.data.doneTasks)
+    );
     setUsername(response.data.data.username);
   };
 

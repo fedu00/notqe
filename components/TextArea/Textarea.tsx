@@ -18,7 +18,7 @@ export default function Textarea({
   showError = false,
 }: TextareaType) {
   return (
-    <div>
+    <div className="textarea_container">
       <textarea
         className={`${inter.className} textarea_form ${
           showError ? "error_active" : ""

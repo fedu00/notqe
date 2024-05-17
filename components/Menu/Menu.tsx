@@ -5,13 +5,11 @@ import Button from "../Button/Button";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useUserContext } from "@/context/userContext";
 import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
 
 export default function Menu() {
-  const { setEmail } = useUserContext();
   const router = useRouter();
   const [showmenu, setShowMenu] = useState(false);
   const isMobileSize = useMediaQuery({ query: "(max-width: 800px)" });
@@ -24,7 +22,8 @@ export default function Menu() {
     try {
       await axios.get("/api/users/logout");
       console.log("logout successful!!!");
-      setEmail("");
+      sessionStorage.removeItem("userNotqeEmail");
+      sessionStorage.removeItem("userNotqeDoneTasks");
       router.push("/");
     } catch (error: any) {
       console.log("logout failed", error.message);

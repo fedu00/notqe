@@ -2,10 +2,11 @@
 import ProgresBar from "@/components/ProgresBar/ProgresBar";
 import "./experience.css";
 import TaskScore from "@/components/TaskScore/TaskScore";
-import { useUserContext } from "@/context/userContext";
 
 export default function Experience() {
-  const { doneTasks } = useUserContext();
+  const jsonDonteTasksData: string =
+    sessionStorage.getItem("userNotqeDoneTasks");
+  const doneTasksData = JSON.parse(jsonDonteTasksData);
 
   const {
     health,
@@ -17,7 +18,7 @@ export default function Experience() {
     medium,
     important,
     veryImportant,
-  } = doneTasks;
+  } = doneTasksData;
 
   return (
     <div className="experience_container">
