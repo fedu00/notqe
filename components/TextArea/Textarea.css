@@ -16,8 +16,8 @@
   margin: 0 0 17px 10px;
 }
 
-.textarea_form .error_active {
-  margin: 0;
+.textarea_container .error_active {
+  margin-bottom: 0;
 }
 
 @media (max-width: 800px) {
