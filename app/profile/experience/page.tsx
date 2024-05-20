@@ -1,5 +1,5 @@
 "use client";
-import ProgresBar from "@/components/ProgresBar/ProgresBar";
+import UserExperience from "@/components/UserExperience/UserExperience";
 import "./experience.css";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
@@ -37,12 +37,7 @@ export default function Experience() {
           <TaskScore score={veryImportant} title={"very important"} />
         </div>
       </div>
-      <div className="user_experience_container">
-        <p className="lvl">{6} lvl</p>
-        <ProgresBar percentage={"30%"} />
-        <p className="tasks_on_lvl">tasks done on this lvl: 17/56 </p>
-        <p></p>
-      </div>
+      <UserExperience doneTasksData={doneTasksData} />
     </div>
   );
 }
