@@ -1,20 +1,15 @@
 .progres_bar_background {
-  position: relative;
-  background-color: #3e4247;
-  height: 20px;
+  display: flex;
   width: 350px;
-  border-radius: 5px;
 }
 .progres_bar_fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-color: #ffa768c5;
+  height: 20px;
+  width: 90%;
+  background-color: #747474;
   border-radius: 5px;
 }
 .progres_bar_background p {
-  position: absolute;
-  right: -46px;
+  margin-left: 10px;
 }
 
 @media (max-width: 600px) {

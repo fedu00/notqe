@@ -6,11 +6,6 @@
   margin-right: 20px;
 }
 
-.lvl {
-  font-size: 72px;
-  text-align: center;
-}
-
 .importance_tasks {
   padding: 10px;
 }
@@ -20,11 +15,6 @@
   display: flex;
   justify-content: center;
 }
-.tasks_on_lvl {
-  margin-top: 10px;
-  text-align: left;
-  padding-left: 16px;
-}
 
 @media (max-width: 1200px) {
   .experience_container {
@@ -33,9 +23,6 @@
   }
   .tasks-experience_container {
     margin-right: 0px;
-  }
-  .user_experience_container {
-    margin-bottom: 20px;
   }
 }
 

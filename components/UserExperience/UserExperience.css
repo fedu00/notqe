@@ -1,0 +1,35 @@
+.user_experience_container {
+  background-color: #3e4247;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.lvl_container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.lvl_container h1 {
+  font-size: 72px;
+  font-weight: 500;
+}
+
+.lvl_container p {
+  text-align: center;
+  font-size: 20px;
+  margin: 0 0 16px 16px;
+}
+
+.tasks_on_lvl {
+  margin-top: 10px;
+  text-align: left;
+  padding-left: 16px;
+}
+
+@media (max-width: 1200px) {
+  .user_experience_container {
+    margin-bottom: 20px;
+  }
+}
