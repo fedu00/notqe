@@ -2,11 +2,12 @@
 import UserExperience from "@/components/UserExperience/UserExperience";
 import "./experience.css";
 import TaskScore from "@/components/TaskScore/TaskScore";
+import { DoneTasksType } from "@/types/types";
 
 export default function Experience() {
-  const jsonDonteTasksData: string =
+  const jsonDonteTasksData: string | null =
     sessionStorage.getItem("userNotqeDoneTasks");
-  const doneTasksData = JSON.parse(jsonDonteTasksData);
+  const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
 
   const {
     health,

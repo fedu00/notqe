@@ -1,6 +1,6 @@
 "use client";
 import "./login.css";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import axios from "axios";
@@ -8,19 +8,24 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Logo from "@/components/Logo/Logo";
 
+type UserType = {
+  email: string;
+  password: string;
+};
+
 export default function LoginPage() {
   const router = useRouter();
-  const [showError, setShowError] = useState(false);
-  const [user, setuser] = useState({
+  const [showError, setShowError] = useState<boolean>(false);
+  const [user, setuser] = useState<UserType>({
     email: "",
     password: "",
   });
 
-  const handleLogin = async (event: any) => {
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
 
-    const emailValidation = validateEmail(user.email);
-    const passwordValidation = user.password.length >= 4;
+    const emailValidation: boolean = validateEmail(user.email);
+    const passwordValidation: boolean = user.password.length >= 4;
 
     if (emailValidation && passwordValidation) {
       try {

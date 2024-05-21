@@ -1,21 +1,30 @@
 import ProgresBar from "../ProgresBar/ProgresBar";
 import "./UserExperience.css";
+import { DoneTasksType } from "@/types/types";
 
-interface currentLvlInformationType {
-  currentLvl: number;
-  lvlProgres: string;
-  taskForNextLvl: number;
-}
+type CurrentLvlInformationType =
+  | {
+      currentLvl: number;
+      lvlProgres: number;
+      taskForNextLvl: string;
+    }
+  | undefined;
 
-export default function UserExperience({ doneTasksData }) {
-  const doneTasks =
+export default function UserExperience({
+  doneTasksData,
+}: {
+  doneTasksData: DoneTasksType;
+}) {
+  const doneTasks: number =
     doneTasksData.veryImportant +
     doneTasksData.important +
     doneTasksData.medium +
     doneTasksData.lesImportant +
     doneTasksData.noImportant;
 
-  const getCurrentLvlInformation = (doneTasks: number) => {
+  const getCurrentLvlInformation = (
+    doneTasks: number
+  ): CurrentLvlInformationType => {
     let lvlRequirement = 6;
     let requiredPointsForNextLvl = 6;
     for (let lvl = 0; lvl < 99999; lvl++) {
@@ -36,9 +45,9 @@ export default function UserExperience({ doneTasksData }) {
       }
     }
   };
-  const currentLvlInformation: currentLvlInformationType =
-    getCurrentLvlInformation(doneTasks);
-  const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation;
+
+  const currentLvlInformation = getCurrentLvlInformation(doneTasks);
+  const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
 
   return (
     <div className="user_experience_container">

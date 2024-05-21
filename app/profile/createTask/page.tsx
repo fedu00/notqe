@@ -1,6 +1,11 @@
 "use client";
 import "./createTask.css";
 import { useState } from "react";
+import {
+  CREATE_TASK_CATEGORY_DATA,
+  IMPORTANCE_DATA,
+} from "@/constans/constans";
+import { TaskType } from "@/types/types";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 // import DateInput from "@/components/DateInput/DateInput"; //save for next app version
@@ -8,13 +13,15 @@ import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 
-const CATEGORY_DATA = ["health", "work", "study", "other"];
-const IMPORTANCE_DATA = ["1", "2", "3", "4", "5"];
+type TaskErrorType = {
+  title: boolean;
+  description: boolean;
+};
 
-export default function CreateTask({ params }: any) {
+export default function CreateTask() {
   let email = sessionStorage.getItem("userNotqeEmail");
 
-  const [task, setTask] = useState({
+  const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
     category: "health",
@@ -22,23 +29,25 @@ export default function CreateTask({ params }: any) {
     // deadline: "",
   });
 
-  const [showError, setShowError] = useState({
+  const [showError, setShowError] = useState<TaskErrorType>({
     title: false,
     description: false,
   });
 
-  const handleOnChangeTitle = (event) => {
+  const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...task, title: event.target.value });
     setShowError({ ...showError, title: false });
   };
-  const handleOnChangeDescription = (event) => {
+  const handleOnChangeDescription = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setTask({ ...task, description: event.target.value });
     setShowError({ ...showError, description: false });
   };
 
   const handleAddNote = async () => {
-    const titleIsnotEmpty = task.title.length > 0;
-    const descriptionIsnotEmptyy = task.description.length > 0;
+    const titleIsnotEmpty: boolean = task.title.length > 0;
+    const descriptionIsnotEmptyy: boolean = task.description.length > 0;
     if (titleIsnotEmpty && descriptionIsnotEmptyy) {
       try {
         const response = await axios.post(
@@ -85,7 +94,7 @@ export default function CreateTask({ params }: any) {
           placeholder="description..."
         />
         <Select
-          data={CATEGORY_DATA}
+          data={CREATE_TASK_CATEGORY_DATA}
           onChange={(event) => {
             setTask({ ...task, category: event.target.value });
           }}

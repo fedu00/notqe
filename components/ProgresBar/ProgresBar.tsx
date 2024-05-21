@@ -1,6 +1,6 @@
 import "./ProgresBar.css";
 
-export default function ProgresBar({ percentage }) {
+export default function ProgresBar({ percentage }: { percentage: number }) {
   return (
     <div className="progres_bar_background">
       <div

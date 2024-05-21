@@ -5,25 +5,36 @@ import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
 import axios from "axios";
 
-// same interface/type what you can find in manageTasks
-export default function Task({ task, id, userId, handleUpdateTasks }: any) {
-  const jsonDonteTasksData: string =
-    sessionStorage.getItem("userNotqeDoneTasks");
-  const doneTasksData = JSON.parse(jsonDonteTasksData);
+type ImportanceType =
+  | "veryImportant"
+  | "important"
+  | "medium"
+  | "lesImportant"
+  | "noImportant"
+  | "";
 
-  const { title, description, category, importance, deadline } = task;
-  const [testTasks, setTestTasks] = useState(doneTasksData);
-  const [currentTask, setCurrentTask] = useState({
+export default function Task({
+  task,
+  id,
+  userId,
+  handleUpdateTasks,
+}: TaskComponentType) {
+  const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
+  const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
+
+  const { title, description, category, importance } = task;
+  const [testTasks, setTestTasks] = useState<DoneTasksType>(doneTasksData);
+  const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
     category,
     importance,
-    deadline,
   });
   const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState<boolean>(false);
   const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
 
   const textareaRef = useRef(null);
@@ -36,7 +47,7 @@ export default function Task({ task, id, userId, handleUpdateTasks }: any) {
     }
   };
 
-  const selectHowImportantIsTask = (importance: string) => {
+  const selectHowImportantIsTask = (importance: string): ImportanceType => {
     switch (importance) {
       case "5":
         return "veryImportant";
@@ -48,15 +59,19 @@ export default function Task({ task, id, userId, handleUpdateTasks }: any) {
         return "lesImportant";
       case "1":
         return "noImportant";
+      default:
+        return "";
     }
   };
 
   const handleFinishTask = async () => {
-    const selectedImportance = selectHowImportantIsTask(importance);
-    const updateDoneTasks = { ...testTasks };
+    const selectedImportance: ImportanceType =
+      selectHowImportantIsTask(importance);
+    const updateDoneTasks: DoneTasksType = { ...testTasks };
 
-    const increaseCategoryValue = updateDoneTasks[category] + 1;
-    const increaseImportanceValue = updateDoneTasks[selectedImportance] + 1;
+    const increaseCategoryValue: number = updateDoneTasks[category] + 1;
+    const increaseImportanceValue: number =
+      updateDoneTasks[selectedImportance] + 1;
 
     updateDoneTasks[category] = increaseCategoryValue;
     updateDoneTasks[selectedImportance] = increaseImportanceValue;
@@ -119,17 +134,17 @@ export default function Task({ task, id, userId, handleUpdateTasks }: any) {
         value={currentTask.title}
         disabled={!edit}
         maxLength={25}
-        onChange={(e) => {
-          setCurrentTask({ ...currentTask, title: e.target.value });
+        onChange={(event) => {
+          setCurrentTask({ ...currentTask, title: event.target.value });
         }}
       />
       <textarea
         value={currentTask.description}
         style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
         disabled={!edit}
-        onChange={(e) => {
-          handleTextareaHeight(e);
-          setCurrentTask({ ...currentTask, description: e.target.value });
+        onChange={(event) => {
+          handleTextareaHeight(event);
+          setCurrentTask({ ...currentTask, description: event.target.value });
         }}
       />
 
