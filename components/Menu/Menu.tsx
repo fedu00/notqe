@@ -11,8 +11,8 @@ import { useState } from "react";
 
 export default function Menu() {
   const router = useRouter();
-  const [showmenu, setShowMenu] = useState(false);
-  const isMobileSize = useMediaQuery({ query: "(max-width: 800px)" });
+  const [showmenu, setShowMenu] = useState<boolean>(false);
+  const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
 
   if (!isMobileSize && showmenu) {
     setShowMenu(false);

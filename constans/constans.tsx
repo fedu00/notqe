@@ -11,3 +11,7 @@ export const DONE_TASKS_DATA = {
 };
 
 export const CATEGORY_DATA = ["all", "health", "work", "study", "other"];
+
+export const CREATE_TASK_CATEGORY_DATA = ["health", "work", "study", "other"];
+
+export const IMPORTANCE_DATA = ["1", "2", "3", "4", "5"];

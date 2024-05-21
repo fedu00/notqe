@@ -1,6 +1,6 @@
 "use client";
 import "./signup.css";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import Input from "@/components/Input/Input";
@@ -8,20 +8,31 @@ import Button from "@/components/Button/Button";
 import axios from "axios";
 import Logo from "@/components/Logo/Logo";
 
+type FullUserType = {
+  username: string;
+  email: string;
+  password: string;
+};
+type UserErrorType = {
+  username: boolean;
+  email: boolean;
+  password: boolean;
+};
+
 export default function SignUpPage() {
   const router = useRouter();
-  const [showError, setShowError] = useState({
+  const [showError, setShowError] = useState<UserErrorType>({
     username: false,
     email: false,
     password: false,
   });
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<FullUserType>({
     username: "",
     email: "",
     password: "",
   });
 
-  const handleSignup = async (event: any) => {
+  const handleSignup = async (event: FormEvent) => {
     event.preventDefault();
 
     const emailValidation: boolean = validateEmail(user.email);
