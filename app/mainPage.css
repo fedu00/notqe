@@ -11,10 +11,13 @@
   margin-bottom: 50px;
 }
 
-.main_page_container div {
+.button_container {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 400px;
 }
 
 .main_page_container div button {
-  margin: 24px;
+  margin: 16px;
 }
