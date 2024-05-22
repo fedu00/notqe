@@ -1,13 +1,16 @@
 "use client";
 import "./globals.css";
 import "./mainPage.css";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button/Button";
 import Logo from "@/components/Logo/Logo";
-import { useRouter } from "next/navigation";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLoginTestAccount = async () => {
     const user = {
@@ -15,9 +18,11 @@ export default function Home() {
       password: "test",
     };
     try {
+      setIsLoading(true);
       const response = await axios.post("/api/users/login", user);
       router.push("/profile");
     } catch (error: any) {
+      setIsLoading(false);
       console.log("login failed", error.message);
     }
   };
@@ -25,25 +30,36 @@ export default function Home() {
   return (
     <main className="main_page_container">
       <Logo bigSize={true} />
-      <div className="button_container">
-        <Button
-          text="signup"
-          onClick={() => {
-            router.push("/signup");
-          }}
+      {isLoading ? (
+        <ClipLoader
+          color={"#ffa868"}
+          loading={true}
+          size={60}
+          speedMultiplier={0.4}
+          aria-label="Loading Spinner"
+          data-testid="loader"
         />
-        <Button
-          text="log in"
-          onClick={() => {
-            router.push("/login");
-          }}
-        />
-      </div>
-      <Button
-        text="try test account"
-        test={true}
-        onClick={handleLoginTestAccount}
-      />
+      ) : (
+        <div className="button_container">
+          <Button
+            text="signup"
+            onClick={() => {
+              router.push("/signup");
+            }}
+          />
+          <Button
+            text="log in"
+            onClick={() => {
+              router.push("/login");
+            }}
+          />
+          <Button
+            text="try test account"
+            test={true}
+            onClick={handleLoginTestAccount}
+          />
+        </div>
+      )}
     </main>
   );
 }

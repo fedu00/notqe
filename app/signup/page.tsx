@@ -7,6 +7,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import Logo from "@/components/Logo/Logo";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type FullUserType = {
   username: string;
@@ -31,6 +32,7 @@ export default function SignUpPage() {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSignup = async (event: FormEvent) => {
     event.preventDefault();
@@ -41,10 +43,12 @@ export default function SignUpPage() {
 
     if (emailValidation && passwordValidation && usernameValidation) {
       try {
+        setIsLoading(true);
         const response = await axios.post("/api/users/signup", user);
         console.log("signup success", response);
         router.push("/login");
       } catch (error: any) {
+        setIsLoading(false);
         setShowError({ ...showError, email: true });
         console.log("signup error", error.message);
       }
@@ -56,48 +60,59 @@ export default function SignUpPage() {
     <div className="signup-container">
       <Logo bigSize={true} />
       <h2>Create Account</h2>
-      <form
-        autoComplete="off"
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleSignup(event);
-        }}
-      >
-        <Input
-          type="text"
-          value={user.username}
-          onChange={(event) => {
-            setUser({ ...user, username: event.target.value });
-            setShowError({ ...showError, username: false });
-          }}
-          placeholder="username"
-          showError={showError.username}
-          errorMessage="wrong username"
+      {isLoading ? (
+        <ClipLoader
+          color={"#ffa868"}
+          loading={true}
+          size={60}
+          speedMultiplier={0.4}
+          aria-label="Loading Spinner"
+          data-testid="loader"
         />
-        <Input
-          type="text"
-          value={user.email}
-          onChange={(event) => {
-            setUser({ ...user, email: event.target.value });
-            setShowError({ ...showError, email: false });
+      ) : (
+        <form
+          autoComplete="off"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSignup(event);
           }}
-          placeholder="email"
-          showError={showError.email}
-          errorMessage="wrong email"
-        />
-        <Input
-          type="password"
-          value={user.password}
-          onChange={(event) => {
-            setUser({ ...user, password: event.target.value });
-            setShowError({ ...showError, password: false });
-          }}
-          errorMessage="wrong password"
-          placeholder="password"
-          showError={showError.password}
-        />
-        <Button type="submit" text="create account" />
-      </form>
+        >
+          <Input
+            type="text"
+            value={user.username}
+            onChange={(event) => {
+              setUser({ ...user, username: event.target.value });
+              setShowError({ ...showError, username: false });
+            }}
+            placeholder="username"
+            showError={showError.username}
+            errorMessage="wrong username"
+          />
+          <Input
+            type="text"
+            value={user.email}
+            onChange={(event) => {
+              setUser({ ...user, email: event.target.value });
+              setShowError({ ...showError, email: false });
+            }}
+            placeholder="email"
+            showError={showError.email}
+            errorMessage="wrong email"
+          />
+          <Input
+            type="password"
+            value={user.password}
+            onChange={(event) => {
+              setUser({ ...user, password: event.target.value });
+              setShowError({ ...showError, password: false });
+            }}
+            errorMessage="wrong password"
+            placeholder="password"
+            showError={showError.password}
+          />
+          <Button type="submit" text="create account" />
+        </form>
+      )}
     </div>
   );
 }
