@@ -32,7 +32,7 @@ export default function Experience() {
         </div>
         <div className="importance_tasks">
           <TaskScore score={noImportant} title={"no important"} />
-          <TaskScore score={lesImportant} title={"les important"} />
+          <TaskScore score={lesImportant} title={"less important"} />
           <TaskScore score={medium} title={"medium"} />
           <TaskScore score={important} title={"important"} />
           <TaskScore score={veryImportant} title={"very important"} />
