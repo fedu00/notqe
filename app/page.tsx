@@ -42,7 +42,7 @@ export default function Home() {
       ) : (
         <div className="button_container">
           <Button
-            text="signup"
+            text="sign up"
             onClick={() => {
               router.push("/signup");
             }}

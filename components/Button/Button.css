@@ -7,9 +7,37 @@
   cursor: pointer;
   margin-bottom: 24px;
   font-size: 16px;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: #fcbd90;
 }
 
 .test_button {
   color: #eeeee1;
   background-color: #3e4247;
+}
+
+.test_button:hover {
+  background-color: #565b61;
+}
+
+@keyframes buttonAnimation {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.9);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.show-animation {
+  animation: 0.3s buttonAnimation forwards;
 }
