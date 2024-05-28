@@ -113,12 +113,14 @@ export default function CreateTask() {
             />
             <Select
               data={CREATE_TASK_CATEGORY_DATA}
+              value={task.category}
               onChange={(event) => {
                 setTask({ ...task, category: event.target.value });
               }}
             />
             <Select
               data={IMPORTANCE_DATA}
+              value={task.importance}
               onChange={(event) => {
                 setTask({ ...task, importance: event.target.value });
               }}

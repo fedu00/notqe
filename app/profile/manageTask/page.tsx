@@ -60,7 +60,7 @@ export default function ManageTask() {
     setCurrentTasksData(newTasksData);
   };
 
-  const emptyTasksData: boolean = currentTasksData.length === 0;
+  const emptyTasksData: boolean = data.length === 0;
 
   if (emptyTasksData) {
     return (
@@ -89,6 +89,7 @@ export default function ManageTask() {
             <h1>manage your tasks</h1>
             <Select
               data={CATEGORY_DATA}
+              value={currentCategory}
               onChange={(event) => setCurrentCategory(event.target.value)}
             />
           </div>
