@@ -1,17 +1,19 @@
 "use client";
 import "./createTask.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CREATE_TASK_CATEGORY_DATA,
   IMPORTANCE_DATA,
 } from "@/constans/constans";
 import { TaskType } from "@/types/types";
+import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 // import DateInput from "@/components/DateInput/DateInput"; //save for next app version
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type TaskErrorType = {
   title: boolean;
@@ -19,7 +21,8 @@ type TaskErrorType = {
 };
 
 export default function CreateTask() {
-  let email = sessionStorage.getItem("userNotqeEmail");
+  const [email, setEmail] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [task, setTask] = useState<TaskType>({
     title: "",
@@ -33,6 +36,10 @@ export default function CreateTask() {
     title: false,
     description: false,
   });
+
+  useEffect(() => {
+    getdataFromSessionStorage("userNotqeEmail", setIsLoading, setEmail, true);
+  }, []);
 
   const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...task, title: event.target.value });
@@ -73,45 +80,58 @@ export default function CreateTask() {
   };
   return (
     <div className="create_task_page_container">
-      <div className="title_container">
-        <h1>Create a new task</h1>
-        <Button onClick={handleAddNote} text="create task" />
-      </div>
-      <div className="create_task_form_container">
-        <Input
-          type="text"
-          value={task.title}
-          showError={showError.title}
-          errorMessage="this field cannot be empty"
-          onChange={(event) => handleOnChangeTitle(event)}
-          placeholder="enter title"
+      {isLoading ? (
+        <ClipLoader
+          color={"#ffa868"}
+          loading={true}
+          size={60}
+          speedMultiplier={0.4}
+          aria-label="Loading Spinner"
+          data-testid="loader"
         />
-        <Textarea
-          value={task.description}
-          showError={showError.description}
-          errorMessage="this field cannot be empty"
-          onChange={(event) => handleOnChangeDescription(event)}
-          placeholder="description..."
-        />
-        <Select
-          data={CREATE_TASK_CATEGORY_DATA}
-          onChange={(event) => {
-            setTask({ ...task, category: event.target.value });
-          }}
-        />
-        <Select
-          data={IMPORTANCE_DATA}
-          onChange={(event) => {
-            setTask({ ...task, importance: event.target.value });
-          }}
-        />
-        {/* save this for future version app */}
-        {/* <DateInput
+      ) : (
+        <>
+          <div className="title_container">
+            <h1>Create a new task</h1>
+            <Button onClick={handleAddNote} text="create task" />
+          </div>
+          <div className="create_task_form_container">
+            <Input
+              type="text"
+              value={task.title}
+              showError={showError.title}
+              errorMessage="this field cannot be empty"
+              onChange={(event) => handleOnChangeTitle(event)}
+              placeholder="enter title"
+            />
+            <Textarea
+              value={task.description}
+              showError={showError.description}
+              errorMessage="this field cannot be empty"
+              onChange={(event) => handleOnChangeDescription(event)}
+              placeholder="description..."
+            />
+            <Select
+              data={CREATE_TASK_CATEGORY_DATA}
+              onChange={(event) => {
+                setTask({ ...task, category: event.target.value });
+              }}
+            />
+            <Select
+              data={IMPORTANCE_DATA}
+              onChange={(event) => {
+                setTask({ ...task, importance: event.target.value });
+              }}
+            />
+            {/* save this for future version app */}
+            {/* <DateInput
           onChange={(event) => {
             setTask({ ...task, deadline: event.target.value });
           }}
         /> */}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

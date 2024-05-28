@@ -2,10 +2,12 @@
 import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import { useEffect, useState } from "react";
-import Task from "@/components/Task/Task";
 import { CATEGORY_DATA } from "@/constans/constans";
-import axios from "axios";
 import { TaskType } from "@/types/types";
+import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
+import axios from "axios";
+import Task from "@/components/Task/Task";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface DataType {
   createdAt: string;
@@ -16,11 +18,11 @@ interface DataType {
 }
 
 export default function ManageTask() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userId, setUserId] = useState<string>("");
   const [data, setData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
-
-  const userId = sessionStorage.getItem("userNotqeId");
 
   const getTask = async () => {
     try {
@@ -36,6 +38,7 @@ export default function ManageTask() {
   };
 
   useEffect(() => {
+    getdataFromSessionStorage("userNotqeId", setIsLoading, setUserId, true);
     if (currentCategory === "all") {
       setCurrentTasksData(data);
     } else {
@@ -70,25 +73,38 @@ export default function ManageTask() {
   }
 
   return (
-    <div className="manage_task_container">
-      <div className="title_container">
-        <h1>manage your tasks</h1>
-        <Select
-          data={CATEGORY_DATA}
-          onChange={(event) => setCurrentCategory(event.target.value)}
+    <>
+      {isLoading ? (
+        <ClipLoader
+          color={"#ffa868"}
+          loading={true}
+          size={60}
+          speedMultiplier={0.4}
+          aria-label="Loading Spinner"
+          data-testid="loader"
         />
-      </div>
-      <div className="tasks_container">
-        {currentTasksData.map((task: DataType) => (
-          <Task
-            key={task._id}
-            id={task._id}
-            task={task.task}
-            userId={userId!}
-            handleUpdateTasks={handleUpdateTasks}
-          />
-        ))}
-      </div>
-    </div>
+      ) : (
+        <div className="manage_task_container">
+          <div className="title_container">
+            <h1>manage your tasks</h1>
+            <Select
+              data={CATEGORY_DATA}
+              onChange={(event) => setCurrentCategory(event.target.value)}
+            />
+          </div>
+          <div className="tasks_container">
+            {currentTasksData.map((task: DataType) => (
+              <Task
+                key={task._id}
+                id={task._id}
+                task={task.task}
+                userId={userId!}
+                handleUpdateTasks={handleUpdateTasks}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
