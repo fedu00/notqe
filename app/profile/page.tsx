@@ -29,9 +29,7 @@ export default function ProfilePage() {
           Build your future brick by brick. The NOTQE application can help you
           with this - organize your tasks and check your plans for today before
           you start taking action. Check your progress and how much work you
-          have done in the "score" tab. If you have any comments about the
-          application or know what is missing, please send your comments in the
-          "feedback" tab.
+          have done in the "experience" tab.
         </p>
       </div>
     </div>
