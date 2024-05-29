@@ -44,24 +44,24 @@ export default function Menu() {
       <ul className={`menu_list ${showmenu ? "show_menu" : ""}`}>
         <li>
           {/* <Link href={"http://localhost:3000/profile/createTask"}> */}
-          <Link href={`http://notqe.vercel.app/profile/createTask`}>
+          <Link href={`https://notqe.vercel.app/profile/createTask`}>
             create task
           </Link>
         </li>
         <li>
-          <Link href={`http://notqe.vercel.app/profile/manageTask`}>
+          <Link href={`https://notqe.vercel.app/profile/manageTask`}>
             {/* <Link href={"http://localhost:3000/profile/manageTask"}> */}
             manage task
           </Link>
         </li>
         <li>
-          <Link href={`http://notqe.vercel.app/profile/experience`}>
+          <Link href={`https://notqe.vercel.app/profile/experience`}>
             {/* <Link href={"http://localhost:3000/profile/experience"}> */}
             experience
           </Link>
         </li>
         <li>
-          <Link href={`http://notqe.vercel.app/profile`}>profile</Link>
+          <Link href={`https://notqe.vercel.app/profile`}>profile</Link>
           {/* <Link href={"http://localhost:3000/profile"}>profile</Link> */}
         </li>
         <li>
