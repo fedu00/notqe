@@ -43,22 +43,26 @@ export default function Menu() {
       )}
       <ul className={`menu_list ${showmenu ? "show_menu" : ""}`}>
         <li>
-          <Link href={"http://localhost:3000/profile/createTask"}>
+          {/* <Link href={"http://localhost:3000/profile/createTask"}> */}
+          <Link href={`http://${process.env.domain}/profile/createTask`}>
             create task
           </Link>
         </li>
         <li>
-          <Link href={"http://localhost:3000/profile/manageTask"}>
+          <Link href={`http://${process.env.domain}/profile/manageTask`}>
+            {/* <Link href={"http://localhost:3000/profile/manageTask"}> */}
             manage task
           </Link>
         </li>
         <li>
-          <Link href={"http://localhost:3000/profile/experience"}>
+          <Link href={`http://${process.env.domain}/profile/experience`}>
+            {/* <Link href={"http://localhost:3000/profile/experience"}> */}
             experience
           </Link>
         </li>
         <li>
-          <Link href={"http://localhost:3000/profile"}>profile</Link>
+          <Link href={`http://${process.env.domain}/profile`}>profile</Link>
+          {/* <Link href={"http://localhost:3000/profile"}>profile</Link> */}
         </li>
         <li>
           <Button onClick={handleLogout} text="log out" test={true} />

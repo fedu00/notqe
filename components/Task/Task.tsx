@@ -88,7 +88,7 @@ export default function Task({
       });
 
       const responseDeleteTask = await axios.delete(
-        `http://localhost:3000/api/usersTasks?id=${id}`
+        `http://${process.env.domain}/api/usersTasks?id=${id}`
       );
       handleUpdateTasks(id);
     } catch (error: any) {
@@ -98,7 +98,7 @@ export default function Task({
 
   const handleDeleteTask = async () => {
     const response = await axios.delete(
-      `http://localhost:3000/api/usersTasks?id=${id}`
+      `http://${process.env.domain}/api/usersTasks?id=${id}`
     );
     handleUpdateTasks(id);
   };
@@ -109,7 +109,7 @@ export default function Task({
       setShowDescription(false);
       try {
         const response = await axios.put(
-          `http://localhost:3000/api/usersTasks?id=${id}`,
+          `http://${process.env.domain}/api/usersTasks?id=${id}`,
           {
             userEmail: "test@test.com",
             task: currentTask,
