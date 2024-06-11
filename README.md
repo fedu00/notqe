@@ -28,7 +28,7 @@ Backend
 
 How to run the application locally:
 
-1. clone repository : git clone (totaj wpisasz adres nie)
+1. clone repository : git clone https://github.com/fedu00/notqe.git
 2. go to app folder: cd notqe
 3. this app using free vercel hoisting, to run this app locally you need to change "notqe.vercel.app" to "localhost:3000" in project files
 4. install project: npm install
