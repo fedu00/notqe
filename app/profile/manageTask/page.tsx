@@ -27,7 +27,8 @@ export default function ManageTask() {
   const getTask = async () => {
     try {
       const response = await axios.get(
-        "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
+        // "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
+        "http://localhost:3000/api/usersTasks?email=test@test.com"
       );
       const dataTasks: { myTasks: DataType[] | [] } = await response.data;
       setData(dataTasks.myTasks);

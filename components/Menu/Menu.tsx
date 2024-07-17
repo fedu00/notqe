@@ -43,9 +43,9 @@ export default function Menu() {
       )}
       <ul className={`menu_list ${showmenu ? "show_menu" : ""}`}>
         <li>
-          {/* <Link href={"http://localhost:3000/profile/createTask"}> */}
           <Link
-            href={`https://notqe.vercel.app/profile/createTask`}
+            // href={`https://notqe.vercel.app/profile/createTask`}
+            href={`http://localhost:3000/profile/createTask`}
             onClick={() => {
               setShowMenu(false);
             }}
@@ -55,36 +55,36 @@ export default function Menu() {
         </li>
         <li>
           <Link
-            href={`https://notqe.vercel.app/profile/manageTask`}
+            // href={`https://notqe.vercel.app/profile/manageTask`}
+            href={`http://localhost:3000/profile/manageTask`}
             onClick={() => {
               setShowMenu(false);
             }}
           >
-            {/* <Link href={"http://localhost:3000/profile/manageTask"}> */}
             manage task
           </Link>
         </li>
         <li>
           <Link
-            href={`https://notqe.vercel.app/profile/experience`}
+            // href={`https://notqe.vercel.app/profile/experience`}
+            href={`http://localhost:3000/profile/experience`}
             onClick={() => {
               setShowMenu(false);
             }}
           >
-            {/* <Link href={"http://localhost:3000/profile/experience"}> */}
             experience
           </Link>
         </li>
         <li>
           <Link
-            href={`https://notqe.vercel.app/profile`}
+            // href={`https://notqe.vercel.app/profile`}
+            href={`http://localhost:3000/profile`}
             onClick={() => {
               setShowMenu(false);
             }}
           >
             profile
           </Link>
-          {/* <Link href={"http://localhost:3000/profile"}>profile</Link> */}
         </li>
         <li>
           <Button onClick={handleLogout} text="log out" test={true} />
