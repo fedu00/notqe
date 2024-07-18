@@ -4,7 +4,6 @@ import "./manageTask.css";
 import { useEffect, useState } from "react";
 import { CATEGORY_DATA } from "@/constans/constans";
 import { TaskType } from "@/types/types";
-import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -13,7 +12,7 @@ interface DataType {
   createdAt: string;
   task: TaskType;
   updatedAt: string;
-  userEmail: string;
+  userID: string;
   _id: string;
 }
 
@@ -24,13 +23,14 @@ export default function ManageTask() {
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
 
-  const getTask = async () => {
+  const getTask = async (userID: string) => {
     try {
       const response = await axios.get(
         // "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
-        "http://localhost:3000/api/usersTasks?email=test@test.com"
+        `http://localhost:3000/api/usersTasks?userID=${userID}`
       );
       const dataTasks: { myTasks: DataType[] | [] } = await response.data;
+
       setData(dataTasks.myTasks);
       return response;
     } catch (error: any) {
@@ -39,7 +39,6 @@ export default function ManageTask() {
   };
 
   useEffect(() => {
-    getdataFromSessionStorage("userID", setIsLoading, setUserID, true);
     if (currentCategory === "all") {
       setCurrentTasksData(data);
     } else {
@@ -51,7 +50,15 @@ export default function ManageTask() {
   }, [currentCategory, data]);
 
   useEffect(() => {
-    getTask();
+    const userID: string | null = sessionStorage.getItem("userID");
+
+    if (userID != null && userID != "") {
+      setUserID(userID);
+      setIsLoading(false);
+      getTask(userID);
+    } else {
+      console.log("we can not find your ID");
+    }
   }, []);
 
   const handleUpdateTasks = (id: string): void => {
@@ -100,7 +107,7 @@ export default function ManageTask() {
                 key={task._id}
                 id={task._id}
                 task={task.task}
-                userId={userID!}
+                userID={userID!}
                 handleUpdateTasks={handleUpdateTasks}
               />
             ))}

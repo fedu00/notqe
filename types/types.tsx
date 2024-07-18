@@ -20,6 +20,6 @@ export type TaskType = {
 export interface TaskComponentType {
   task: TaskType;
   id: string;
-  userId: string;
+  userID: string;
   handleUpdateTasks(id: string): void;
 }

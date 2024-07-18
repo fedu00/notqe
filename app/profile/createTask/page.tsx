@@ -21,7 +21,6 @@ type TaskErrorType = {
 };
 
 export default function CreateTask() {
-  const [email, setEmail] = useState<string>("");
   const [userID, setUserID] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -39,7 +38,6 @@ export default function CreateTask() {
   });
 
   useEffect(() => {
-    // getdataFromSessionStorage("userNotqeEmail", setIsLoading, setEmail, true);
     getdataFromSessionStorage("userID", setIsLoading, setUserID, true);
   }, []);
 
@@ -62,7 +60,6 @@ export default function CreateTask() {
         const response = await axios.post(
           // `https://notqe.vercel.app/api/usersTasks`,
           "http://localhost:3000/api/usersTasks",
-          // { userEmail: email, task: task }
           { userID: userID, task: task }
         );
         setTask({

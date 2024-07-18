@@ -19,7 +19,7 @@ type ImportanceType =
 export default function Task({
   task,
   id,
-  userId,
+  userID,
   handleUpdateTasks,
 }: TaskComponentType) {
   const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
@@ -83,10 +83,9 @@ export default function Task({
     );
     try {
       const response = await axios.put("/api/users/login", {
-        userId,
+        userId: userID,
         doneTasks: updateDoneTasks,
       });
-
       const responseDeleteTask = await axios.delete(
         // `https://notqe.vercel.app/api/usersTasks?id=${id}`
         `http://localhost:3000/api/usersTasks?id=${id}`
@@ -114,7 +113,7 @@ export default function Task({
           // `https://notqe.vercel.app/api/usersTasks?id=${id}`,
           `http://localhost:3000/api/usersTasks?id=${id}`,
           {
-            userEmail: "test@test.com",
+            userID: userID,
             task: currentTask,
           }
         );

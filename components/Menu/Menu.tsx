@@ -22,7 +22,6 @@ export default function Menu() {
     try {
       await axios.get("/api/users/logout");
       console.log("logout successful!!!");
-      sessionStorage.removeItem("userNotqeEmail");
       sessionStorage.removeItem("userNotqeDoneTasks");
       sessionStorage.removeItem("userID");
       router.push("/");
