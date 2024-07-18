@@ -24,6 +24,7 @@ export default function Menu() {
       console.log("logout successful!!!");
       sessionStorage.removeItem("userNotqeEmail");
       sessionStorage.removeItem("userNotqeDoneTasks");
+      sessionStorage.removeItem("userID");
       router.push("/");
     } catch (error: any) {
       console.log("logout failed", error.message);

@@ -3,14 +3,16 @@ import MyTask from "@/models/taskModel";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request: any) {
-  const { userEmail, task } = await request.json();
+  // const { userEmail, task } = await request.json();
+  const { userID, task } = await request.json();
   await connectMongoDB();
-  await MyTask.create({ userEmail, task });
+  await MyTask.create({ userID, task });
   return NextResponse.json({ message: "topic Created" }, { status: 201 });
 }
 
 export async function GET(request: NextRequest) {
-  const userEmail = request.nextUrl.searchParams.get("email");
+  // const userEmail = request.nextUrl.searchParams.get("email");
+  const userEmail = request.nextUrl.searchParams.get("userID");
   await connectMongoDB();
   const task = await MyTask.find({ userEmail });
   return NextResponse.json({ myTasks: task }, { status: 200 });

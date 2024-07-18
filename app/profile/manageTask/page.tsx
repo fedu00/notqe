@@ -19,7 +19,7 @@ interface DataType {
 
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [userId, setUserId] = useState<string>("");
+  const [userID, setUserID] = useState<string>("");
   const [data, setData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
@@ -39,7 +39,7 @@ export default function ManageTask() {
   };
 
   useEffect(() => {
-    getdataFromSessionStorage("userNotqeId", setIsLoading, setUserId, true);
+    getdataFromSessionStorage("userID", setIsLoading, setUserID, true);
     if (currentCategory === "all") {
       setCurrentTasksData(data);
     } else {
@@ -100,7 +100,7 @@ export default function ManageTask() {
                 key={task._id}
                 id={task._id}
                 task={task.task}
-                userId={userId!}
+                userId={userID!}
                 handleUpdateTasks={handleUpdateTasks}
               />
             ))}

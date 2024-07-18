@@ -14,6 +14,7 @@ export default function ProfilePage() {
     const response = await axios.get("/api/users/userDetails");
     sessionStorage.setItem("userNotqeEmail", response.data.data.email);
     sessionStorage.setItem("userNotqeId", response.data.data._id);
+    sessionStorage.setItem("userID", response.data.data._id);
     sessionStorage.setItem(
       "userNotqeDoneTasks",
       JSON.stringify(response.data.data.doneTasks)

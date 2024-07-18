@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const myTaskSchema = new Schema(
   {
-    userEmail: String,
+    userID: String,
     task: {
       title: String,
       description: String,
