@@ -2,7 +2,7 @@
 import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import { useEffect, useState } from "react";
-import { CATEGORY_DATA } from "@/constans/constans";
+import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
 import { TaskType } from "@/types/types";
 import axios from "axios";
 import Task from "@/components/Task/Task";
@@ -21,6 +21,7 @@ export default function ManageTask() {
   const [userID, setUserID] = useState<string>("");
   const [data, setData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
+  const [currentImportance, setCurrentImportance] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
 
   const getTask = async (userID: string) => {
@@ -39,15 +40,21 @@ export default function ManageTask() {
   };
 
   useEffect(() => {
-    if (currentCategory === "all") {
+    if (currentCategory === "all" && currentImportance === "all") {
       setCurrentTasksData(data);
     } else {
-      const filteredTasks = data.filter(
-        (task: DataType) => task.task.category === currentCategory
+      const categoryFilteredTasks = data.filter(
+        (task: DataType) =>
+          task.task.category === currentCategory || currentCategory === "all"
+      );
+      const filteredTasks = categoryFilteredTasks.filter(
+        (task: DataType) =>
+          task.task.importance === currentImportance ||
+          currentImportance === "all"
       );
       setCurrentTasksData(filteredTasks);
     }
-  }, [currentCategory, data]);
+  }, [currentCategory, data, currentImportance]);
 
   useEffect(() => {
     const userID: string | null = sessionStorage.getItem("userID");
@@ -93,12 +100,21 @@ export default function ManageTask() {
         />
       ) : (
         <div className="manage_task_container">
-          <div className="title_container">
-            <h1>manage your tasks</h1>
+          <div>
+            <h1 className="manage_tasks_title">manage your tasks</h1>
             <Select
               data={CATEGORY_DATA}
-              value={currentCategory}
+              value={currentCategory === "all" ? "default" : currentCategory}
               onChange={(event) => setCurrentCategory(event.target.value)}
+              placeholder="select category"
+            />
+            <Select
+              data={ALL_TASKS_IMPORTANCE_DATA}
+              value={
+                currentImportance === "all" ? "default" : currentImportance
+              }
+              onChange={(event) => setCurrentImportance(event.target.value)}
+              placeholder="select task importance"
             />
           </div>
           <div className="tasks_container">

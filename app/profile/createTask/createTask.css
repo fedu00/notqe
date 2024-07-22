@@ -9,10 +9,17 @@
 .create_task_form_container {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 input {
   font-family: var(--font-inter);
+}
+
+.error_message {
+  color: #de4747;
+  position: absolute;
+  bottom: -16px;
 }
 
 @media (max-width: 800px) {

@@ -8,14 +8,6 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
 import axios from "axios";
 
-type ImportanceType =
-  | "veryImportant"
-  | "important"
-  | "medium"
-  | "lesImportant"
-  | "noImportant"
-  | "";
-
 export default function Task({
   task,
   id,
@@ -39,6 +31,25 @@ export default function Task({
 
   const textareaRef = useRef(null);
 
+  const getImportanceTaskNumber = (importance: string): string => {
+    switch (importance) {
+      case "all":
+        return "all";
+      case "very important":
+        return "5";
+      case "important":
+        return "4";
+      case "medium":
+        return "3";
+      case "less important":
+        return "2";
+      case "no important":
+        return "1";
+      default:
+        return "";
+    }
+  };
+
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -47,34 +58,16 @@ export default function Task({
     }
   };
 
-  const selectHowImportantIsTask = (importance: string): ImportanceType => {
-    switch (importance) {
-      case "5":
-        return "veryImportant";
-      case "4":
-        return "important";
-      case "3":
-        return "medium";
-      case "2":
-        return "lesImportant";
-      case "1":
-        return "noImportant";
-      default:
-        return "";
-    }
-  };
+  const importanceNumber = getImportanceTaskNumber(importance);
 
   const handleFinishTask = async () => {
-    const selectedImportance: ImportanceType =
-      selectHowImportantIsTask(importance);
     const updateDoneTasks: DoneTasksType = { ...testTasks };
 
     const increaseCategoryValue: number = updateDoneTasks[category] + 1;
-    const increaseImportanceValue: number =
-      updateDoneTasks[selectedImportance] + 1;
+    const increaseImportanceValue: number = updateDoneTasks[importance] + 1;
 
     updateDoneTasks[category] = increaseCategoryValue;
-    updateDoneTasks[selectedImportance] = increaseImportanceValue;
+    updateDoneTasks[importance] = increaseImportanceValue;
     setTestTasks(updateDoneTasks);
 
     sessionStorage.setItem(
@@ -176,7 +169,7 @@ export default function Task({
           onClick={handleDeleteTask}
         />
       </div>
-      <div className="task_importance">{importance}</div>
+      <div className="task_importance">{importanceNumber}</div>
     </div>
   );
 }

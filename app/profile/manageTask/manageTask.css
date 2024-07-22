@@ -10,6 +10,10 @@
   max-width: 550px;
 }
 
+.manage_tasks_title {
+  margin-bottom: 16px;
+}
+
 @media (max-width: 800px) {
   .manage_task_container {
     width: 70%;

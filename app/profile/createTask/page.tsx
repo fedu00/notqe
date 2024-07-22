@@ -3,7 +3,7 @@ import "./createTask.css";
 import { useState, useEffect } from "react";
 import {
   CREATE_TASK_CATEGORY_DATA,
-  IMPORTANCE_DATA,
+  TASKS_IMPORTANCE_DATA,
 } from "@/constans/constans";
 import { TaskType } from "@/types/types";
 import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
@@ -27,15 +27,12 @@ export default function CreateTask() {
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
-    category: "health",
-    importance: "1",
+    category: "default",
+    importance: "default",
     // deadline: "",
   });
 
-  const [showError, setShowError] = useState<TaskErrorType>({
-    title: false,
-    description: false,
-  });
+  const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
     getdataFromSessionStorage("userID", setIsLoading, setUserID, true);
@@ -43,19 +40,27 @@ export default function CreateTask() {
 
   const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...task, title: event.target.value });
-    setShowError({ ...showError, title: false });
+    setShowError(false);
   };
   const handleOnChangeDescription = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setTask({ ...task, description: event.target.value });
-    setShowError({ ...showError, description: false });
+    setShowError(false);
   };
 
-  const handleAddNote = async () => {
+  const handleAddTask = async () => {
     const titleIsnotEmpty: boolean = task.title.length > 0;
     const descriptionIsnotEmptyy: boolean = task.description.length > 0;
-    if (titleIsnotEmpty && descriptionIsnotEmptyy) {
+    const categoryIsSelected: boolean = task.category != "default";
+    const importanceIsSelected: boolean = task.importance != "default";
+
+    if (
+      titleIsnotEmpty &&
+      descriptionIsnotEmptyy &&
+      categoryIsSelected &&
+      importanceIsSelected
+    ) {
       try {
         const response = await axios.post(
           // `https://notqe.vercel.app/api/usersTasks`,
@@ -66,19 +71,17 @@ export default function CreateTask() {
           title: "",
           description: "",
           category: "health",
-          importance: "1",
+          importance: "default",
           // deadline: "",
         });
       } catch (error) {
         console.log(error);
       }
     } else {
-      setShowError({
-        title: !titleIsnotEmpty,
-        description: !descriptionIsnotEmptyy,
-      });
+      setShowError(true);
     }
   };
+
   return (
     <div className="create_task_page_container">
       {isLoading ? (
@@ -94,20 +97,18 @@ export default function CreateTask() {
         <>
           <div className="title_container">
             <h1>Create a new task</h1>
-            <Button onClick={handleAddNote} text="create task" />
+            <Button onClick={handleAddTask} text="create task" />
           </div>
           <div className="create_task_form_container">
             <Input
               type="text"
               value={task.title}
-              showError={showError.title}
               errorMessage="this field cannot be empty"
               onChange={(event) => handleOnChangeTitle(event)}
               placeholder="enter title"
             />
             <Textarea
               value={task.description}
-              showError={showError.description}
               errorMessage="this field cannot be empty"
               onChange={(event) => handleOnChangeDescription(event)}
               placeholder="description..."
@@ -115,17 +116,24 @@ export default function CreateTask() {
             <Select
               data={CREATE_TASK_CATEGORY_DATA}
               value={task.category}
+              placeholder="select category"
               onChange={(event) => {
+                setShowError(false);
                 setTask({ ...task, category: event.target.value });
               }}
             />
             <Select
-              data={IMPORTANCE_DATA}
+              data={TASKS_IMPORTANCE_DATA}
               value={task.importance}
+              placeholder="select importance level"
               onChange={(event) => {
+                setShowError(false);
                 setTask({ ...task, importance: event.target.value });
               }}
             />
+            {showError && (
+              <p className="error_message">You must complete all fields!</p>
+            )}
             {/* save this for future version app */}
             {/* <DateInput
           onChange={(event) => {
