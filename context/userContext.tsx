@@ -1,57 +1,44 @@
-// "use client";
-// import {
-//   useContext,
-//   createContext,
-//   useState,
-//   Dispatch,
-//   SetStateAction,
-// } from "react";
-// import { DoneTasksType } from "@/types/doneTasksType";
-// import { DONE_TASKS_DATA } from "@/constans/constans";
+"use client";
+import {
+  useContext,
+  createContext,
+  useState,
+  Dispatch,
+  // useEffect,
+  SetStateAction,
+} from "react";
 
-// interface ContextUserType {
-//   userId: string;
-//   setUserId: Dispatch<SetStateAction<string>>;
-//   username: string;
-//   setUsername: Dispatch<SetStateAction<string>>;
-//   email: string;
-//   setEmail: Dispatch<SetStateAction<string>>;
-//   doneTasks: DoneTasksType;
-//   setDoneTasks: Dispatch<SetStateAction<DoneTasksType>>;
-// }
+interface DarkModeContexType {
+  darkMode: boolean;
+  setDarkMode: Dispatch<SetStateAction<boolean>>;
+}
 
-// const UserContext = createContext<ContextUserType>({
-//   userId: "",
-//   setUserId: (): string => "",
-//   username: "",
-//   setUsername: (): string => "",
-//   email: "",
-//   setEmail: (): string => "",
-//   doneTasks: DONE_TASKS_DATA,
-//   setDoneTasks: (): DoneTasksType => DONE_TASKS_DATA,
-// });
+const DarkModeContext = createContext<DarkModeContexType>({
+  darkMode: false,
+  setDarkMode: (): string => "",
+});
 
-// export const ContextProvider = ({ children }: any) => {
-//   const [userId, setUserId] = useState<string>("");
-//   const [email, setEmail] = useState<string>("");
-//   const [username, setUsername] = useState<string>("");
-//   const [doneTasks, setDoneTasks] = useState(DONE_TASKS_DATA);
-//   return (
-//     <UserContext.Provider
-//       value={{
-//         userId,
-//         setUserId,
-//         username,
-//         setUsername,
-//         email,
-//         setEmail,
-//         doneTasks,
-//         setDoneTasks,
-//       }}
-//     >
-//       {children}
-//     </UserContext.Provider>
-//   );
-// };
+export const ContextDarkModeProvider = ({ children }: any) => {
+  const [darkMode, setDarkMode] = useState<boolean>(true);
 
-// export const useUserContext = () => useContext(UserContext);
+  //do it only with optimization
+  // useEffect(() => {
+  //   const getBrowserTheme = window.matchMedia(
+  //     "(prefers-color-scheme: dark)"
+  //   ).matches;
+  //   setDarkMode(getBrowserTheme);
+  // }, []);
+
+  return (
+    <DarkModeContext.Provider
+      value={{
+        darkMode,
+        setDarkMode,
+      }}
+    >
+      {children}
+    </DarkModeContext.Provider>
+  );
+};
+
+export const useDarkModeContext = () => useContext(DarkModeContext);

@@ -1,5 +1,5 @@
 "use client";
-import "./Button.css";
+import styles from "./Button.module.css";
 import { useRef } from "react";
 interface ButtonType {
   text: string;
@@ -20,18 +20,17 @@ export default function Button({
     if (onClick != undefined) {
       onClick();
     }
-
     buttonRef.current?.classList.add("show-animation");
-
     setTimeout(() => {
       buttonRef.current?.classList.remove("show-animation");
     }, 301);
   };
+
   return (
     <button
       ref={buttonRef}
       type={type}
-      className={`${test ? "test_button" : ""} button`}
+      className={`${test && styles.test_button} ${styles.button}`}
       onClick={handleOnClick}
     >
       {text}

@@ -1,6 +1,5 @@
-main {
+.profile_container {
   display: flex;
-  color: #eeeee1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -8,16 +7,25 @@ main {
   flex-grow: 1;
 }
 
+.profil_container_dark {
+  background-color: #22252a;
+}
+
 .profile_message {
-  background-color: #3e4247;
+  background-color: #eeeee1;
   max-width: 600px;
   border-radius: 5px;
   padding: 20px;
+  color: #22252a;
 }
 
 .profile_message h1 {
   font-weight: 500;
   margin-bottom: 24px;
+}
+.profile_message_dark {
+  background-color: #3e4247;
+  color: #eeeee1;
 }
 
 @media (max-width: 800px) {

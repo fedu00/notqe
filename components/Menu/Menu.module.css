@@ -2,9 +2,13 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  color: #eeeee1;
+  /* color: #eeeee1; */
   width: 100vw;
   padding: 24px 48px;
+}
+
+.menu {
+  display: flex;
 }
 
 .hamburger_menu {
@@ -26,8 +30,19 @@
 }
 
 .menu_container ul li a {
-  color: #eeeee1;
+  color: #22252a;
   text-decoration: none;
+}
+
+.menu_container_dark {
+  background-color: #22252a;
+}
+
+.menu_container_dark > h1 {
+  color: #eeeee1;
+}
+.menu_container_dark ul li a {
+  color: #eeeee1;
 }
 
 .menu_container ul li button {

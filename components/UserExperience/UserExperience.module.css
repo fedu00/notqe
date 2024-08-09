@@ -1,7 +1,11 @@
 .user_experience_container {
-  background-color: #3e4247;
+  background-color: #eeeee1;
   padding: 20px;
   border-radius: 5px;
+}
+
+.user_experience_container_dark {
+  background-color: #3e4247;
 }
 
 .lvl_container {
@@ -22,10 +26,21 @@
   margin: 0 0 16px 16px;
 }
 
+.lvl_container_dark h1 {
+  color: #eeeee1;
+}
+.lvl_container_dark p {
+  color: #eeeee1;
+}
+
 .tasks_on_lvl {
   margin-top: 10px;
   text-align: left;
   padding-left: 16px;
+}
+
+.tasks_on_lvl_dark {
+  color: #eeeee1;
 }
 
 @media (max-width: 1200px) {

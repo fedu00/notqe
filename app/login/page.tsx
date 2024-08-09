@@ -1,8 +1,10 @@
 "use client";
-import "./login.css";
+import styles from "./login.module.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
+import { useDarkModeContext } from "@/context/userContext";
+import SwitchMode from "@/components/SwitchMode/SwitchMode";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -22,6 +24,8 @@ export default function LoginPage() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { darkMode } = useDarkModeContext();
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -45,7 +49,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-container">
+    <div
+      className={`${styles.login_container} ${
+        darkMode && styles.login_container_dark
+      } `}
+    >
+      <SwitchMode />
       <Logo bigSize={true} />
       <h2>Login your account</h2>
       {isLoading ? (
@@ -59,6 +68,7 @@ export default function LoginPage() {
         />
       ) : (
         <form
+          className={styles.login_container_form}
           onSubmit={(event) => {
             handleLogin(event);
           }}
@@ -73,6 +83,7 @@ export default function LoginPage() {
             }}
             errorMessage="invalid email"
             showError={showError}
+            darkMode={darkMode}
           />
           <Input
             type="text"
@@ -84,6 +95,7 @@ export default function LoginPage() {
             }}
             errorMessage="invalid email"
             showError={showError}
+            darkMode={darkMode}
           />
           <Button text="log in" type="submit" />
         </form>

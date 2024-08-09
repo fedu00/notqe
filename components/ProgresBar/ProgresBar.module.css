@@ -12,6 +12,10 @@
   margin-left: 10px;
 }
 
+.percentage_dark {
+  color: #eeeee1;
+}
+
 @media (max-width: 600px) {
   .progres_bar_background {
     width: 250px;

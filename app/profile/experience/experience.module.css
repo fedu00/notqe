@@ -1,8 +1,16 @@
 .experience_container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  flex-grow: 1;
 }
 
-.tasks-experience_container {
+.experience_container_dark {
+  background-color: #22252a;
+}
+
+.tasks_experience_container {
   margin-right: 20px;
 }
 
@@ -21,7 +29,7 @@
     flex-direction: column-reverse;
     align-items: center;
   }
-  .tasks-experience_container {
+  .tasks_experience_container {
     margin-right: 0px;
   }
 }

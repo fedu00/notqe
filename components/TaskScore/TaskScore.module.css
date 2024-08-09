@@ -1,21 +1,30 @@
 .task_score_container {
   padding: 10px;
-  background-color: #3e4247;
+  background-color: #eeeee1;
   margin: 8px;
   border-radius: 5px;
 }
 
-.task_score_container h4,
-p {
-  text-align: center;
-}
-
-.task_score_container > h4 {
+.task_score_container_dark {
   background-color: #3e4247;
 }
 
+.task_score_container > h4 {
+  text-align: center;
+  color: #22252a;
+}
+
 .task_score_container p {
+  text-align: center;
   font-size: 32px;
+}
+
+.task_score_container_dark p {
+  color: #eeeee1;
+}
+
+.task_score_container_dark > h4 {
+  color: #eeeee1;
 }
 
 .task_score_container .health {

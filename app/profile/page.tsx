@@ -1,10 +1,12 @@
 "use client";
-import "./profile.css";
+import styles from "./profile.module.css";
 import { useState, useEffect } from "react";
+import { useDarkModeContext } from "@/context/userContext";
 import axios from "axios";
 
 export default function ProfilePage() {
   const [username, setUsername] = useState<string>("unknow");
+  const { darkMode } = useDarkModeContext();
 
   useEffect(() => {
     getUserDetails();
@@ -22,8 +24,16 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile_message">
+    <div
+      className={`${styles.profile_container} ${
+        darkMode && styles.profil_container_dark
+      } `}
+    >
+      <div
+        className={`${styles.profile_message} ${
+          darkMode && styles.profile_message_dark
+        } `}
+      >
         <h1>welcome on your account {username}</h1>
         <p>
           Build your future brick by brick. The NOTQE application can help you

@@ -1,5 +1,5 @@
 import ProgresBar from "../ProgresBar/ProgresBar";
-import "./UserExperience.css";
+import styles from "./UserExperience.module.css";
 import { DoneTasksType } from "@/types/types";
 
 type CurrentLvlInformationType =
@@ -12,8 +12,10 @@ type CurrentLvlInformationType =
 
 export default function UserExperience({
   doneTasksData,
+  darkMode,
 }: {
   doneTasksData: DoneTasksType;
+  darkMode: boolean;
 }) {
   const doneTasks: number =
     doneTasksData.veryImportant +
@@ -50,14 +52,34 @@ export default function UserExperience({
   const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
 
   return (
-    <div className="user_experience_container">
-      <div className="lvl_container">
+    <div
+      className={`${styles.user_experience_container} ${
+        darkMode && styles.user_experience_container_dark
+      } `}
+    >
+      <div
+        className={`${styles.lvl_container} ${
+          darkMode && styles.lvl_container_dark
+        } `}
+      >
         <h1>{currentLvl}</h1>
         <p>lvl</p>
       </div>
-      <ProgresBar percentage={lvlProgres} />
-      <p className="tasks_on_lvl">tasks for nextt lvl: {taskForNextLvl}</p>
-      <p className="tasks_on_lvl">total done tasks: {doneTasks}</p>
+      <ProgresBar percentage={lvlProgres} darkMode={darkMode} />
+      <p
+        className={`${styles.tasks_on_lvl} ${
+          darkMode && styles.tasks_on_lvl_dark
+        } `}
+      >
+        tasks for next lvl: {taskForNextLvl}
+      </p>
+      <p
+        className={`${styles.tasks_on_lvl} ${
+          darkMode && styles.tasks_on_lvl_dark
+        } `}
+      >
+        total done tasks: {doneTasks}
+      </p>
     </div>
   );
 }

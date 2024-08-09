@@ -1,13 +1,15 @@
 "use client";
-import "./signup.css";
+import styles from "./signup.module.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
+import { useDarkModeContext } from "@/context/userContext";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import Logo from "@/components/Logo/Logo";
 import ClipLoader from "react-spinners/ClipLoader";
+import SwitchMode from "@/components/SwitchMode/SwitchMode";
 
 type FullUserType = {
   username: string;
@@ -33,6 +35,7 @@ export default function SignUpPage() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { darkMode } = useDarkModeContext();
 
   const handleSignup = async (event: FormEvent) => {
     event.preventDefault();
@@ -57,7 +60,12 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className="signup-container">
+    <div
+      className={`${styles.signup_container} ${
+        darkMode && styles.signup_container_dark
+      } `}
+    >
+      <SwitchMode />
       <Logo bigSize={true} />
       <h2>Create Account</h2>
       {isLoading ? (
@@ -76,6 +84,7 @@ export default function SignUpPage() {
             event.preventDefault();
             handleSignup(event);
           }}
+          className={styles.signup_container_form}
         >
           <Input
             type="text"
@@ -87,6 +96,7 @@ export default function SignUpPage() {
             placeholder="username"
             showError={showError.username}
             errorMessage="wrong username"
+            darkMode={darkMode}
           />
           <Input
             type="text"
@@ -98,6 +108,7 @@ export default function SignUpPage() {
             placeholder="email"
             showError={showError.email}
             errorMessage="wrong email"
+            darkMode={darkMode}
           />
           <Input
             type="password"
@@ -109,6 +120,7 @@ export default function SignUpPage() {
             errorMessage="wrong password"
             placeholder="password"
             showError={showError.password}
+            darkMode={darkMode}
           />
           <Button type="submit" text="create account" />
         </form>

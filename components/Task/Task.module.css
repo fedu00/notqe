@@ -22,16 +22,16 @@
 }
 
 .edit_mode {
-  border: 2px solid #fffff1;
+  border: 2px solid #22252a;
+}
+.edit_mode_dark {
+  border: 2px solid #eeeee1;
 }
 
-.task input,
-textarea {
+.remove_background {
   background: none;
   outline: none;
   border: none;
-  font-family: var(--font-inter);
-  color: #22252a;
 }
 
 .task input {
@@ -45,7 +45,7 @@ textarea {
   transition: 0.4s;
 }
 
-textarea::-webkit-scrollbar {
+.task textarea::-webkit-scrollbar {
   display: none;
 }
 
@@ -62,7 +62,7 @@ textarea::-webkit-scrollbar {
 }
 
 .task_icons_container svg:hover {
-  fill: #22252a;
+  fill: #eeeee1;
 }
 
 .show_description {
@@ -70,6 +70,13 @@ textarea::-webkit-scrollbar {
 }
 
 .edit {
+  fill: #eeeee1;
+}
+
+.task_icons_container_dark svg:hover {
+  fill: #22252a;
+}
+.task_icons_container_dark .edit {
   fill: #22252a;
 }
 
@@ -82,8 +89,13 @@ textarea::-webkit-scrollbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #fffff1;
+  border: 2px solid #22252a;
   border-radius: 20px;
+}
+
+.task_importance_dark {
+  border-color: #eeeee1;
+  color: #eeeee1;
 }
 
 @media (max-width: 800px) {

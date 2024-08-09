@@ -1,27 +1,32 @@
-.textarea_form {
-  resize: none;
-  background-color: #3e4247;
+.input {
+  background-color: #eeeee1;
   padding: 12px 24px;
   width: 320px;
   font-size: 20px;
-  color: #eeeee1;
+  color: #22252a;
   border: none;
   border-radius: 5px;
   outline: none;
   margin-bottom: 32px;
 }
+
+.input_dark {
+  background-color: #3e4247;
+  color: #eeeee1;
+}
+
 .error_message {
   color: #de4747;
   font-size: 12px;
   margin: 0 0 17px 10px;
 }
 
-.textarea_container .error_active {
-  margin-bottom: 0;
+.input_container .error_active {
+  margin: 0;
 }
 
 @media (max-width: 800px) {
-  .textarea_form {
+  .input_form {
     font-size: 16px;
     padding: 8px 18px;
     width: 100%;
