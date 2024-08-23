@@ -1,5 +1,5 @@
 "use client";
-import styles from "./Button.module.css";
+import "./Button.css";
 import { useRef } from "react";
 interface ButtonType {
   text: string;
@@ -30,7 +30,7 @@ export default function Button({
     <button
       ref={buttonRef}
       type={type}
-      className={`${test && styles.test_button} ${styles.button}`}
+      className={`${test && "test_button"} button`}
       onClick={handleOnClick}
     >
       {text}

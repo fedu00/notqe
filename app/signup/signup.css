@@ -3,20 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   position: relative;
-}
-
-.signup_container_dark {
-  background-color: #22252a;
-}
-
-.signup_container_dark > h1 {
-  color: #eeeee1;
-}
-
-.signup_container_dark > h2 {
-  color: #eeeee1;
 }
 
 .signup_container > button {

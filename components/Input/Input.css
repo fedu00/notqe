@@ -8,6 +8,7 @@
   border-radius: 5px;
   outline: none;
   margin-bottom: 32px;
+  transition: 0.4s;
 }
 
 .input_dark {

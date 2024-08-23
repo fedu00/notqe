@@ -2,26 +2,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  flex-grow: 1;
-}
-
-.experience_container_dark {
-  background-color: #22252a;
 }
 
 .tasks_experience_container {
   margin-right: 20px;
 }
 
-.importance_tasks {
-  padding: 10px;
-}
-
-.category_tasks,
-.importance_tasks {
+.tasks_score_container {
   display: flex;
   justify-content: center;
+}
+
+.tasks_score_container > div {
+  background-color: #eeeee1;
+}
+.tasks_score_container_dark > div {
+  background-color: #3e4247;
 }
 
 @media (max-width: 1200px) {

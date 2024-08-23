@@ -29,11 +29,24 @@
   z-index: 0;
 }
 
-.dark {
+.switch_btn svg {
+  background-color: transparent;
+  position: relative;
+  z-index: 3;
+}
+
+.icon_sun {
+  margin-left: 1px;
+}
+.icon_moon {
+  margin-right: 2px;
+}
+
+.icon_background_dark {
   background-color: #fcbd90;
   left: 41px;
 }
-.light {
+.icon_background_light {
   background-color: #22252a;
   left: 3px;
 }

@@ -1,17 +1,17 @@
 .task_score_container {
   padding: 10px;
-  background-color: #eeeee1;
+  /* background-color: #eeeee1; */
   margin: 8px;
   border-radius: 5px;
 }
 
 .task_score_container_dark {
-  background-color: #3e4247;
+  /* background-color: #3e4247; */
 }
 
 .task_score_container > h4 {
   text-align: center;
-  color: #22252a;
+  /* color: #22252a; */
 }
 
 .task_score_container p {

@@ -1,10 +1,10 @@
 "use client";
-import Select from "@/components/Select/Select";
-import styles from "./manageTask.module.css";
 import { useEffect, useState } from "react";
 import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
 import { TaskType } from "@/types/types";
 import { useDarkModeContext } from "@/context/userContext";
+import Select from "@/components/Select/Select";
+import "./manageTask.css";
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -90,11 +90,7 @@ export default function ManageTask() {
   }
 
   return (
-    <div
-      className={`${styles.manage_tasks_page_container} ${
-        darkMode && styles.manage_tasks_page_container_dark
-      } `}
-    >
+    <div className={"manage_tasks_page_container"}>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}
@@ -105,11 +101,11 @@ export default function ManageTask() {
           data-testid="loader"
         />
       ) : (
-        <div className={styles.manage_task_container}>
+        <div className={"manage_task_container"}>
           <div>
             <h1
-              className={`${styles.manage_tasks_title} ${
-                darkMode && styles.manage_tasks_title_dark
+              className={`${"manage_tasks_title"} ${
+                darkMode && "manage_tasks_title_dark"
               } `}
             >
               manage your tasks
@@ -119,7 +115,6 @@ export default function ManageTask() {
               value={currentCategory === "all" ? "default" : currentCategory}
               onChange={(event) => setCurrentCategory(event.target.value)}
               placeholder="select category"
-              darkMode={darkMode}
             />
             <Select
               data={ALL_TASKS_IMPORTANCE_DATA}
@@ -128,12 +123,11 @@ export default function ManageTask() {
               }
               onChange={(event) => setCurrentImportance(event.target.value)}
               placeholder="select task importance"
-              darkMode={darkMode}
             />
           </div>
           <div
-            className={`${styles.tasks_container} ${
-              darkMode && styles.tasks_container_dark
+            className={`${"tasks_container"} ${
+              darkMode && "tasks_container_dark"
             } `}
           >
             {currentTasksData.map((task: DataType) => (

@@ -3,12 +3,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  flex-grow: 1;
-}
-
-.create_task_page_container_dark {
-  background-color: #22252a;
 }
 
 .title_container {

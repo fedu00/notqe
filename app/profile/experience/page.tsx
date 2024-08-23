@@ -1,13 +1,13 @@
 "use client";
-import UserExperience from "@/components/UserExperience/UserExperience";
-import styles from "./experience.module.css";
-import TaskScore from "@/components/TaskScore/TaskScore";
+import "./experience.css";
 import { DoneTasksType } from "@/types/types";
 import { useState, useEffect } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 import { DONE_TASKS_DATA } from "@/constans/constans";
 import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
 import { useDarkModeContext } from "@/context/userContext";
+import UserExperience from "@/components/UserExperience/UserExperience";
+import ClipLoader from "react-spinners/ClipLoader";
+import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,11 +37,7 @@ export default function Experience() {
   } = doneTasksData;
 
   return (
-    <div
-      className={`${styles.experience_container} ${
-        darkMode && styles.experience_container_dark
-      } `}
-    >
+    <div className={"experience_container"}>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}
@@ -53,58 +49,45 @@ export default function Experience() {
         />
       ) : (
         <>
-          <div className={styles.tasks_experience_container}>
-            <div className={styles.category_tasks}>
+          <div className={"tasks_experience_container"}>
+            <div
+              className={`tasks_score_container  ${
+                darkMode && "tasks_score_container_dark"
+              }`}
+            >
               <TaskScore
                 score={health}
                 title={"health"}
-                selectClass={"health"}
-                darkMode={darkMode}
+                selectedClass={"health"}
               />
-              <TaskScore
-                score={work}
-                title={"work"}
-                selectClass={"work"}
-                darkMode={darkMode}
-              />
+              <TaskScore score={work} title={"work"} selectedClass={"work"} />
               <TaskScore
                 score={study}
                 title={"study"}
-                selectClass={"study"}
-                darkMode={darkMode}
+                selectedClass={"study"}
               />
               <TaskScore
                 score={other}
                 title={"other"}
-                selectClass={"other"}
-                darkMode={darkMode}
+                selectedClass={"other"}
               />
             </div>
-            <div className={styles.importance_tasks}>
-              <TaskScore
-                score={noImportant}
-                title={"no important"}
-                darkMode={darkMode}
-              />
-              <TaskScore
-                score={lesImportant}
-                title={"less important"}
-                darkMode={darkMode}
-              />
-              <TaskScore score={medium} title={"medium"} darkMode={darkMode} />
-              <TaskScore
-                score={important}
-                title={"important"}
-                darkMode={darkMode}
-              />
-              <TaskScore
-                score={veryImportant}
-                title={"very important"}
-                darkMode={darkMode}
-              />
+            <div
+              className={`tasks_score_container ${
+                darkMode && "tasks_score_container_dark"
+              }`}
+            >
+              <TaskScore score={noImportant} title={"no important"} />
+              <TaskScore score={lesImportant} title={"less important"} />
+              <TaskScore score={medium} title={"medium"} />
+              <TaskScore score={important} title={"important"} />
+              <TaskScore score={veryImportant} title={"very important"} />
             </div>
           </div>
-          <UserExperience doneTasksData={doneTasksData} darkMode={darkMode} />
+          <UserExperience
+            doneTasksData={doneTasksData}
+            darkModeClass={darkMode ? "user_experience_container_dark" : ""}
+          />
         </>
       )}
     </div>

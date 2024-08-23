@@ -1,26 +1,46 @@
 "use client";
-import styles from "./Menu.module.css";
+import { useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useEffect, useState } from "react";
+import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logOut } from "@/redux/authSlice";
+import { RootState } from "../../redux/store";
+import "./Menu.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useMediaQuery } from "react-responsive";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
-import { useDarkModeContext } from "@/context/userContext";
-import SwitchMode from "../SwitchMode/SwitchMode";
+import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
+
+// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+// const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
+const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Menu() {
   const router = useRouter();
   const [showmenu, setShowMenu] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
   const { darkMode } = useDarkModeContext();
+  const dispatch = useDispatch();
+  const { isUserLogIn } = useSelector((state: RootState) => state.auth);
 
-  if (!isMobileSize && showmenu) {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileSize && showmenu) {
+      setShowMenu(false);
+    }
+  }, [isMobileSize, showmenu]);
+
+  const handleMenuClick = () => {
     setShowMenu(false);
-  }
-
+  };
   const handleLogout = async () => {
     try {
       await axios.get("/api/users/logout");
@@ -28,78 +48,66 @@ export default function Menu() {
       sessionStorage.removeItem("userNotqeDoneTasks");
       sessionStorage.removeItem("userID");
       router.push("/");
+      dispatch(logOut());
     } catch (error: any) {
       console.log("logout failed", error.message);
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <div
-      className={`${styles.menu_container} ${
-        darkMode && styles.menu_container_dark
-      }`}
-    >
+    <div className={`menu_container ${darkMode && "menu_container_dark"}`}>
       <Logo bigSize={false} />
       {isMobileSize && (
         <RxHamburgerMenu
-          className={styles.hamburger_menu}
+          className={"hamburger_menu"}
           onClick={() => {
             setShowMenu(!showmenu);
           }}
           size={40}
         />
       )}
-      <div className={styles.menu}>
-        <ul className={`${styles.menu_list} ${showmenu && styles.show_menu}`}>
-          <li>
-            <Link
-              //just for production
-              // href={`https://notqe.vercel.app/profile/createTask`}
-              href={`http://localhost:3000/profile/createTask`}
-              onClick={() => {
-                setShowMenu(false);
-              }}
-            >
-              create task
-            </Link>
-          </li>
-          <li>
-            <Link
-              // href={`https://notqe.vercel.app/profile/manageTask`}
-              href={`http://localhost:3000/profile/manageTask`}
-              onClick={() => {
-                setShowMenu(false);
-              }}
-            >
-              manage task
-            </Link>
-          </li>
-          <li>
-            <Link
-              // href={`https://notqe.vercel.app/profile/experience`}
-              href={`http://localhost:3000/profile/experience`}
-              onClick={() => {
-                setShowMenu(false);
-              }}
-            >
-              experience
-            </Link>
-          </li>
-          <li>
-            <Link
-              // href={`https://notqe.vercel.app/profile`}
-              href={`http://localhost:3000/profile`}
-              onClick={() => {
-                setShowMenu(false);
-              }}
-            >
-              profile
-            </Link>
-          </li>
-          <li>
-            <Button onClick={handleLogout} text="log out" test={true} />
-          </li>
-        </ul>
-        <SwitchMode />
+      <div className={"menu"}>
+        {isUserLogIn && (
+          <ul className={`menu_list ${showmenu && "show_menu"}`}>
+            <li>
+              <Link
+                href={`${baseUrl}/profile/createTask`}
+                onClick={handleMenuClick}
+              >
+                create task
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`${baseUrl}/profile/manageTask`}
+                onClick={handleMenuClick}
+              >
+                manage task
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`${baseUrl}/profile/experience`}
+                onClick={handleMenuClick}
+              >
+                experience
+              </Link>
+            </li>
+            <li>
+              <Link href={`${baseUrl}/profile`} onClick={handleMenuClick}>
+                profile
+              </Link>
+            </li>
+            <li>
+              <Button onClick={handleLogout} text="log out" test={true} />
+            </li>
+          </ul>
+        )}
+        <DarkModeSwitch />
       </div>
     </div>
   );

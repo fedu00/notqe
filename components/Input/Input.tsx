@@ -1,4 +1,6 @@
-import styles from "./Input.module.css";
+"use client";
+import { useDarkModeContext } from "@/context/userContext";
+import "./Input.css";
 interface InputType {
   type: string;
   value: string;
@@ -6,7 +8,6 @@ interface InputType {
   placeholder?: string;
   errorMessage?: string;
   showError?: boolean;
-  darkMode: boolean;
 }
 
 export default function Input({
@@ -16,21 +17,22 @@ export default function Input({
   placeholder,
   errorMessage,
   showError = false,
-  darkMode,
 }: InputType) {
+  const { darkMode } = useDarkModeContext();
   return (
-    <div className={styles.input_container}>
+    <div className={`input_container`}>
       <input
         autoComplete="new-password"
-        className={`${showError && styles.error_active} ${styles.input} ${
-          darkMode && styles.input_dark
-        } `}
+        className={`${showError && "error_active"} input ${
+          darkMode && "input_dark"
+        }
+         `}
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={styles.error_message}>{errorMessage}</p>}
+      {showError && <p className={"error_message"}>{errorMessage}</p>}
     </div>
   );
 }

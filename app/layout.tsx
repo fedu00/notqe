@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
 import { ContextDarkModeProvider } from "@/context/userContext";
-
-const inter = Inter({ subsets: ["latin"] });
+import UserAuthProvider from "@/redux/UserAuthProvider";
+import Body from "@/components/Body/Body";
 
 export default function RootLayout({
   children,
@@ -10,10 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ContextDarkModeProvider>
-      <html lang="en" suppressHydrationWarning={true}>
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ContextDarkModeProvider>
+    <UserAuthProvider>
+      <ContextDarkModeProvider>
+        <Body>{children}</Body>
+      </ContextDarkModeProvider>
+    </UserAuthProvider>
   );
 }

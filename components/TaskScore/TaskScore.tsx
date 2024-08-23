@@ -1,26 +1,19 @@
-import styles from "./TaskScore.module.css";
-import { addCorrectClassName } from "@/helpers/addCorrectClassName";
+import "./TaskScore.css";
 
 interface TaskScoreType {
   score: string | number;
   title: string;
-  selectClass?: string;
-  darkMode: boolean;
+  selectedClass?: string;
 }
 
 export default function TaskScore({
   score,
   title,
-  selectClass,
-  darkMode,
+  selectedClass,
 }: TaskScoreType) {
   return (
-    <div
-      className={`${styles.task_score_container} ${
-        darkMode && styles.task_score_container_dark
-      } `}
-    >
-      <h4 className={addCorrectClassName(selectClass, styles)}>{title}</h4>
+    <div className={"task_score_container"}>
+      <h4 className={selectedClass}>{title}</h4>
       <p>{score}</p>
     </div>
   );

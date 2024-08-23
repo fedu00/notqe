@@ -1,5 +1,5 @@
 "use client";
-import styles from "./createTask.module.css";
+import "./createTask.css";
 import { useState, useEffect } from "react";
 import {
   CREATE_TASK_CATEGORY_DATA,
@@ -10,7 +10,6 @@ import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
 import { useDarkModeContext } from "@/context/userContext";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-// import DateInput from "@/components/DateInput/DateInput"; //save for next app version
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import axios from "axios";
@@ -19,15 +18,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function CreateTask() {
   const [userID, setUserID] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
     category: "default",
     importance: "default",
-    // deadline: "",
   });
-
   const [showError, setShowError] = useState<boolean>(false);
 
   const { darkMode } = useDarkModeContext();
@@ -70,7 +66,6 @@ export default function CreateTask() {
           description: "",
           category: "health",
           importance: "default",
-          // deadline: "",
         });
       } catch (error) {
         console.log(error);
@@ -81,11 +76,7 @@ export default function CreateTask() {
   };
 
   return (
-    <div
-      className={`${styles.create_task_page_container} ${
-        darkMode && styles.create_task_page_container_dark
-      } `}
-    >
+    <div className={"create_task_page_container"}>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}
@@ -98,28 +89,24 @@ export default function CreateTask() {
       ) : (
         <>
           <div
-            className={`${styles.title_container} ${
-              darkMode && styles.title_container_dark
-            } `}
+            className={`title_container ${darkMode && "title_container_dark"} `}
           >
             <h1>Create a new task</h1>
             <Button onClick={handleAddTask} text="create task" />
           </div>
-          <div className={styles.create_task_form_container}>
+          <div className={"create_task_form_container"}>
             <Input
               type="text"
               value={task.title}
               errorMessage="this field cannot be empty"
               onChange={(event) => handleOnChangeTitle(event)}
               placeholder="enter title"
-              darkMode={darkMode}
             />
             <Textarea
               value={task.description}
               errorMessage="this field cannot be empty"
               onChange={(event) => handleOnChangeDescription(event)}
               placeholder="description..."
-              darkMode={darkMode}
             />
             <Select
               data={CREATE_TASK_CATEGORY_DATA}
@@ -129,7 +116,6 @@ export default function CreateTask() {
                 setShowError(false);
                 setTask({ ...task, category: event.target.value });
               }}
-              darkMode={darkMode}
             />
             <Select
               data={TASKS_IMPORTANCE_DATA}
@@ -139,19 +125,10 @@ export default function CreateTask() {
                 setShowError(false);
                 setTask({ ...task, importance: event.target.value });
               }}
-              darkMode={darkMode}
             />
             {showError && (
-              <p className={styles.error_message}>
-                You must complete all fields!
-              </p>
+              <p className={"error_message"}>You must complete all fields!</p>
             )}
-            {/* save this for future version app */}
-            {/* <DateInput
-          onChange={(event) => {
-            setTask({ ...task, deadline: event.target.value });
-          }}
-        /> */}
           </div>
         </>
       )}

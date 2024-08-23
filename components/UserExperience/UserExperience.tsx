@@ -1,5 +1,4 @@
-import ProgresBar from "../ProgresBar/ProgresBar";
-import styles from "./UserExperience.module.css";
+import "./UserExperience.css";
 import { DoneTasksType } from "@/types/types";
 
 type CurrentLvlInformationType =
@@ -12,10 +11,10 @@ type CurrentLvlInformationType =
 
 export default function UserExperience({
   doneTasksData,
-  darkMode,
+  darkModeClass,
 }: {
   doneTasksData: DoneTasksType;
-  darkMode: boolean;
+  darkModeClass: string;
 }) {
   const doneTasks: number =
     doneTasksData.veryImportant +
@@ -52,34 +51,22 @@ export default function UserExperience({
   const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
 
   return (
-    <div
-      className={`${styles.user_experience_container} ${
-        darkMode && styles.user_experience_container_dark
-      } `}
-    >
-      <div
-        className={`${styles.lvl_container} ${
-          darkMode && styles.lvl_container_dark
-        } `}
-      >
+    <div className={`user_experience_container ${darkModeClass} `}>
+      <div className={"lvl_container"}>
         <h1>{currentLvl}</h1>
         <p>lvl</p>
       </div>
-      <ProgresBar percentage={lvlProgres} darkMode={darkMode} />
-      <p
-        className={`${styles.tasks_on_lvl} ${
-          darkMode && styles.tasks_on_lvl_dark
-        } `}
-      >
-        tasks for next lvl: {taskForNextLvl}
-      </p>
-      <p
-        className={`${styles.tasks_on_lvl} ${
-          darkMode && styles.tasks_on_lvl_dark
-        } `}
-      >
-        total done tasks: {doneTasks}
-      </p>
+      <div className={"progres_bar_background"}>
+        <div
+          className={"progres_bar_fill"}
+          style={{
+            backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgres}%, rgba(0, 0, 0, 0) ${lvlProgres}%)`,
+          }}
+        ></div>
+        <p>{lvlProgres}%</p>
+      </div>
+      <p className={"tasks_on_lvl"}>tasks for next lvl: {taskForNextLvl}</p>
+      <p className={"tasks_on_lvl"}>total done tasks: {doneTasks}</p>
     </div>
   );
 }

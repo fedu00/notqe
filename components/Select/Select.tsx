@@ -1,25 +1,23 @@
 "use client";
-import styles from "./Select.module.css";
+import "./Select.css";
+import { useDarkModeContext } from "@/context/userContext";
 
 interface SelectType {
   data: string[];
   onChange(event: React.ChangeEvent<HTMLSelectElement>): void;
   value: string;
   placeholder: string;
-  darkMode: boolean;
 }
 export default function Select({
   data,
   onChange,
   value,
   placeholder = "default",
-  darkMode,
 }: SelectType) {
+  const { darkMode } = useDarkModeContext();
   return (
     <select
-      className={`${styles.select_field} ${
-        darkMode && styles.select_field_dark
-      }`}
+      className={`select_field ${darkMode && "select_field_dark"}`}
       onChange={onChange}
       value={value}
     >

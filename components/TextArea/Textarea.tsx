@@ -1,4 +1,6 @@
-import styles from "./Textarea.module.css";
+"use client";
+import { useDarkModeContext } from "@/context/userContext";
+import "./Textarea.css";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -8,7 +10,6 @@ interface TextareaType {
   placeholder: string;
   errorMessage?: string;
   showError?: boolean;
-  darkMode: boolean;
 }
 
 export default function Textarea({
@@ -17,19 +18,19 @@ export default function Textarea({
   placeholder,
   errorMessage,
   showError = false,
-  darkMode,
 }: TextareaType) {
+  const { darkMode } = useDarkModeContext();
   return (
-    <div className={styles.textarea_container}>
+    <div className={"textarea_container"}>
       <textarea
-        className={`${inter.className} ${styles.textarea_form} ${
-          darkMode && styles.textarea_for_dark
-        } ${showError && styles.error_active}`}
+        className={`${inter.className} textarea_form ${
+          darkMode && "textarea_for_dark"
+        } ${showError && "error_active"}`}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={styles.error_message}>{errorMessage}</p>}
+      {showError && <p className={"error_message"}>{errorMessage}</p>}
     </div>
   );
 }

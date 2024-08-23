@@ -1,18 +1,19 @@
 "use client";
-import styles from "./mainPage.module.css";
+import "./mainPage.css";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button/Button";
-import Logo from "@/components/Logo/Logo";
-import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 import { useDarkModeContext } from "@/context/userContext";
-import SwitchMode from "@/components/SwitchMode/SwitchMode";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/redux/authSlice";
+import Button from "@/components/Button/Button";
+import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { darkMode } = useDarkModeContext();
+  const dispatch = useDispatch();
 
   const handleLoginTestAccount = async () => {
     const user = {
@@ -23,6 +24,7 @@ export default function Home() {
       setIsLoading(true);
       const response = await axios.post("/api/users/login", user);
       router.push("/profile");
+      dispatch(logIn());
     } catch (error: any) {
       setIsLoading(false);
       console.log("login failed", error.message);
@@ -30,13 +32,7 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`${styles.main_page_container} ${
-        darkMode && styles.dark_mode_bgc
-      } `}
-    >
-      <SwitchMode />
-      <Logo bigSize={true} />
+    <div className={`${"main_page_container"} ${darkMode && "dark_mode_bgc"} `}>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}
@@ -47,7 +43,7 @@ export default function Home() {
           data-testid="loader"
         />
       ) : (
-        <div className={styles.button_container}>
+        <div className={"button_container"}>
           <Button
             text="sign up"
             onClick={() => {
@@ -67,6 +63,6 @@ export default function Home() {
           />
         </div>
       )}
-    </main>
+    </div>
   );
 }

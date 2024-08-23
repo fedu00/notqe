@@ -1,5 +1,5 @@
 "use client";
-import styles from "./Task.module.css";
+import "./Task.css";
 import { useState, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
@@ -7,7 +7,6 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
 import { useDarkModeContext } from "@/context/userContext";
-import { addCorrectClassName } from "@/helpers/addCorrectClassName";
 import axios from "axios";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
@@ -129,14 +128,14 @@ export default function Task({
 
   return (
     <div
-      className={`${styles.task} ${addCorrectClassName(category, styles)} ${
-        edit && (darkMode ? styles.edit_mode_dark : styles.edit_mode)
+      className={`task ${category} ${
+        edit && (darkMode ? "edit_mode_dark" : "edit_mode")
       }`}
     >
       <input
         ref={textareaRef}
         value={currentTask.title}
-        className={styles.remove_background}
+        className={"remove_background"}
         disabled={!edit}
         maxLength={25}
         onChange={(event) => {
@@ -147,7 +146,7 @@ export default function Task({
         value={currentTask.description}
         style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
         disabled={!edit}
-        className={`${styles.remove_background} ${inter.className} `}
+        className={`remove_background ${inter.className} `}
         onChange={(event) => {
           handleTextareaHeight(event);
           setCurrentTask({ ...currentTask, description: event.target.value });
@@ -155,8 +154,8 @@ export default function Task({
       />
 
       <div
-        className={`${styles.task_icons_container} ${
-          darkMode && styles.task_icons_container_dark
+        className={`task_icons_container ${
+          darkMode && "task_icons_container_dark"
         } `}
       >
         <AiFillCaretDown
@@ -166,7 +165,7 @@ export default function Task({
           }}
           size={"30px"}
           color={darkMode ? "#eeeee1" : "#22252a"}
-          className={`${showDescription && styles.show_description}`}
+          className={`${showDescription && "show_description"}`}
         />
         <AiFillCheckCircle
           size={"30px"}
@@ -178,7 +177,7 @@ export default function Task({
           size={"30px"}
           color={darkMode ? "#eeeee1" : "#22252a"}
           title="edit task"
-          className={`${edit && styles.edit}`}
+          className={`${edit && "edit"}`}
           onClick={handleEditTask}
         />
         <MdDelete
@@ -189,8 +188,8 @@ export default function Task({
         />
       </div>
       <div
-        className={`${styles.task_importance} ${
-          darkMode && styles.task_importance_dark
+        className={`${"task_importance"} ${
+          darkMode && "task_importance_dark"
         } `}
       >
         {importanceNumber}

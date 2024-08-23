@@ -3,12 +3,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  position: relative;
-}
-
-.login_container_dark {
-  background-color: #22252a;
 }
 
 .login_container > button {
