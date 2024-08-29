@@ -20,6 +20,7 @@ export default function Home() {
       email: "test@test.com",
       password: "test",
     };
+
     try {
       setIsLoading(true);
       const response = await axios.post("/api/users/login", user);

@@ -22,8 +22,9 @@ export default function CreateTask() {
     title: "",
     description: "",
     category: "default",
-    importance: "default",
+    importanceLevel: "default",
   });
+
   const [showError, setShowError] = useState<boolean>(false);
 
   const { darkMode } = useDarkModeContext();
@@ -47,7 +48,7 @@ export default function CreateTask() {
     const titleIsnotEmpty: boolean = task.title.length > 0;
     const descriptionIsnotEmptyy: boolean = task.description.length > 0;
     const categoryIsSelected: boolean = task.category != "default";
-    const importanceIsSelected: boolean = task.importance != "default";
+    const importanceIsSelected: boolean = task.importanceLevel != "default";
 
     if (
       titleIsnotEmpty &&
@@ -64,8 +65,8 @@ export default function CreateTask() {
         setTask({
           title: "",
           description: "",
-          category: "health",
-          importance: "default",
+          category: "default",
+          importanceLevel: "default",
         });
       } catch (error) {
         console.log(error);
@@ -119,11 +120,11 @@ export default function CreateTask() {
             />
             <Select
               data={TASKS_IMPORTANCE_DATA}
-              value={task.importance}
+              value={task.importanceLevel}
               placeholder="select importance level"
               onChange={(event) => {
                 setShowError(false);
-                setTask({ ...task, importance: event.target.value });
+                setTask({ ...task, importanceLevel: event.target.value });
               }}
             />
             {showError && (

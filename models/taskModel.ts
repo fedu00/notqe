@@ -2,17 +2,38 @@ import mongoose, { Schema } from "mongoose";
 
 const myTaskSchema = new Schema(
   {
-    userID: String,
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
     task: {
-      title: String,
-      description: String,
-      category: String,
-      importance: String,
-      // deadline: String,
-      // details: {
-      //   dayInWeek: String,
-      //   timeOfDay: String,
-      // },
+      title: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      description: {
+        type: String,
+        trim: true,
+      },
+      category: {
+        type: String,
+        required: true,
+        enum: ["health", "work", "study", "other"],
+      },
+      importanceLevel: {
+        type: String,
+        required: true,
+        enum: [
+          "no important",
+          "less important",
+          "medium",
+          "important",
+          "very important",
+        ],
+      },
     },
   },
   {

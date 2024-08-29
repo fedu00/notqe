@@ -24,17 +24,15 @@ export default function Experience() {
     );
   }, []);
 
+  const { categories, importanceLevel } = doneTasksData;
+  const { health, other, study, work } = categories;
   const {
-    health,
-    other,
-    study,
-    work,
     noImportant,
-    lesImportant,
-    medium,
+    lessImportant,
+    mediumImportant,
     important,
     veryImportant,
-  } = doneTasksData;
+  } = importanceLevel;
 
   return (
     <div className={"experience_container"}>
@@ -78,8 +76,8 @@ export default function Experience() {
               }`}
             >
               <TaskScore score={noImportant} title={"no important"} />
-              <TaskScore score={lesImportant} title={"less important"} />
-              <TaskScore score={medium} title={"medium"} />
+              <TaskScore score={lessImportant} title={"less important"} />
+              <TaskScore score={mediumImportant} title={"medium"} />
               <TaskScore score={important} title={"important"} />
               <TaskScore score={veryImportant} title={"very important"} />
             </div>

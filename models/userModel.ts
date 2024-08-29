@@ -17,15 +17,55 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   doneTasks: {
-    health: Number,
-    work: Number,
-    study: Number,
-    other: Number,
-    noImportant: Number,
-    lesImportant: Number,
-    medium: Number,
-    important: Number,
-    veryImportant: Number,
+    categories: {
+      health: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      work: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      study: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      other: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+    },
+    importanceLevel: {
+      noImportant: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      lessImportant: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      mediumImportant: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      important: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+      veryImportant: {
+        type: Number,
+        default: 0,
+        min: [0, "Value can not be negative"],
+      },
+    },
   },
   isVerified: {
     type: Boolean,

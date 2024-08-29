@@ -8,16 +8,16 @@
   min-width: 500px;
 }
 
-.health {
+.health_bgc {
   background-color: #fe56aaab;
 }
-.work {
+.work_bgc {
   background-color: #6c87ffb0;
 }
-.study {
+.study_bgc {
   background-color: #0db985ab;
 }
-.other {
+.other_bgc {
   background-color: #ffa768c5;
 }
 

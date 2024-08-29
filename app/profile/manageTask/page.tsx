@@ -51,7 +51,7 @@ export default function ManageTask() {
       );
       const filteredTasks = categoryFilteredTasks.filter(
         (task: DataType) =>
-          task.task.importance === currentImportance ||
+          task.task.importanceLevel === currentImportance ||
           currentImportance === "all"
       );
       setCurrentTasksData(filteredTasks);

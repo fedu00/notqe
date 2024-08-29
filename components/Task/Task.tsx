@@ -20,13 +20,14 @@ export default function Task({
   const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
   const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
 
-  const { title, description, category, importance } = task;
+  const { title, description, category, importanceLevel } = task;
   const [testTasks, setTestTasks] = useState<DoneTasksType>(doneTasksData);
+
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
     category,
-    importance,
+    importanceLevel,
   });
   const [showDescription, setShowDescription] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
@@ -53,6 +54,22 @@ export default function Task({
         return "";
     }
   };
+  const getTaskImportance = (importance: string): string => {
+    switch (importance) {
+      case "very important":
+        return "veryImportant";
+      case "important":
+        return "important";
+      case "medium":
+        return "mediumImportant";
+      case "less important":
+        return "lessImportant";
+      case "no important":
+        return "noImportant";
+      default:
+        return "noImportant";
+    }
+  };
 
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -62,16 +79,21 @@ export default function Task({
     }
   };
 
-  const importanceNumber = getImportanceTaskNumber(importance);
+  const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
   const handleFinishTask = async () => {
+    const taskImportance = getTaskImportance(importanceLevel);
+
     const updateDoneTasks: DoneTasksType = { ...testTasks };
 
-    const increaseCategoryValue: number = updateDoneTasks[category] + 1;
-    const increaseImportanceValue: number = updateDoneTasks[importance] + 1;
+    const newCategoryValue: number = updateDoneTasks.categories[category] + 1;
 
-    updateDoneTasks[category] = increaseCategoryValue;
-    updateDoneTasks[importance] = increaseImportanceValue;
+    const newImportanceValue: number =
+      updateDoneTasks.importanceLevel[taskImportance] + 1;
+
+    updateDoneTasks.categories[category] = newCategoryValue;
+    updateDoneTasks.importanceLevel[taskImportance] = newImportanceValue;
+
     setTestTasks(updateDoneTasks);
 
     sessionStorage.setItem(
@@ -128,7 +150,7 @@ export default function Task({
 
   return (
     <div
-      className={`task ${category} ${
+      className={`task ${category + "_bgc"} ${
         edit && (darkMode ? "edit_mode_dark" : "edit_mode")
       }`}
     >

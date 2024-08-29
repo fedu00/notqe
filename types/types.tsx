@@ -1,20 +1,24 @@
 export type DoneTasksType = {
-  health: number;
-  work: number;
-  study: number;
-  other: number;
-  noImportant: number;
-  lesImportant: number;
-  medium: number;
-  important: number;
-  veryImportant: number;
+  categories: {
+    health: number;
+    work: number;
+    study: number;
+    other: number;
+  };
+  importanceLevel: {
+    noImportant: number;
+    lessImportant: number;
+    mediumImportant: number;
+    important: number;
+    veryImportant: number;
+  };
 };
 
 export type TaskType = {
   title: string;
   description: string;
   category: string;
-  importance: string;
+  importanceLevel: string;
 };
 
 export interface TaskComponentType {

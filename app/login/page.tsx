@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useDarkModeContext } from "@/context/userContext";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/redux/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -21,6 +23,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { darkMode } = useDarkModeContext();
@@ -36,6 +40,7 @@ export default function LoginPage() {
         setIsLoading(true);
         const response = await axios.post("/api/users/login", user);
         router.push("/profile");
+        dispatch(logIn());
       } catch (error: any) {
         setIsLoading(false);
         setShowError(true);

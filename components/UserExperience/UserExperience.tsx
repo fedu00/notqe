@@ -17,11 +17,10 @@ export default function UserExperience({
   darkModeClass: string;
 }) {
   const doneTasks: number =
-    doneTasksData.veryImportant +
-    doneTasksData.important +
-    doneTasksData.medium +
-    doneTasksData.lesImportant +
-    doneTasksData.noImportant;
+    doneTasksData.categories.health +
+    doneTasksData.categories.work +
+    doneTasksData.categories.study +
+    doneTasksData.categories.other;
 
   const getCurrentLvlInformation = (
     doneTasks: number
