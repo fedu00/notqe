@@ -1,6 +1,7 @@
 "use client";
 import "./Select.css";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface SelectType {
   data: string[];
@@ -14,10 +15,11 @@ export default function Select({
   value,
   placeholder = "default",
 }: SelectType) {
-  const { darkMode } = useDarkModeContext();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
   return (
     <select
-      className={`select_field ${darkMode && "select_field_dark"}`}
+      className={`select_field ${darkModeTheme && "select_field_dark"}`}
       onChange={onChange}
       value={value}
     >

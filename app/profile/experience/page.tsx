@@ -1,30 +1,22 @@
 "use client";
 import "./experience.css";
-import { DoneTasksType } from "@/types/types";
 import { useState, useEffect } from "react";
-import { DONE_TASKS_DATA } from "@/constans/constans";
-import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import UserExperience from "@/components/UserExperience/UserExperience";
 import ClipLoader from "react-spinners/ClipLoader";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [doneTasksData, setDoneTasksData] =
-    useState<DoneTasksType>(DONE_TASKS_DATA);
-
-  const { darkMode } = useDarkModeContext();
+  const { ui, userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
 
   useEffect(() => {
-    getdataFromSessionStorage(
-      "userNotqeDoneTasks",
-      setIsLoading,
-      setDoneTasksData
-    );
+    setIsLoading(false);
   }, []);
 
-  const { categories, importanceLevel } = doneTasksData;
+  const { categories, importanceLevel } = userData.doneTasks;
   const { health, other, study, work } = categories;
   const {
     noImportant,
@@ -50,7 +42,7 @@ export default function Experience() {
           <div className={"tasks_experience_container"}>
             <div
               className={`tasks_score_container  ${
-                darkMode && "tasks_score_container_dark"
+                darkModeTheme && "tasks_score_container_dark"
               }`}
             >
               <TaskScore
@@ -72,7 +64,7 @@ export default function Experience() {
             </div>
             <div
               className={`tasks_score_container ${
-                darkMode && "tasks_score_container_dark"
+                darkModeTheme && "tasks_score_container_dark"
               }`}
             >
               <TaskScore score={noImportant} title={"no important"} />
@@ -83,8 +75,10 @@ export default function Experience() {
             </div>
           </div>
           <UserExperience
-            doneTasksData={doneTasksData}
-            darkModeClass={darkMode ? "user_experience_container_dark" : ""}
+            doneTasksData={userData.doneTasks}
+            darkModeClass={
+              darkModeTheme ? "user_experience_container_dark" : ""
+            }
           />
         </>
       )}

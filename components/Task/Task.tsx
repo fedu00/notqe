@@ -1,15 +1,52 @@
 "use client";
 import "./Task.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import { updateUserTaskValue } from "@/redux/store/userSlice";
 import axios from "axios";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
+
+const getImportanceTaskNumber = (importance: string): string => {
+  switch (importance) {
+    case "all":
+      return "all";
+    case "very important":
+      return "5";
+    case "important":
+      return "4";
+    case "medium":
+      return "3";
+    case "less important":
+      return "2";
+    case "no important":
+      return "1";
+    default:
+      return "";
+  }
+};
+const getTaskImportance = (importance: string): string => {
+  switch (importance) {
+    case "very important":
+      return "veryImportant";
+    case "important":
+      return "important";
+    case "medium":
+      return "mediumImportant";
+    case "less important":
+      return "lessImportant";
+    case "no important":
+      return "noImportant";
+    default:
+      return "noImportant";
+  }
+};
 
 export default function Task({
   task,
@@ -19,9 +56,9 @@ export default function Task({
 }: TaskComponentType) {
   const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
   const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
-
   const { title, description, category, importanceLevel } = task;
-  const [testTasks, setTestTasks] = useState<DoneTasksType>(doneTasksData);
+  const [isUserTasksDataStale, setIsUserTasksDataStale] =
+    useState<boolean>(false);
 
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
@@ -32,44 +69,11 @@ export default function Task({
   const [showDescription, setShowDescription] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
   const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
-  const { darkMode } = useDarkModeContext();
 
+  const dispatch = useDispatch();
+  const { ui, userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
   const textareaRef = useRef(null);
-
-  const getImportanceTaskNumber = (importance: string): string => {
-    switch (importance) {
-      case "all":
-        return "all";
-      case "very important":
-        return "5";
-      case "important":
-        return "4";
-      case "medium":
-        return "3";
-      case "less important":
-        return "2";
-      case "no important":
-        return "1";
-      default:
-        return "";
-    }
-  };
-  const getTaskImportance = (importance: string): string => {
-    switch (importance) {
-      case "very important":
-        return "veryImportant";
-      case "important":
-        return "important";
-      case "medium":
-        return "mediumImportant";
-      case "less important":
-        return "lessImportant";
-      case "no important":
-        return "noImportant";
-      default:
-        return "noImportant";
-    }
-  };
 
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -81,25 +85,8 @@ export default function Task({
 
   const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
-  const handleFinishTask = async () => {
-    const taskImportance = getTaskImportance(importanceLevel);
-
-    const updateDoneTasks: DoneTasksType = { ...testTasks };
-
-    const newCategoryValue: number = updateDoneTasks.categories[category] + 1;
-
-    const newImportanceValue: number =
-      updateDoneTasks.importanceLevel[taskImportance] + 1;
-
-    updateDoneTasks.categories[category] = newCategoryValue;
-    updateDoneTasks.importanceLevel[taskImportance] = newImportanceValue;
-
-    setTestTasks(updateDoneTasks);
-
-    sessionStorage.setItem(
-      "userNotqeDoneTasks",
-      JSON.stringify(updateDoneTasks)
-    );
+  const updateUserTasksData = async (updateDoneTasks) => {
+    setIsUserTasksDataStale(false);
     try {
       const response = await axios.put("/api/users/login", {
         userId: userID,
@@ -114,6 +101,18 @@ export default function Task({
       console.log("login failed", error.message);
     }
   };
+
+  const handleFinishTask = async () => {
+    const taskImportance = getTaskImportance(importanceLevel);
+    dispatch(updateUserTaskValue({ category, taskImportance }));
+    setIsUserTasksDataStale(true);
+  };
+
+  useEffect(() => {
+    if (isUserTasksDataStale) {
+      updateUserTasksData(userData.doneTasks);
+    }
+  }, [userData.doneTasks]);
 
   const handleDeleteTask = async () => {
     const response = await axios.delete(
@@ -151,7 +150,7 @@ export default function Task({
   return (
     <div
       className={`task ${category + "_bgc"} ${
-        edit && (darkMode ? "edit_mode_dark" : "edit_mode")
+        edit && (darkModeTheme ? "edit_mode_dark" : "edit_mode")
       }`}
     >
       <input
@@ -177,7 +176,7 @@ export default function Task({
 
       <div
         className={`task_icons_container ${
-          darkMode && "task_icons_container_dark"
+          darkModeTheme && "task_icons_container_dark"
         } `}
       >
         <AiFillCaretDown
@@ -186,18 +185,18 @@ export default function Task({
             setShowDescription(!showDescription);
           }}
           size={"30px"}
-          color={darkMode ? "#eeeee1" : "#22252a"}
+          color={darkModeTheme ? "#eeeee1" : "#22252a"}
           className={`${showDescription && "show_description"}`}
         />
         <AiFillCheckCircle
           size={"30px"}
-          color={darkMode ? "#eeeee1" : "#22252a"}
+          color={darkModeTheme ? "#eeeee1" : "#22252a"}
           onClick={handleFinishTask}
           title="finish task"
         />
         <MdEdit
           size={"30px"}
-          color={darkMode ? "#eeeee1" : "#22252a"}
+          color={darkModeTheme ? "#eeeee1" : "#22252a"}
           title="edit task"
           className={`${edit && "edit"}`}
           onClick={handleEditTask}
@@ -205,13 +204,13 @@ export default function Task({
         <MdDelete
           title="delete task"
           size={"30px"}
-          color={darkMode ? "#eeeee1" : "#22252a"}
+          color={darkModeTheme ? "#eeeee1" : "#22252a"}
           onClick={handleDeleteTask}
         />
       </div>
       <div
         className={`${"task_importance"} ${
-          darkMode && "task_importance_dark"
+          darkModeTheme && "task_importance_dark"
         } `}
       >
         {importanceNumber}

@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
 import { TaskType } from "@/types/types";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import axios from "axios";
@@ -19,12 +20,13 @@ interface DataType {
 
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [userID, setUserID] = useState<string>("");
   const [data, setData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentImportance, setCurrentImportance] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
-  const { darkMode } = useDarkModeContext();
+  const { ui, userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
+  const { userId } = userData;
 
   const getTask = async (userID: string) => {
     try {
@@ -59,12 +61,9 @@ export default function ManageTask() {
   }, [currentCategory, data, currentImportance]);
 
   useEffect(() => {
-    const userID: string | null = sessionStorage.getItem("userID");
-
-    if (userID != null && userID != "") {
-      setUserID(userID);
+    if (userId != null && userId != "") {
       setIsLoading(false);
-      getTask(userID);
+      getTask(userId);
     } else {
       console.log("we can not find your ID");
     }
@@ -77,13 +76,15 @@ export default function ManageTask() {
     setCurrentTasksData(newTasksData);
   };
 
+  //on database is something wrong, ther is one old task
   const emptyTasksData: boolean = data.length === 0;
-
   if (emptyTasksData) {
     return (
       <div className="manage_task_container">
-        <div className="title_container">
-          <h1>You don't have any tasks yet </h1>
+        <div>
+          <h1 className={`${darkModeTheme && "manage_tasks_title_dark"}`}>
+            You don't have any tasks yet
+          </h1>
         </div>
       </div>
     );
@@ -105,7 +106,7 @@ export default function ManageTask() {
           <div>
             <h1
               className={`${"manage_tasks_title"} ${
-                darkMode && "manage_tasks_title_dark"
+                darkModeTheme && "manage_tasks_title_dark"
               } `}
             >
               manage your tasks
@@ -127,7 +128,7 @@ export default function ManageTask() {
           </div>
           <div
             className={`${"tasks_container"} ${
-              darkMode && "tasks_container_dark"
+              darkModeTheme && "tasks_container_dark"
             } `}
           >
             {currentTasksData.map((task: DataType) => (
@@ -135,7 +136,7 @@ export default function ManageTask() {
                 key={task._id}
                 id={task._id}
                 task={task.task}
-                userID={userID!}
+                userID={userId!}
                 handleUpdateTasks={handleUpdateTasks}
               />
             ))}

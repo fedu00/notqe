@@ -2,15 +2,17 @@
 import { Inter } from "next/font/google";
 import "./Body.css";
 import Menu from "../Menu/Menu";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Body({ children }) {
-  const { darkMode } = useDarkModeContext();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${inter.className} ${darkMode && "body_dark"}`}>
+      <body className={`${inter.className} ${darkModeTheme && "body_dark"}`}>
         <Menu />
         <main>{children}</main>
       </body>

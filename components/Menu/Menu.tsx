@@ -3,11 +3,9 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useDarkModeContext } from "@/context/userContext";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { logOut } from "@/redux/authSlice";
-import { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/store/authSlice";
+import { RootState } from "../../redux/store/store";
 import "./Menu.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
@@ -24,9 +22,10 @@ export default function Menu() {
   const [showmenu, setShowMenu] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
-  const { darkMode } = useDarkModeContext();
   const dispatch = useDispatch();
-  const { isUserLogIn } = useSelector((state: RootState) => state.auth);
+  const { auth, ui } = useSelector((state: RootState) => state);
+  const { isUserLogIn } = auth;
+  const { darkModeTheme } = ui;
 
   useEffect(() => {
     setIsMounted(true);
@@ -45,10 +44,9 @@ export default function Menu() {
     try {
       await axios.get("/api/users/logout");
       console.log("logout successful!!!");
-      sessionStorage.removeItem("userNotqeDoneTasks");
-      sessionStorage.removeItem("userID");
+      sessionStorage.removeItem("userState");
       router.push("/");
-      dispatch(logOut());
+      dispatch(logout());
     } catch (error: any) {
       console.log("logout failed", error.message);
     }
@@ -59,7 +57,7 @@ export default function Menu() {
   }
 
   return (
-    <div className={`menu_container ${darkMode && "menu_container_dark"}`}>
+    <div className={`menu_container ${darkModeTheme && "menu_container_dark"}`}>
       <Logo bigSize={false} />
       {isMobileSize && (
         <RxHamburgerMenu

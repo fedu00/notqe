@@ -1,5 +1,6 @@
 "use client";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import "./Input.css";
 interface InputType {
   type: string;
@@ -18,13 +19,14 @@ export default function Input({
   errorMessage,
   showError = false,
 }: InputType) {
-  const { darkMode } = useDarkModeContext();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
   return (
     <div className={`input_container`}>
       <input
         autoComplete="new-password"
         className={`${showError && "error_active"} input ${
-          darkMode && "input_dark"
+          darkModeTheme && "input_dark"
         }
          `}
         type={type}

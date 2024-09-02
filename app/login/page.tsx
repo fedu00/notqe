@@ -3,9 +3,9 @@ import "./login.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import { useDarkModeContext } from "@/context/userContext";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/redux/authSlice";
+import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "@/redux/store/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -24,10 +24,10 @@ export default function LoginPage() {
     password: "",
   });
   const dispatch = useDispatch();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const { darkMode } = useDarkModeContext();
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -40,7 +40,7 @@ export default function LoginPage() {
         setIsLoading(true);
         const response = await axios.post("/api/users/login", user);
         router.push("/profile");
-        dispatch(logIn());
+        dispatch(login());
       } catch (error: any) {
         setIsLoading(false);
         setShowError(true);
@@ -52,7 +52,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`login_container ${darkMode && "login_container_dark"} `}>
+    <div
+      className={`login_container ${darkModeTheme && "login_container_dark"} `}
+    >
       <h2>Login your account</h2>
       {isLoading ? (
         <ClipLoader

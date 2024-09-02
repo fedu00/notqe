@@ -2,23 +2,27 @@
 import "./DarkModeSwitch.css";
 import { FaRegMoon } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
-import { useDarkModeContext } from "@/context/userContext";
+import { toggleTheme } from "@/redux/store/uiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function DarkModeSwitch() {
-  const { darkMode, setDarkMode } = useDarkModeContext();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
+  const dispatch = useDispatch();
 
   return (
     <button
-      className={`switch_btn ${darkMode && "dark_btn"} `}
+      className={`switch_btn ${darkModeTheme && "dark_btn"} `}
       onClick={() => {
-        setDarkMode(!darkMode);
+        dispatch(toggleTheme());
       }}
     >
       <FaRegSun className="icon_sun" color={"#fcbd90"} size={24} />
       <FaRegMoon className="icon_moon" color={"#22252a"} size={24} />
       <div
         className={`icon_background ${
-          darkMode ? "icon_background_dark" : "icon_background_light"
+          darkModeTheme ? "icon_background_dark" : "icon_background_light"
         }`}
       ></div>
     </button>

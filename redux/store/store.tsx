@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
+import rootReducer from "../rootReducer";
 
-//typy dodaj nie
 function saveStateToLocalStorage(state) {
   try {
     const jsonUserState = JSON.stringify(state);

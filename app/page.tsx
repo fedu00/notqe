@@ -2,9 +2,9 @@
 import "./mainPage.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDarkModeContext } from "@/context/userContext";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { login } from "@/redux/store/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -12,20 +12,23 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { darkMode } = useDarkModeContext();
+
   const dispatch = useDispatch();
+
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
 
   const handleLoginTestAccount = async () => {
     const user = {
-      email: "test@test.com",
-      password: "test",
+      email: "test4@test4.pl",
+      password: "test4",
     };
 
     try {
       setIsLoading(true);
       const response = await axios.post("/api/users/login", user);
       router.push("/profile");
-      dispatch(logIn());
+      dispatch(login());
     } catch (error: any) {
       setIsLoading(false);
       console.log("login failed", error.message);
@@ -33,7 +36,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`${"main_page_container"} ${darkMode && "dark_mode_bgc"} `}>
+    <div className={`main_page_container ${darkModeTheme && "dark_mode_bgc"} `}>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}

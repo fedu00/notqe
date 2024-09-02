@@ -6,8 +6,8 @@ import {
   TASKS_IMPORTANCE_DATA,
 } from "@/constans/constans";
 import { TaskType } from "@/types/types";
-import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -16,7 +16,6 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function CreateTask() {
-  const [userID, setUserID] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [task, setTask] = useState<TaskType>({
     title: "",
@@ -24,13 +23,13 @@ export default function CreateTask() {
     category: "default",
     importanceLevel: "default",
   });
-
   const [showError, setShowError] = useState<boolean>(false);
 
-  const { darkMode } = useDarkModeContext();
+  const { ui, userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
 
   useEffect(() => {
-    getdataFromSessionStorage("userID", setIsLoading, setUserID, true);
+    setIsLoading(false);
   }, []);
 
   const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +59,7 @@ export default function CreateTask() {
         const response = await axios.post(
           // `https://notqe.vercel.app/api/usersTasks`,
           "http://localhost:3000/api/usersTasks",
-          { userID: userID, task: task }
+          { userID: userData.userId, task: task }
         );
         setTask({
           title: "",
@@ -90,7 +89,9 @@ export default function CreateTask() {
       ) : (
         <>
           <div
-            className={`title_container ${darkMode && "title_container_dark"} `}
+            className={`title_container ${
+              darkModeTheme && "title_container_dark"
+            } `}
           >
             <h1>Create a new task</h1>
             <Button onClick={handleAddTask} text="create task" />

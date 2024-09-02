@@ -2,11 +2,15 @@
 import "./profile.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useDarkModeContext } from "@/context/userContext";
+import { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData } from "@/redux/store/userSlice";
 
 export default function ProfilePage() {
   const [username, setUsername] = useState<string>("unknow");
-  const { darkMode } = useDarkModeContext();
+  const { ui, userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserDetails();
@@ -14,18 +18,14 @@ export default function ProfilePage() {
 
   const getUserDetails = async () => {
     const response = await axios.get("/api/users/userDetails");
-
-    sessionStorage.setItem("userNotqeId", response.data.data._id);
-    sessionStorage.setItem("userID", response.data.data._id);
-    sessionStorage.setItem(
-      "userNotqeDoneTasks",
-      JSON.stringify(response.data.data.doneTasks)
-    );
+    dispatch(getUserData(response.data.data));
     setUsername(response.data.data.username);
   };
 
   return (
-    <div className={`profile_message ${darkMode && "profile_message_dark"} `}>
+    <div
+      className={`profile_message ${darkModeTheme && "profile_message_dark"} `}
+    >
       <h1>welcome on your account {username}</h1>
       <p>
         Build your future brick by brick. The NOTQE application can help you

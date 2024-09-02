@@ -1,4 +1,3 @@
-import { ContextDarkModeProvider } from "@/context/userContext";
 import UserAuthProvider from "@/redux/UserAuthProvider";
 import Body from "@/components/Body/Body";
 
@@ -9,9 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <UserAuthProvider>
-      <ContextDarkModeProvider>
-        <Body>{children}</Body>
-      </ContextDarkModeProvider>
+      <Body>{children}</Body>
     </UserAuthProvider>
   );
 }

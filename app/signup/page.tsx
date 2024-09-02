@@ -1,12 +1,12 @@
 "use client";
 import "./signup.css";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { validateEmail } from "@/helpers/validateEmail";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
-import { validateEmail } from "@/helpers/validateEmail";
 
 type FullUserType = {
   username: string;

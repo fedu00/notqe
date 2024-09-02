@@ -1,5 +1,6 @@
 "use client";
-import { useDarkModeContext } from "@/context/userContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import "./Textarea.css";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
@@ -19,12 +20,13 @@ export default function Textarea({
   errorMessage,
   showError = false,
 }: TextareaType) {
-  const { darkMode } = useDarkModeContext();
+  const { ui } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = ui;
   return (
     <div className={"textarea_container"}>
       <textarea
         className={`${inter.className} textarea_form ${
-          darkMode && "textarea_for_dark"
+          darkModeTheme && "textarea_for_dark"
         } ${showError && "error_active"}`}
         value={value}
         onChange={onChange}
