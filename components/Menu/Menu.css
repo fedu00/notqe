@@ -2,12 +2,17 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100vw;
   padding: 24px 48px;
 }
 
 .menu {
   display: flex;
+}
+
+.menu_list {
+  transition: 0.4s;
 }
 
 .hamburger_menu {
@@ -45,22 +50,42 @@
 }
 
 .menu_container .show_menu {
-  height: auto;
+  height: 80vh;
 }
+
+@media (max-width: 1000px) {
+  .menu_container {
+    padding: 14px 20px;
+  }
+  .menu_container ul li {
+    margin-right: 0px;
+    margin: 10px;
+  }
+}
+
 @media (max-width: 800px) {
+  .menu ul {
+    background-color: #d0c2bd;
+  }
+  .menu .menu_list_dark {
+    background-color: #22252a;
+  }
   .menu_list {
     position: absolute;
+    z-index: 2;
     top: 80px;
     right: 20px;
     height: 0;
     flex-direction: column;
     overflow: hidden;
     border-radius: 5px;
-    background-color: #22252a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
-
-  .menu_container ul li {
-    margin-right: 0px;
-    margin: 10px;
+  .menu_list {
+    position: fixed;
+    width: 100vw;
   }
 }

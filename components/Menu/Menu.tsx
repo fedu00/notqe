@@ -35,7 +35,10 @@ export default function Menu() {
     if (!isMobileSize && showmenu) {
       setShowMenu(false);
     }
-  }, [isMobileSize, showmenu]);
+    if (!isUserLogIn) {
+      setShowMenu(false);
+    }
+  }, [isMobileSize, showmenu, isUserLogIn]);
 
   const handleMenuClick = () => {
     setShowMenu(false);
@@ -59,7 +62,7 @@ export default function Menu() {
   return (
     <div className={`menu_container ${darkModeTheme && "menu_container_dark"}`}>
       <Logo bigSize={false} />
-      {isMobileSize && (
+      {isMobileSize && isUserLogIn && (
         <RxHamburgerMenu
           className={"hamburger_menu"}
           onClick={() => {
@@ -70,42 +73,50 @@ export default function Menu() {
       )}
       <div className={"menu"}>
         {isUserLogIn && (
-          <ul className={`menu_list ${showmenu && "show_menu"}`}>
-            <li>
-              <Link
-                href={`${baseUrl}/profile/createTask`}
-                onClick={handleMenuClick}
-              >
-                create task
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`${baseUrl}/profile/manageTask`}
-                onClick={handleMenuClick}
-              >
-                manage task
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`${baseUrl}/profile/experience`}
-                onClick={handleMenuClick}
-              >
-                experience
-              </Link>
-            </li>
-            <li>
-              <Link href={`${baseUrl}/profile`} onClick={handleMenuClick}>
-                profile
-              </Link>
-            </li>
-            <li>
-              <Button onClick={handleLogout} text="log out" test={true} />
-            </li>
-          </ul>
+          <>
+            <ul
+              className={`menu_list ${showmenu && "show_menu"} ${
+                darkModeTheme && "menu_list_dark"
+              }`}
+            >
+              <li>
+                <Link
+                  href={`${baseUrl}/profile/createTask`}
+                  onClick={handleMenuClick}
+                >
+                  create task
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`${baseUrl}/profile/manageTask`}
+                  onClick={handleMenuClick}
+                >
+                  manage task
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`${baseUrl}/profile/experience`}
+                  onClick={handleMenuClick}
+                >
+                  experience
+                </Link>
+              </li>
+              <li>
+                <Link href={`${baseUrl}/profile`} onClick={handleMenuClick}>
+                  profile
+                </Link>
+              </li>
+              <li>
+                <Button onClick={handleLogout} text="log out" test={true} />
+              </li>
+              <li>
+                <DarkModeSwitch />
+              </li>
+            </ul>
+          </>
         )}
-        <DarkModeSwitch />
       </div>
     </div>
   );

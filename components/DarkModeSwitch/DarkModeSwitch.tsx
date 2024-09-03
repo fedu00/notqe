@@ -4,7 +4,7 @@ import { FaRegMoon } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
 import { toggleTheme } from "@/redux/store/uiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../redux/store/store";
 
 export default function DarkModeSwitch() {
   const { ui } = useSelector((state: RootState) => state);
@@ -18,7 +18,11 @@ export default function DarkModeSwitch() {
         dispatch(toggleTheme());
       }}
     >
-      <FaRegSun className="icon_sun" color={"#fcbd90"} size={24} />
+      <FaRegSun
+        className="icon_sun"
+        color={`${darkModeTheme ? "#fcbd90" : "#d0c2bd"}`}
+        size={24}
+      />
       <FaRegMoon className="icon_moon" color={"#22252a"} size={24} />
       <div
         className={`icon_background ${
