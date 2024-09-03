@@ -106,7 +106,7 @@ export default function SignUpPage() {
               setShowError({ ...showError, password: false });
             }}
             errorMessage="wrong password"
-            placeholder="password"
+            placeholder="enter your password"
             showError={showError.password}
           />
           <Button type="submit" text="create account" />

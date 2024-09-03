@@ -3,7 +3,7 @@ import "./login.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/store/authSlice";
 import axios from "axios";
@@ -84,7 +84,7 @@ export default function LoginPage() {
             showError={showError}
           />
           <Input
-            type="text"
+            type="password"
             placeholder="enter your password"
             value={user.password}
             onChange={(event) => {
