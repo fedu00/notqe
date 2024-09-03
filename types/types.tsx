@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type DoneTasksType = {
   categories: {
     health: number;
@@ -21,9 +23,18 @@ export type TaskType = {
   importanceLevel: string;
 };
 
+export interface DataType {
+  createdAt: string;
+  task: TaskType;
+  updatedAt: string;
+  userID: string;
+  _id: string;
+}
+
 export interface TaskComponentType {
   task: TaskType;
   id: string;
   userID: string;
   handleUpdateTasks(id: string): void;
+  setTasksData: Dispatch<SetStateAction<DataType[] | []>>;
 }

@@ -1,26 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
-import { TaskType } from "@/types/types";
+import { DataType } from "@/types/types";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../../redux/store/store";
 import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import ClipLoader from "react-spinners/ClipLoader";
 
-interface DataType {
-  createdAt: string;
-  task: TaskType;
-  updatedAt: string;
-  userID: string;
-  _id: string;
-}
-
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<DataType[] | []>([]);
+  const [tasksData, setTasksData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentImportance, setCurrentImportance] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
@@ -28,26 +20,11 @@ export default function ManageTask() {
   const { darkModeTheme } = ui;
   const { userId } = userData;
 
-  const getTask = async (userID: string) => {
-    try {
-      const response = await axios.get(
-        // "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
-        `http://localhost:3000/api/usersTasks?userID=${userID}`
-      );
-      const dataTasks: { myTasks: DataType[] | [] } = await response.data;
-
-      setData(dataTasks.myTasks);
-      return response;
-    } catch (error: any) {
-      console.log("you can not get tasks", error);
-    }
-  };
-
-  useEffect(() => {
+  const getFilteredTasks = () => {
     if (currentCategory === "all" && currentImportance === "all") {
-      setCurrentTasksData(data);
+      setCurrentTasksData(tasksData);
     } else {
-      const categoryFilteredTasks = data.filter(
+      const categoryFilteredTasks = tasksData.filter(
         (task: DataType) =>
           task.task.category === currentCategory || currentCategory === "all"
       );
@@ -58,7 +35,11 @@ export default function ManageTask() {
       );
       setCurrentTasksData(filteredTasks);
     }
-  }, [currentCategory, data, currentImportance]);
+  };
+
+  useEffect(() => {
+    getFilteredTasks();
+  }, [currentCategory, tasksData, currentImportance]);
 
   useEffect(() => {
     if (userId != null && userId != "") {
@@ -69,6 +50,20 @@ export default function ManageTask() {
     }
   }, []);
 
+  const getTask = async (userID: string) => {
+    try {
+      const response = await axios.get(
+        // "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
+        `http://localhost:3000/api/usersTasks?userID=${userID}`
+      );
+      const dataTasks: { myTasks: DataType[] | [] } = await response.data;
+      setTasksData(dataTasks.myTasks);
+      return response;
+    } catch (error: any) {
+      console.log("you can not get tasks", error);
+    }
+  };
+
   const handleUpdateTasks = (id: string): void => {
     const newTasksData: DataType[] | [] = currentTasksData.filter(
       (task) => task._id !== id
@@ -76,8 +71,7 @@ export default function ManageTask() {
     setCurrentTasksData(newTasksData);
   };
 
-  //on database is something wrong, ther is one old task
-  const emptyTasksData: boolean = data.length === 0;
+  const emptyTasksData: boolean = tasksData.length === 0;
   if (emptyTasksData) {
     return (
       <div className="manage_task_container">
@@ -131,15 +125,20 @@ export default function ManageTask() {
               darkModeTheme && "tasks_container_dark"
             } `}
           >
-            {currentTasksData.map((task: DataType) => (
-              <Task
-                key={task._id}
-                id={task._id}
-                task={task.task}
-                userID={userId!}
-                handleUpdateTasks={handleUpdateTasks}
-              />
-            ))}
+            {currentTasksData.length > 0 ? (
+              currentTasksData.map((task: DataType) => (
+                <Task
+                  key={task._id}
+                  id={task._id}
+                  task={task.task}
+                  userID={userId!}
+                  handleUpdateTasks={handleUpdateTasks}
+                  setTasksData={setTasksData}
+                />
+              ))
+            ) : (
+              <p>you don't have such tasks</p>
+            )}
           </div>
         </div>
       )}

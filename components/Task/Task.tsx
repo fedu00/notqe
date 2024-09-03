@@ -7,7 +7,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../redux/store/store";
 import { updateUserTaskValue } from "@/redux/store/userSlice";
 import axios from "axios";
 import { Inter } from "next/font/google";
@@ -53,9 +53,8 @@ export default function Task({
   id,
   userID,
   handleUpdateTasks,
+  setTasksData,
 }: TaskComponentType) {
-  const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
-  const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
   const { title, description, category, importanceLevel } = task;
   const [isUserTasksDataStale, setIsUserTasksDataStale] =
     useState<boolean>(false);
@@ -106,6 +105,13 @@ export default function Task({
     const taskImportance = getTaskImportance(importanceLevel);
     dispatch(updateUserTaskValue({ category, taskImportance }));
     setIsUserTasksDataStale(true);
+    setTasksData((prevValue) => {
+      return prevValue.filter((task) => task._id !== id);
+    });
+    const response = await axios.delete(
+      // `https://notqe.vercel.app/api/usersTasks?id=${id}`
+      `http://localhost:3000/api/usersTasks?id=${id}`
+    );
   };
 
   useEffect(() => {
@@ -119,6 +125,11 @@ export default function Task({
       // `https://notqe.vercel.app/api/usersTasks?id=${id}`
       `http://localhost:3000/api/usersTasks?id=${id}`
     );
+
+    setTasksData((prevValue) => {
+      return prevValue.filter((task) => task._id !== id);
+    });
+
     handleUpdateTasks(id);
   };
 
