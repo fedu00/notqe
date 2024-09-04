@@ -1,3 +1,8 @@
+.select_container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 32px;
+}
 .select_field {
   background-color: #eeeee1;
   padding: 12px 24px;
@@ -7,8 +12,17 @@
   border: none;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 32px;
   transition: 0.4s;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select_arrow_icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  pointer-events: none;
+  transform: translate(0, -50%);
 }
 
 .select_field_dark {
