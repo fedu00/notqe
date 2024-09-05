@@ -1,6 +1,5 @@
 "use client";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useTheme } from "@/context/themeContext";
 import "./Textarea.css";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
@@ -20,8 +19,7 @@ export default function Textarea({
   errorMessage,
   showError = false,
 }: TextareaType) {
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
   return (
     <div className={"textarea_container"}>
       <textarea

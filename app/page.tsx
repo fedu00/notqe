@@ -2,8 +2,8 @@
 import "./mainPage.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store/store";
+import { useDispatch } from "react-redux";
+import { useTheme } from "@/context/themeContext";
 import { login } from "@/redux/store/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
@@ -12,11 +12,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { darkModeTheme } = useTheme();
 
   const dispatch = useDispatch();
-
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
 
   const handleLoginTestAccount = async () => {
     const user = {

@@ -4,6 +4,7 @@ import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
 import { DataType } from "@/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 import Select from "@/components/Select/Select";
 import "./manageTask.css";
 import axios from "axios";
@@ -16,8 +17,8 @@ export default function ManageTask() {
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentImportance, setCurrentImportance] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
-  const { ui, userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = useTheme();
   const { userId } = userData;
 
   const getFilteredTasks = () => {

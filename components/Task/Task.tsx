@@ -9,8 +9,9 @@ import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { updateUserTaskValue } from "@/redux/store/userSlice";
-import axios from "axios";
+import { useTheme } from "@/context/themeContext";
 import { Inter } from "next/font/google";
+import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
 
 const getImportanceTaskNumber = (importance: string): string => {
@@ -70,8 +71,8 @@ export default function Task({
   const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
 
   const dispatch = useDispatch();
-  const { ui, userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = useTheme();
   const textareaRef = useRef(null);
 
   const handleTextareaHeight = (

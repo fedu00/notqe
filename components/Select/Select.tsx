@@ -1,7 +1,6 @@
 "use client";
 import "./Select.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 import { BiSolidDownArrow } from "react-icons/bi";
 interface SelectType {
   data: string[];
@@ -15,8 +14,7 @@ export default function Select({
   value,
   placeholder = "default",
 }: SelectType) {
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
 
   return (
     <div className="select_container">

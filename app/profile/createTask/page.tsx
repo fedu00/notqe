@@ -7,7 +7,8 @@ import {
 } from "@/constans/constans";
 import { TaskType } from "@/types/types";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -25,8 +26,8 @@ export default function CreateTask() {
   });
   const [showError, setShowError] = useState<boolean>(false);
 
-  const { ui, userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = useTheme();
 
   useEffect(() => {
     setIsLoading(false);

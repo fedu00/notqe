@@ -1,4 +1,5 @@
 import UserAuthProvider from "@/redux/UserAuthProvider";
+import { ThemeProvider } from "@/context/themeContext";
 import Body from "@/components/Body/Body";
 
 export default function RootLayout({
@@ -8,7 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <UserAuthProvider>
-      <Body>{children}</Body>
+      <ThemeProvider>
+        <Body>{children}</Body>
+      </ThemeProvider>
     </UserAuthProvider>
   );
 }

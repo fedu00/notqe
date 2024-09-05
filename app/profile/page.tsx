@@ -2,14 +2,13 @@
 import "./profile.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { RootState } from "@/redux/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useTheme } from "@/context/themeContext";
 import { getUserData } from "@/redux/store/userSlice";
 
 export default function ProfilePage() {
   const [username, setUsername] = useState<string>("unknow");
-  const { ui, userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {

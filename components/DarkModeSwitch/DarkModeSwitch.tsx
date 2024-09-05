@@ -2,21 +2,15 @@
 import "./DarkModeSwitch.css";
 import { FaRegMoon } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
-import { toggleTheme } from "@/redux/store/uiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 
 export default function DarkModeSwitch() {
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
-  const dispatch = useDispatch();
+  const { darkModeTheme, toggleTheme } = useTheme();
 
   return (
     <button
       className={`switch_btn ${darkModeTheme && "dark_btn"} `}
-      onClick={() => {
-        dispatch(toggleTheme());
-      }}
+      onClick={toggleTheme}
     >
       <FaRegSun
         className="icon_sun"

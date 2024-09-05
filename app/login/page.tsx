@@ -3,8 +3,8 @@ import "./login.css";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import { RootState } from "../../redux/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useTheme } from "@/context/themeContext";
 import { login } from "@/redux/store/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
@@ -24,8 +24,7 @@ export default function LoginPage() {
     password: "",
   });
   const dispatch = useDispatch();
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

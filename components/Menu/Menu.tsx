@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/store/authSlice";
 import { RootState } from "../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 import "./Menu.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
@@ -23,9 +24,9 @@ export default function Menu() {
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
   const dispatch = useDispatch();
-  const { auth, ui } = useSelector((state: RootState) => state);
+  const { auth } = useSelector((state: RootState) => state);
   const { isUserLogIn } = auth;
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -111,12 +112,15 @@ export default function Menu() {
               <li>
                 <Button onClick={handleLogout} text="log out" test={true} />
               </li>
-              <li>
-                <DarkModeSwitch />
-              </li>
+              {isMobileSize && (
+                <li>
+                  <DarkModeSwitch />
+                </li>
+              )}
             </ul>
           </>
         )}
+        {!isMobileSize && <DarkModeSwitch />}
       </div>
     </div>
   );

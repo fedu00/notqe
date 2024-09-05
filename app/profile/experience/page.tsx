@@ -2,15 +2,16 @@
 import "./experience.css";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "../../../redux/store/store";
+import { useTheme } from "@/context/themeContext";
 import UserExperience from "@/components/UserExperience/UserExperience";
 import ClipLoader from "react-spinners/ClipLoader";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { ui, userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { userData } = useSelector((state: RootState) => state);
+  const { darkModeTheme } = useTheme();
 
   useEffect(() => {
     setIsLoading(false);

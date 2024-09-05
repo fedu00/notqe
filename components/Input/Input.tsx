@@ -1,6 +1,5 @@
 "use client";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useTheme } from "@/context/themeContext";
 import "./Input.css";
 interface InputType {
   type: string;
@@ -19,8 +18,7 @@ export default function Input({
   errorMessage,
   showError = false,
 }: InputType) {
-  const { ui } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = ui;
+  const { darkModeTheme } = useTheme();
   return (
     <div className={`input_container`}>
       <input
