@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
-import { DONE_TASKS_DATA } from "@/constans/constans";
+import { NEW_USER_DONE_TASKS_DATA } from "@/constans/constans";
 
 connectMongoDB();
 
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       username,
       email,
       password: hashedPassword,
-      doneTasks: DONE_TASKS_DATA,
+      doneTasks: NEW_USER_DONE_TASKS_DATA,
     });
 
     const savedUser = await newUser.save();

@@ -2,8 +2,8 @@
 import "./createTask.css";
 import { useState, useEffect } from "react";
 import {
-  CREATE_TASK_CATEGORY_DATA,
-  TASKS_IMPORTANCE_DATA,
+  TASK_CATEGORY_LIST,
+  TASK_LVL_IMPORTANCE_LIST,
 } from "@/constans/constans";
 import { TaskType } from "@/types/types";
 import { useSelector } from "react-redux";
@@ -112,7 +112,7 @@ export default function CreateTask() {
               placeholder="description..."
             />
             <Select
-              data={CREATE_TASK_CATEGORY_DATA}
+              data={TASK_CATEGORY_LIST}
               value={task.category}
               placeholder="select category"
               onChange={(event) => {
@@ -121,7 +121,7 @@ export default function CreateTask() {
               }}
             />
             <Select
-              data={TASKS_IMPORTANCE_DATA}
+              data={TASK_LVL_IMPORTANCE_LIST}
               value={task.importanceLevel}
               placeholder="select importance level"
               onChange={(event) => {

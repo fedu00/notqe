@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CATEGORY_DATA, ALL_TASKS_IMPORTANCE_DATA } from "@/constans/constans";
+import {
+  FULL_TASK_CATEGORY_LIST,
+  FULL_TASK_LVL_IMPORTANCE_LIST,
+} from "@/constans/constans";
 import { DataType } from "@/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -107,13 +110,13 @@ export default function ManageTask() {
               manage your tasks
             </h1>
             <Select
-              data={CATEGORY_DATA}
+              data={FULL_TASK_CATEGORY_LIST}
               value={currentCategory === "all" ? "default" : currentCategory}
               onChange={(event) => setCurrentCategory(event.target.value)}
               placeholder="select category"
             />
             <Select
-              data={ALL_TASKS_IMPORTANCE_DATA}
+              data={FULL_TASK_LVL_IMPORTANCE_LIST}
               value={
                 currentImportance === "all" ? "default" : currentImportance
               }
