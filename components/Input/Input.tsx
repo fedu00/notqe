@@ -32,7 +32,7 @@ export default function Input({
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={"error_message"}>{errorMessage}</p>}
+      {showError && <p className={"error_input_message"}>{errorMessage}</p>}
     </div>
   );
 }

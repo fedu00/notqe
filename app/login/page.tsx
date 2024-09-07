@@ -90,7 +90,7 @@ export default function LoginPage() {
               setuser({ ...user, password: event.target.value });
               setShowError(false);
             }}
-            errorMessage="invalid email"
+            errorMessage="invalid password"
             showError={showError}
           />
           <Button text="log in" type="submit" />
