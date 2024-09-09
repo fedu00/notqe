@@ -33,14 +33,33 @@ export default function SignUpPage() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleOnChange =
+    (field: keyof FullUserType) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUser((prev) => ({ ...prev, [field]: event.target.value }));
+      setShowError((prev) => ({ ...prev, [field]: false }));
+    };
+
+  const usernameValidation = user.username.length >= 4;
+  const emailValidation = validateEmail(user.email);
+  const passwordValidation = user.password.length >= 4;
+
+  const validateUserCredentials = (): boolean => {
+    return usernameValidation && emailValidation && passwordValidation;
+  };
+
+  const checkUserSignupValidation = () => {
+    setShowError({
+      username: !usernameValidation,
+      email: !emailValidation,
+      password: !passwordValidation,
+    });
+  };
+
   const handleSignup = async (event: FormEvent) => {
     event.preventDefault();
 
-    const emailValidation: boolean = validateEmail(user.email);
-    const passwordValidation: boolean = user.password.length >= 4;
-    const usernameValidation: boolean = user.username.length >= 4;
-
-    if (emailValidation && passwordValidation && usernameValidation) {
+    if (validateUserCredentials()) {
       try {
         setIsLoading(true);
         const response = await axios.post("/api/users/signup", user);
@@ -52,7 +71,7 @@ export default function SignUpPage() {
         console.log("signup error", error.message);
       }
     } else {
-      setShowError({ username: true, email: true, password: true });
+      checkUserSignupValidation();
     }
   };
   return (
@@ -79,10 +98,7 @@ export default function SignUpPage() {
           <Input
             type="text"
             value={user.username}
-            onChange={(event) => {
-              setUser({ ...user, username: event.target.value });
-              setShowError({ ...showError, username: false });
-            }}
+            onChange={handleOnChange("username")}
             placeholder="username"
             showError={showError.username}
             errorMessage="wrong username"
@@ -90,10 +106,7 @@ export default function SignUpPage() {
           <Input
             type="text"
             value={user.email}
-            onChange={(event) => {
-              setUser({ ...user, email: event.target.value });
-              setShowError({ ...showError, email: false });
-            }}
+            onChange={handleOnChange("email")}
             placeholder="email"
             showError={showError.email}
             errorMessage="wrong email"
@@ -101,10 +114,7 @@ export default function SignUpPage() {
           <Input
             type="password"
             value={user.password}
-            onChange={(event) => {
-              setUser({ ...user, password: event.target.value });
-              setShowError({ ...showError, password: false });
-            }}
+            onChange={handleOnChange("password")}
             errorMessage="wrong password"
             placeholder="enter your password"
             showError={showError.password}

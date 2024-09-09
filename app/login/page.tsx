@@ -19,22 +19,28 @@ type UserType = {
 export default function LoginPage() {
   const router = useRouter();
   const [showError, setShowError] = useState<boolean>(false);
-  const [user, setuser] = useState<UserType>({
+  const [user, setUser] = useState<UserType>({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { darkModeTheme } = useTheme();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleOnChange =
+    (field: keyof UserType) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUser((prev) => ({ ...prev, [field]: event.target.value }));
+      setShowError(false);
+    };
+
+  const validateUserCredentials = (): boolean => {
+    return validateEmail(user.email) && user.password.length >= 4;
+  };
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
 
-    const emailValidation: boolean = validateEmail(user.email);
-    const passwordValidation: boolean = user.password.length >= 4;
-
-    if (emailValidation && passwordValidation) {
+    if (validateUserCredentials()) {
       try {
         setIsLoading(true);
         const response = await axios.post("/api/users/login", user);
@@ -65,20 +71,12 @@ export default function LoginPage() {
           data-testid="loader"
         />
       ) : (
-        <form
-          className={"login_container_form"}
-          onSubmit={(event) => {
-            handleLogin(event);
-          }}
-        >
+        <form className={"login_container_form"} onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="enter your email"
             value={user.email}
-            onChange={(event) => {
-              setuser({ ...user, email: event.target.value });
-              setShowError(false);
-            }}
+            onChange={handleOnChange("email")}
             errorMessage="invalid email"
             showError={showError}
           />
@@ -86,10 +84,7 @@ export default function LoginPage() {
             type="password"
             placeholder="enter your password"
             value={user.password}
-            onChange={(event) => {
-              setuser({ ...user, password: event.target.value });
-              setShowError(false);
-            }}
+            onChange={handleOnChange("password")}
             errorMessage="invalid password"
             showError={showError}
           />

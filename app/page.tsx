@@ -9,6 +9,11 @@ import Button from "@/components/Button/Button";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
+const TEST_USER_ACCOUNT = {
+  email: "test4@test4.pl",
+  password: "test4",
+};
+
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,19 +22,16 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const handleLoginTestAccount = async () => {
-    const user = {
-      email: "test4@test4.pl",
-      password: "test4",
-    };
-
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/users/login", user);
+      const response = await axios.post("/api/users/login", TEST_USER_ACCOUNT);
       router.push("/profile");
       dispatch(login());
     } catch (error: any) {
       setIsLoading(false);
       console.log("login failed", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 

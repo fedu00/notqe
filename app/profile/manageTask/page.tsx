@@ -1,4 +1,5 @@
 "use client";
+import "./manageTask.css";
 import { useEffect, useState } from "react";
 import {
   FULL_TASK_CATEGORY_LIST,
@@ -9,7 +10,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useTheme } from "@/context/themeContext";
 import Select from "@/components/Select/Select";
-import "./manageTask.css";
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import ClipLoader from "react-spinners/ClipLoader";

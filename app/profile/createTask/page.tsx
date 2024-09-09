@@ -25,7 +25,6 @@ export default function CreateTask() {
     importanceLevel: "default",
   });
   const [showError, setShowError] = useState<boolean>(false);
-
   const { userData } = useSelector((state: RootState) => state);
   const { darkModeTheme } = useTheme();
 
@@ -33,16 +32,16 @@ export default function CreateTask() {
     setIsLoading(false);
   }, []);
 
-  const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTask({ ...task, title: event.target.value });
-    setShowError(false);
-  };
-  const handleOnChangeDescription = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setTask({ ...task, description: event.target.value });
-    setShowError(false);
-  };
+  const handleOnChange =
+    (field: keyof TaskType) =>
+    (
+      event: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
+      setTask((prev) => ({ ...task, [field]: event.target.value }));
+      setShowError(false);
+    };
 
   const handleAddTask = async () => {
     const titleIsnotEmpty: boolean = task.title.length > 0;
@@ -102,32 +101,26 @@ export default function CreateTask() {
               type="text"
               value={task.title}
               errorMessage="this field cannot be empty"
-              onChange={(event) => handleOnChangeTitle(event)}
+              onChange={handleOnChange("title")}
               placeholder="enter title"
             />
             <Textarea
               value={task.description}
               errorMessage="this field cannot be empty"
-              onChange={(event) => handleOnChangeDescription(event)}
+              onChange={handleOnChange("description")}
               placeholder="description..."
             />
             <Select
               data={TASK_CATEGORY_LIST}
               value={task.category}
               placeholder="select category"
-              onChange={(event) => {
-                setShowError(false);
-                setTask({ ...task, category: event.target.value });
-              }}
+              onChange={handleOnChange("category")}
             />
             <Select
               data={TASK_LVL_IMPORTANCE_LIST}
               value={task.importanceLevel}
               placeholder="select importance level"
-              onChange={(event) => {
-                setShowError(false);
-                setTask({ ...task, importanceLevel: event.target.value });
-              }}
+              onChange={handleOnChange("importanceLevel")}
             />
             {showError && (
               <p className={"error_message"}>You must complete all fields!</p>

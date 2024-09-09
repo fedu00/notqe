@@ -1,14 +1,16 @@
 "use client";
 import "./profile.css";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@/context/themeContext";
 import { getUserData } from "@/redux/store/userSlice";
+import { RootState } from "../../redux/store/store";
+import axios from "axios";
 
 export default function ProfilePage() {
-  const [username, setUsername] = useState<string>("unknow");
   const { darkModeTheme } = useTheme();
+  const { userData } = useSelector((state: RootState) => state);
+  const { username } = userData;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,7 +20,6 @@ export default function ProfilePage() {
   const getUserDetails = async () => {
     const response = await axios.get("/api/users/userDetails");
     dispatch(getUserData(response.data.data));
-    setUsername(response.data.data.username);
   };
 
   return (
