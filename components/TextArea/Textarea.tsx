@@ -1,6 +1,5 @@
 "use client";
-import { useTheme } from "@/context/themeContext";
-import "./Textarea.css";
+import "./Textarea.scss";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +18,17 @@ export default function Textarea({
   errorMessage,
   showError = false,
 }: TextareaType) {
-  const { darkModeTheme } = useTheme();
   return (
-    <div className={"textarea_container"}>
+    <div className={"textarea"}>
       <textarea
-        className={`${inter.className} textarea_form ${
-          darkModeTheme && "textarea_for_dark"
-        } ${showError && "error_active"}`}
+        className={`${inter.className} ${"textarea__field"} ${
+          showError && "textarea__field--error"
+        }`}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={"error_message"}>{errorMessage}</p>}
+      {showError && <p className={"textarea__error"}>{errorMessage}</p>}
     </div>
   );
 }

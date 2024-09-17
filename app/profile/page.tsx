@@ -1,14 +1,12 @@
 "use client";
-import "./profile.css";
+import "./profile.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTheme } from "@/context/themeContext";
 import { getUserData } from "@/redux/store/userSlice";
 import { RootState } from "../../redux/store/store";
 import axios from "axios";
 
 export default function ProfilePage() {
-  const { darkModeTheme } = useTheme();
   const { userData } = useSelector((state: RootState) => state);
   const { username } = userData;
   const dispatch = useDispatch();
@@ -23,10 +21,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div
-      className={`profile_message ${darkModeTheme && "profile_message_dark"} `}
-    >
-      <h1>welcome on your account {username}</h1>
+    <div className={`profile_message theme-background`}>
+      <h2>welcome on your account {username}</h2>
       <p>
         Build your future brick by brick. The NOTQE application can help you
         with this - organize your tasks and check your plans for today before

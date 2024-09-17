@@ -1,10 +1,9 @@
 "use client";
-import "./login.css";
+import styles from "./login.module.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useDispatch } from "react-redux";
-import { useTheme } from "@/context/themeContext";
 import { login } from "@/redux/store/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
@@ -25,7 +24,6 @@ export default function LoginPage() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { darkModeTheme } = useTheme();
 
   const handleOnChange =
     (field: keyof UserType) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,9 +55,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className={`login_container ${darkModeTheme && "login_container_dark"} `}
-    >
+    <div className={styles.login_container}>
       <h2>Login your account</h2>
       {isLoading ? (
         <ClipLoader
@@ -71,7 +67,7 @@ export default function LoginPage() {
           data-testid="loader"
         />
       ) : (
-        <form className={"login_container_form"} onSubmit={handleLogin}>
+        <form onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="enter your email"

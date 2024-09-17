@@ -1,0 +1,28 @@
+.button {
+  padding: $padding-s $padding-xl;
+  border-radius: $border-radius-xl;
+  border: none;
+  cursor: pointer;
+  margin: 0 $margin-l $margin-l 0;
+  font-size: $font-size-m;
+  transition: transform 0.3s;
+}
+
+@keyframes buttonAnimation {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.9);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button--animation {
+  animation: 0.3s buttonAnimation forwards;
+}

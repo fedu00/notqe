@@ -1,5 +1,5 @@
 "use client";
-import "./Task.css";
+import "./Task.scss";
 import { useState, useRef, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
@@ -161,16 +161,16 @@ export default function Task({
 
   return (
     <div
-      className={`task ${category + "_bgc"} ${
-        edit && (darkModeTheme ? "edit_mode_dark" : "edit_mode")
+      className={`task task--${category}-bgc ${
+        edit && (darkModeTheme ? "task--dark-edit-mode" : "task--edit-mode")
       }`}
     >
       <input
         ref={textareaRef}
         value={currentTask.title}
-        className={"remove_background"}
         disabled={!edit}
         maxLength={25}
+        className="task__input"
         onChange={(event) => {
           setCurrentTask({ ...currentTask, title: event.target.value });
         }}
@@ -179,7 +179,7 @@ export default function Task({
         value={currentTask.description}
         style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
         disabled={!edit}
-        className={`remove_background ${inter.className} `}
+        className={`task__textarea ${inter.className} `}
         onChange={(event) => {
           handleTextareaHeight(event);
           setCurrentTask({ ...currentTask, description: event.target.value });
@@ -187,8 +187,8 @@ export default function Task({
       />
 
       <div
-        className={`task_icons_container ${
-          darkModeTheme && "task_icons_container_dark"
+        className={`task__icons-container ${
+          darkModeTheme && "task__icons-container--dark"
         } `}
       >
         <AiFillCaretDown
@@ -198,7 +198,7 @@ export default function Task({
           }}
           size={"30px"}
           color={darkModeTheme ? "#eeeee1" : "#22252a"}
-          className={`${showDescription && "show_description"}`}
+          className={`${showDescription && "task__icon--show-description"}`}
         />
         <AiFillCheckCircle
           size={"30px"}
@@ -210,7 +210,7 @@ export default function Task({
           size={"30px"}
           color={darkModeTheme ? "#eeeee1" : "#22252a"}
           title="edit task"
-          className={`${edit && "edit"}`}
+          className={`${edit && "task__icon--edit"}`}
           onClick={handleEditTask}
         />
         <MdDelete
@@ -221,8 +221,8 @@ export default function Task({
         />
       </div>
       <div
-        className={`${"task_importance"} ${
-          darkModeTheme && "task_importance_dark"
+        className={`task__importance ${
+          darkModeTheme && "task__importance--dark"
         } `}
       >
         {importanceNumber}

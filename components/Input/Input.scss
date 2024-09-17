@@ -1,0 +1,29 @@
+.input {
+  height: 80px;
+  position: relative;
+  .input__field {
+    padding: $padding-s $padding-xl;
+    width: 320px;
+    font-size: $font-size-l;
+    border: none;
+    border-radius: $border-radius-s;
+    outline: none;
+    transition: background-color 0.4s;
+  }
+
+  .input__error {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: $error-color;
+    font-size: $font-size-s;
+  }
+}
+
+@media (max-width: $breakpoint-xs) {
+  .input {
+    .input__field {
+      width: 280px;
+    }
+  }
+}

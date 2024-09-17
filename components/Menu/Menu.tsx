@@ -1,4 +1,5 @@
 "use client";
+import "./Menu.scss";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -7,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/store/authSlice";
 import { RootState } from "../../redux/store/store";
 import { useTheme } from "@/context/themeContext";
-import "./Menu.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import axios from "axios";
@@ -61,23 +61,24 @@ export default function Menu() {
   }
 
   return (
-    <div className={`menu_container ${darkModeTheme && "menu_container_dark"}`}>
+    <div className={`menu`}>
       <Logo bigSize={false} />
       {isMobileSize && isUserLogIn && (
         <RxHamburgerMenu
-          className={"hamburger_menu"}
+          className={"menu__hamburger-menu"}
+          color={darkModeTheme ? "#eeeee1" : "#3e4247"}
           onClick={() => {
             setShowMenu(!showmenu);
           }}
           size={40}
         />
       )}
-      <div className={"menu"}>
+      <div className={"menu__menu-container"}>
         {isUserLogIn && (
           <>
             <ul
-              className={`menu_list ${showmenu && "show_menu"} ${
-                darkModeTheme && "menu_list_dark"
+              className={`menu__list ${showmenu && "menu__list--show-menu"} ${
+                darkModeTheme && "menu__list--dark-mode"
               }`}
             >
               <li>
@@ -110,7 +111,11 @@ export default function Menu() {
                 </Link>
               </li>
               <li>
-                <Button onClick={handleLogout} text="log out" test={true} />
+                <Button
+                  onClick={handleLogout}
+                  text="log out"
+                  grayButton={true}
+                />
               </li>
               {isMobileSize && (
                 <li>

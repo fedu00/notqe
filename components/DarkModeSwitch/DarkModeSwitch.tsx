@@ -1,5 +1,5 @@
 "use client";
-import "./DarkModeSwitch.css";
+import "./DarkModeSwitch.scss";
 import { FaRegMoon } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
 import { useTheme } from "@/context/themeContext";
@@ -8,21 +8,29 @@ export default function DarkModeSwitch() {
   const { darkModeTheme, toggleTheme } = useTheme();
 
   return (
-    <button
-      className={`switch_btn ${darkModeTheme && "dark_btn"} `}
+    <div
+      className={`switch-button ${
+        darkModeTheme && "switch-button--dark-mode"
+      } `}
       onClick={toggleTheme}
     >
       <FaRegSun
-        className="icon_sun"
+        className={"switch-button__icon-sun"}
         color={`${darkModeTheme ? "#fcbd90" : "#d0c2bd"}`}
         size={24}
       />
-      <FaRegMoon className="icon_moon" color={"#22252a"} size={24} />
+      <FaRegMoon
+        className={"switch-button__icon-moon"}
+        color={"#22252a"}
+        size={24}
+      />
       <div
-        className={`icon_background ${
-          darkModeTheme ? "icon_background_dark" : "icon_background_light"
+        className={`switch-button__icon-background ${
+          darkModeTheme
+            ? "switch-button__icon-background--dark"
+            : "switch-button__icon-background--light"
         }`}
       ></div>
-    </button>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import "./UserExperience.css";
+import "./UserExperience.scss";
 import { DoneTasksType } from "@/types/types";
 
 type CurrentLvlInformationType =
@@ -11,10 +11,8 @@ type CurrentLvlInformationType =
 
 export default function UserExperience({
   doneTasksData,
-  darkModeClass,
 }: {
   doneTasksData: DoneTasksType;
-  darkModeClass: string;
 }) {
   const doneTasks: number =
     doneTasksData.categories.health +
@@ -50,22 +48,27 @@ export default function UserExperience({
   const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
 
   return (
-    <div className={`user_experience_container ${darkModeClass} `}>
-      <div className={"lvl_container"}>
+    <div
+      className={`user-experience theme-background 
+ `}
+    >
+      <div className={"user-experience__lvl"}>
         <h1>{currentLvl}</h1>
         <p>lvl</p>
       </div>
-      <div className={"progres_bar_background"}>
+      <div className={"user-experience__progres-bar-background"}>
         <div
-          className={"progres_bar_fill"}
+          className={"user-experience__progres-bar-fill"}
           style={{
             backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgres}%, rgba(0, 0, 0, 0) ${lvlProgres}%)`,
           }}
         ></div>
         <p>{lvlProgres}%</p>
       </div>
-      <p className={"tasks_on_lvl"}>tasks for next lvl: {taskForNextLvl}</p>
-      <p className={"tasks_on_lvl"}>total done tasks: {doneTasks}</p>
+      <p className={"user-experience__tasks"}>
+        tasks for next lvl: {taskForNextLvl}
+      </p>
+      <p className={"user-experience__tasks"}>total done tasks: {doneTasks}</p>
     </div>
   );
 }

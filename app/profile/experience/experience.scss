@@ -5,7 +5,7 @@
 }
 
 .tasks_experience_container {
-  margin-right: 20px;
+  margin-right: $margin-l;
 }
 
 .tasks_score_container {
@@ -13,14 +13,7 @@
   justify-content: center;
 }
 
-.tasks_score_container > div {
-  background-color: #eeeee1;
-}
-.tasks_score_container_dark > div {
-  background-color: #3e4247;
-}
-
-@media (max-width: 1200px) {
+@media (max-width: $breakpoint-xxxl) {
   .experience_container {
     flex-direction: column-reverse;
     align-items: center;
@@ -30,7 +23,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: $breakpoint-l) {
   .experience_container {
     width: 300px;
   }

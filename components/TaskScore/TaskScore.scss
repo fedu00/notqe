@@ -1,0 +1,38 @@
+.task-score {
+  padding: $padding-xs;
+  margin: $margin-xs;
+  border-radius: $border-radius-s;
+  .task-score__title {
+    text-align: center;
+  }
+
+  .task-score__score {
+    text-align: center;
+    font-size: $font-size-xxl;
+  }
+
+  .task-score__title--health {
+    color: $pink-color;
+  }
+  .task-score__title--work {
+    color: $blue-color;
+  }
+  .task-score__title--study {
+    color: $green-color;
+  }
+  .task-score__title--other {
+    color: $orange-color;
+  }
+}
+
+@media (max-width: $breakpoint-xl) {
+  .task-score {
+    width: 90px;
+    .task-score__title {
+      font-size: $font-size-m;
+    }
+    .task-score__score {
+      font-size: $font-size-l;
+    }
+  }
+}

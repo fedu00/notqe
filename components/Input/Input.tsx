@@ -1,6 +1,5 @@
 "use client";
-import { useTheme } from "@/context/themeContext";
-import "./Input.css";
+import "./Input.scss";
 interface InputType {
   type: string;
   value: string;
@@ -18,21 +17,17 @@ export default function Input({
   errorMessage,
   showError = false,
 }: InputType) {
-  const { darkModeTheme } = useTheme();
   return (
-    <div className={`input_container`}>
+    <div className={"input"}>
       <input
         autoComplete="new-password"
-        className={`${showError && "error_active"} input ${
-          darkModeTheme && "input_dark"
-        }
-         `}
+        className={`input__field`}
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={"error_input_message"}>{errorMessage}</p>}
+      {showError && <p className={"input__error"}>{errorMessage}</p>}
     </div>
   );
 }

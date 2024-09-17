@@ -1,0 +1,76 @@
+body {
+  background-color: $primary-light-200;
+  transition: background-color 0.4s;
+  button {
+    background-color: $primary-dark-200;
+    color: $primary-light-100;
+  }
+  button:hover {
+    background-color: $primary-dark-300;
+  }
+  .button--gray {
+    background-color: $primary-dark-100;
+  }
+  .button--gray:hover {
+    background-color: $primary-dark-200;
+  }
+
+  select,
+  textarea,
+  input {
+    background-color: $primary-light-100;
+    color: $primary-dark-300;
+  }
+
+  .theme-background {
+    background-color: $primary-light-100;
+    transition: background-color 0.4s;
+    border-radius: $border-radius-s;
+    padding: $padding-l;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+}
+
+.dark-mode {
+  background-color: $primary-dark-400;
+
+  button {
+    background-color: $orange-color;
+    color: $primary-dark-400;
+  }
+  button:hover {
+    background-color: $light-orange-color;
+  }
+  .button--gray {
+    background-color: $primary-dark-100;
+    color: $primary-light-100;
+  }
+  .button--gray:hover {
+    background-color: $primary-dark-200;
+  }
+
+  select,
+  textarea,
+  input {
+    background-color: $primary-dark-300;
+    color: $primary-light-100;
+  }
+
+  .theme-background {
+    background-color: $primary-dark-300;
+  }
+}
+
+@media (max-width: $breakpoint-xl) {
+  body {
+    .theme-background {
+      padding: $padding-s;
+    }
+  }
+}

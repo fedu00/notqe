@@ -1,6 +1,5 @@
 "use client";
-import "./Select.css";
-import { useTheme } from "@/context/themeContext";
+import "./Select.scss";
 import { BiSolidDownArrow } from "react-icons/bi";
 interface SelectType {
   data: string[];
@@ -14,15 +13,9 @@ export default function Select({
   value,
   placeholder = "default",
 }: SelectType) {
-  const { darkModeTheme } = useTheme();
-
   return (
-    <div className="select_container">
-      <select
-        className={`select_field ${darkModeTheme && "select_field_dark"}`}
-        onChange={onChange}
-        value={value}
-      >
+    <div className={"select"}>
+      <select className={"select__field"} onChange={onChange} value={value}>
         <option value="default" disabled>
           {placeholder}
         </option>
@@ -30,7 +23,7 @@ export default function Select({
           <option key={category}>{category}</option>
         ))}
       </select>
-      <BiSolidDownArrow className="select_arrow_icon" />
+      <BiSolidDownArrow className={"select__arrow-icon"} />
     </div>
   );
 }

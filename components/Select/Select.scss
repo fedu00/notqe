@@ -1,0 +1,35 @@
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: $margin-xl;
+  .select__field {
+    padding: $padding-s $padding-xl;
+    width: 320px;
+    font-size: $font-size-l;
+    border: none;
+    border-radius: $border-radius-s;
+    outline: none;
+    transition: background-color 0.4s;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .select__arrow-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    pointer-events: none;
+    transform: translate(0, -50%);
+  }
+}
+
+@media (max-width: $breakpoint-xl) {
+  .select {
+    .select__field {
+      $font-size-m: $font-size-m;
+      padding: $padding-xs $padding-m;
+      width: 100%;
+      margin-bottom: $margin-l;
+    }
+  }
+}

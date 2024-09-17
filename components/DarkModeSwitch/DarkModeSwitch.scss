@@ -1,0 +1,51 @@
+.switch-button {
+  position: relative;
+  box-sizing: border-box;
+  height: 41px;
+  width: 80px;
+  background-color: $primary-light-200;
+  border-radius: $border-radius-l;
+  border: 2px solid $primary-dark-400;
+  padding: $padding-xxs;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+
+  .switch-button__icon-moon,
+  .switch-button__icon-sun {
+    background-color: transparent;
+    position: relative;
+    z-index: 3;
+  }
+
+  .switch-button__icon-sun {
+    margin-left: 1px;
+  }
+  .switch-button__icon-moon {
+    margin-right: 2px;
+  }
+  .switch-button__icon-background {
+    position: absolute;
+    transition: 0.4s;
+    height: 31px;
+    width: 31px;
+    top: 3px;
+    border-radius: $border-radius-m;
+    z-index: 0;
+  }
+  .switch-button__icon-background--light {
+    background-color: $primary-dark-400;
+    left: 3px;
+  }
+}
+
+.switch-button--dark-mode {
+  border-color: $light-orange-color;
+  background-color: $primary-dark-400;
+  .switch-button__icon-background--dark {
+    background-color: $light-orange-color;
+    left: 41px;
+  }
+}

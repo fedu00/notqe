@@ -8,13 +8,6 @@
 .tasks_container {
   display: flex;
   flex-direction: column;
-  background-color: #eeeee1;
-  border-radius: 5px;
-  padding: 20px;
-}
-
-.tasks_container_dark {
-  background-color: #3e4247;
 }
 
 .manage_task_container {
@@ -22,29 +15,23 @@
 }
 
 .manage_tasks_title {
-  margin-bottom: 16px;
+  margin-top: 0;
+  margin-bottom: $margin-m;
 }
 
-.manage_tasks_title_dark {
-  color: #eeeee1;
-}
-
-@media (max-width: 800px) {
+@media (max-width: $breakpoint-xl) {
   .manage_task_container {
     width: 70%;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: $breakpoint-l) {
   .manage_task_container {
     width: 85%;
   }
-  .tasks_container {
-    padding: 10px;
-  }
 }
 
-@media (max-width: 450px) {
+@media (max-width: $breakpoint-s) {
   .manage_task_container {
     width: 90%;
   }

@@ -1,5 +1,5 @@
 "use client";
-import "./manageTask.css";
+import "./manageTask.scss";
 import { useEffect, useState } from "react";
 import {
   FULL_TASK_CATEGORY_LIST,
@@ -8,7 +8,6 @@ import {
 import { DataType } from "@/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useTheme } from "@/context/themeContext";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 import Task from "@/components/Task/Task";
@@ -21,7 +20,6 @@ export default function ManageTask() {
   const [currentImportance, setCurrentImportance] = useState<string>("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
   const { userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = useTheme();
   const { userId } = userData;
 
   const getFilteredTasks = () => {
@@ -80,9 +78,7 @@ export default function ManageTask() {
     return (
       <div className="manage_task_container">
         <div>
-          <h1 className={`${darkModeTheme && "manage_tasks_title_dark"}`}>
-            You don't have any tasks yet
-          </h1>
+          <h1>You don't have any tasks yet</h1>
         </div>
       </div>
     );
@@ -100,15 +96,9 @@ export default function ManageTask() {
           data-testid="loader"
         />
       ) : (
-        <div className={"manage_task_container"}>
+        <div className={"manage_task_container "}>
           <div>
-            <h1
-              className={`${"manage_tasks_title"} ${
-                darkModeTheme && "manage_tasks_title_dark"
-              } `}
-            >
-              manage your tasks
-            </h1>
+            <h2 className={`manage_tasks_title`}>manage your tasks</h2>
             <Select
               data={FULL_TASK_CATEGORY_LIST}
               value={currentCategory === "all" ? "default" : currentCategory}
@@ -124,11 +114,7 @@ export default function ManageTask() {
               placeholder="select task importance"
             />
           </div>
-          <div
-            className={`${"tasks_container"} ${
-              darkModeTheme && "tasks_container_dark"
-            } `}
-          >
+          <div className={"tasks_container theme-background "}>
             {currentTasksData.length > 0 ? (
               currentTasksData.map((task: DataType) => (
                 <Task

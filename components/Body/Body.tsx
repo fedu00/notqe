@@ -1,6 +1,6 @@
 "use client";
 import { Inter } from "next/font/google";
-import "./Body.css";
+import "./Body.scss";
 import Menu from "../Menu/Menu";
 import { useTheme } from "@/context/themeContext";
 
@@ -10,7 +10,10 @@ export default function Body({ children }) {
   const { darkModeTheme } = useTheme();
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${inter.className} ${darkModeTheme && "body_dark"}`}>
+      <body
+        className={`${inter.className} body ${darkModeTheme && "dark-mode"}
+        `}
+      >
         <Menu />
         <main>{children}</main>
       </body>

@@ -3,7 +3,6 @@ import "./mainPage.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useTheme } from "@/context/themeContext";
 import { login } from "@/redux/store/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
@@ -17,7 +16,6 @@ const TEST_USER_ACCOUNT = {
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { darkModeTheme } = useTheme();
 
   const dispatch = useDispatch();
 
@@ -36,7 +34,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`main_page_container ${darkModeTheme && "dark_mode_bgc"} `}>
+    <div>
       {isLoading ? (
         <ClipLoader
           color={"#ffa868"}
@@ -62,7 +60,7 @@ export default function Home() {
           />
           <Button
             text="try test account"
-            test={true}
+            grayButton={true}
             onClick={handleLoginTestAccount}
           />
         </div>

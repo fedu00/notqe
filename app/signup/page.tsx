@@ -1,5 +1,5 @@
 "use client";
-import "./signup.css";
+import styles from "./signup.module.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -75,7 +75,7 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className={"signup_container"}>
+    <div className={styles.signup_container}>
       <h2>Create Account</h2>
       {isLoading ? (
         <ClipLoader
@@ -93,7 +93,6 @@ export default function SignUpPage() {
             event.preventDefault();
             handleSignup(event);
           }}
-          className="signup_container_form"
         >
           <Input
             type="text"

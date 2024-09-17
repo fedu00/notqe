@@ -1,24 +1,6 @@
-.main_page_container > button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.main_page_container > h1 {
-  margin-bottom: 50px;
-}
-
-.dark_mode_bgc > h1 {
-  color: #eeeee1;
-}
-
 .button_container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 400px;
-}
-
-.main_page_container div button {
-  margin: 16px;
 }

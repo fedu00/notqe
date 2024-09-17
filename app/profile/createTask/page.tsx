@@ -1,5 +1,5 @@
 "use client";
-import "./createTask.css";
+import "./createTask.scss";
 import { useState, useEffect } from "react";
 import {
   TASK_CATEGORY_LIST,
@@ -8,7 +8,6 @@ import {
 import { TaskType } from "@/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useTheme } from "@/context/themeContext";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -26,7 +25,6 @@ export default function CreateTask() {
   });
   const [showError, setShowError] = useState<boolean>(false);
   const { userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = useTheme();
 
   useEffect(() => {
     setIsLoading(false);
@@ -88,15 +86,11 @@ export default function CreateTask() {
         />
       ) : (
         <>
-          <div
-            className={`title_container ${
-              darkModeTheme && "title_container_dark"
-            } `}
-          >
-            <h1>Create a new task</h1>
+          <div className={`title_container`}>
+            <h2>Create a new task</h2>
             <Button onClick={handleAddTask} text="create task" />
           </div>
-          <div className={"create_task_form_container"}>
+          <form>
             <Input
               type="text"
               value={task.title}
@@ -125,7 +119,7 @@ export default function CreateTask() {
             {showError && (
               <p className={"error_message"}>You must complete all fields!</p>
             )}
-          </div>
+          </form>
         </>
       )}
     </div>
