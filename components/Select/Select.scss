@@ -9,7 +9,7 @@
     border: none;
     border-radius: $border-radius-s;
     outline: none;
-    transition: background-color 0.4s;
+    transition: background-color $transition-duration-slow;
     appearance: none;
     cursor: pointer;
   }

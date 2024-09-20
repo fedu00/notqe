@@ -12,7 +12,7 @@ export default function TaskScore({
   selectedClass,
 }: TaskScoreType) {
   return (
-    <div className={`task-score theme-background`}>
+    <div className="task-score theme-background">
       <h4 className={`task-score__title task-score__title--${selectedClass}`}>
         {title}
       </h4>

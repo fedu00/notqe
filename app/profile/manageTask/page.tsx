@@ -85,10 +85,10 @@ export default function ManageTask() {
   }
 
   return (
-    <div className={"manage_tasks_page_container"}>
+    <div className="manage_tasks_page_container">
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}
@@ -96,9 +96,9 @@ export default function ManageTask() {
           data-testid="loader"
         />
       ) : (
-        <div className={"manage_task_container "}>
+        <div className="manage_task_container ">
           <div>
-            <h2 className={`manage_tasks_title`}>manage your tasks</h2>
+            <h2 className="manage_tasks_title">manage your tasks</h2>
             <Select
               data={FULL_TASK_CATEGORY_LIST}
               value={currentCategory === "all" ? "default" : currentCategory}
@@ -114,7 +114,7 @@ export default function ManageTask() {
               placeholder="select task importance"
             />
           </div>
-          <div className={"tasks_container theme-background "}>
+          <div className="tasks_container theme-background">
             {currentTasksData.length > 0 ? (
               currentTasksData.map((task: DataType) => (
                 <Task

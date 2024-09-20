@@ -48,27 +48,24 @@ export default function UserExperience({
   const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
 
   return (
-    <div
-      className={`user-experience theme-background 
- `}
-    >
-      <div className={"user-experience__lvl"}>
+    <div className="user-experience theme-background">
+      <div className="user-experience__lvl">
         <h1>{currentLvl}</h1>
         <p>lvl</p>
       </div>
-      <div className={"user-experience__progres-bar-background"}>
+      <div className="user-experience__progres-bar-background">
         <div
-          className={"user-experience__progres-bar-fill"}
+          className="user-experience__progres-bar-fill"
           style={{
             backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgres}%, rgba(0, 0, 0, 0) ${lvlProgres}%)`,
           }}
         ></div>
         <p>{lvlProgres}%</p>
       </div>
-      <p className={"user-experience__tasks"}>
+      <p className="user-experience__tasks">
         tasks for next lvl: {taskForNextLvl}
       </p>
-      <p className={"user-experience__tasks"}>total done tasks: {doneTasks}</p>
+      <p className="user-experience__tasks">total done tasks: {doneTasks}</p>
     </div>
   );
 }

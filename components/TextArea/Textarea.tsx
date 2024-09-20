@@ -1,7 +1,6 @@
 "use client";
 import "./Textarea.scss";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+import clsx from "clsx";
 
 interface TextareaType {
   value: string;
@@ -19,16 +18,17 @@ export default function Textarea({
   showError = false,
 }: TextareaType) {
   return (
-    <div className={"textarea"}>
+    <div className="textarea">
       <textarea
-        className={`${inter.className} ${"textarea__field"} ${
+        className={clsx(
+          "textarea__field",
           showError && "textarea__field--error"
-        }`}
+        )}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className={"textarea__error"}>{errorMessage}</p>}
+      {showError && <p className="textarea__error">{errorMessage}</p>}
     </div>
   );
 }

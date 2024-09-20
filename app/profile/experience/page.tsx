@@ -26,10 +26,10 @@ export default function Experience() {
   } = importanceLevel;
 
   return (
-    <div className={"experience_container"}>
+    <div className="experience_container">
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}
@@ -38,8 +38,8 @@ export default function Experience() {
         />
       ) : (
         <>
-          <div className={"tasks_experience_container"}>
-            <div className={`tasks_score_container`}>
+          <div className="tasks_experience_container">
+            <div className="tasks_score_container">
               <TaskScore
                 score={health}
                 title={"health"}
@@ -57,7 +57,7 @@ export default function Experience() {
                 selectedClass={"other"}
               />
             </div>
-            <div className={`tasks_score_container`}>
+            <div className="tasks_score_container">
               <TaskScore score={noImportant} title={"no important"} />
               <TaskScore score={lessImportant} title={"less important"} />
               <TaskScore score={mediumImportant} title={"medium"} />

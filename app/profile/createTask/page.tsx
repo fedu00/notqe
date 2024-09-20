@@ -74,10 +74,10 @@ export default function CreateTask() {
   };
 
   return (
-    <div className={"create_task_page_container"}>
+    <div className="create_task_page_container">
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}
@@ -86,7 +86,7 @@ export default function CreateTask() {
         />
       ) : (
         <>
-          <div className={`title_container`}>
+          <div className="title_container">
             <h2>Create a new task</h2>
             <Button onClick={handleAddTask} text="create task" />
           </div>
@@ -117,7 +117,7 @@ export default function CreateTask() {
               onChange={handleOnChange("importanceLevel")}
             />
             {showError && (
-              <p className={"error_message"}>You must complete all fields!</p>
+              <p className="error_message">You must complete all fields!</p>
             )}
           </form>
         </>

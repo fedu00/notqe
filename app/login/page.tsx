@@ -1,5 +1,5 @@
 "use client";
-import styles from "./login.module.scss";
+import "./login.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -55,11 +55,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.login_container}>
+    <div className="login_container">
       <h2>Login your account</h2>
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}

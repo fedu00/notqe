@@ -1,5 +1,5 @@
 "use client";
-import styles from "./signup.module.scss";
+import "./signup.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -75,11 +75,11 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className={styles.signup_container}>
+    <div className="signup_container">
       <h2>Create Account</h2>
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}

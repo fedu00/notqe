@@ -1,6 +1,7 @@
 "use client";
 import "./Button.scss";
 import { useRef } from "react";
+import clsx from "clsx";
 interface ButtonType {
   text: string;
   onClick?: () => any | undefined;
@@ -30,7 +31,7 @@ export default function Button({
     <button
       ref={buttonRef}
       type={type}
-      className={` button ${grayButton && "button--gray"}`}
+      className={clsx("button", grayButton && "button--gray")}
       onClick={handleOnClick}
     >
       {text}

@@ -1,5 +1,5 @@
 "use client";
-import "./mainPage.css";
+import "./mainPage.scss";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -37,7 +37,7 @@ export default function Home() {
     <div>
       {isLoading ? (
         <ClipLoader
-          color={"#ffa868"}
+          color="#ffa868"
           loading={true}
           size={60}
           speedMultiplier={0.4}
@@ -45,7 +45,7 @@ export default function Home() {
           data-testid="loader"
         />
       ) : (
-        <div className={"button_container"}>
+        <div className="button_container">
           <Button
             text="sign up"
             onClick={() => {

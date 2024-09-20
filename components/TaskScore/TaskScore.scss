@@ -1,3 +1,9 @@
+@import "../../styles/utils/mixins";
+
+.theme-background {
+  @include theme-container();
+}
+
 .task-score {
   padding: $padding-xs;
   margin: $margin-xs;

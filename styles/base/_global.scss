@@ -1,6 +1,6 @@
 body {
   background-color: $primary-light-200;
-  transition: background-color 0.4s;
+  transition: background-color $transition-duration-slow;
   button {
     background-color: $primary-dark-200;
     color: $primary-light-100;
@@ -24,9 +24,6 @@ body {
 
   .theme-background {
     background-color: $primary-light-100;
-    transition: background-color 0.4s;
-    border-radius: $border-radius-s;
-    padding: $padding-l;
   }
 
   form {

@@ -8,15 +8,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/store/authSlice";
 import { RootState } from "../../redux/store/store";
 import { useTheme } from "@/context/themeContext";
-import Logo from "../Logo/Logo";
+import { Josefin_Sans } from "next/font/google";
 import Button from "../Button/Button";
 import axios from "axios";
 import Link from "next/link";
 import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
+import clsx from "clsx";
 
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 // const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
 const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
+
+type menuElementsType = { href: string; text: string }[];
+const menuElements: menuElementsType = [
+  { href: "/profile/createTask", text: "create task" },
+  { href: "/profile/manageTask", text: "manage task" },
+  { href: "/profile/experience", text: "experience" },
+  { href: "/profile", text: "profile" },
+];
+
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  weight: "200",
+});
 
 export default function Menu() {
   const router = useRouter();
@@ -61,11 +75,11 @@ export default function Menu() {
   }
 
   return (
-    <div className={`menu`}>
-      <Logo bigSize={false} />
+    <div className="menu">
+      <h1 className={clsx(josefin.className, "menu__logo")}>NOTQE</h1>
       {isMobileSize && isUserLogIn && (
         <RxHamburgerMenu
-          className={"menu__hamburger-menu"}
+          className="menu__hamburger-menu"
           color={darkModeTheme ? "#eeeee1" : "#3e4247"}
           onClick={() => {
             setShowMenu(!showmenu);
@@ -73,44 +87,27 @@ export default function Menu() {
           size={40}
         />
       )}
-      <div className={"menu__menu-container"}>
+      <div className="menu__menu-container">
         {isUserLogIn && (
           <>
             <ul
-              className={`menu__list ${showmenu && "menu__list--show-menu"} ${
+              className={clsx(
+                "menu__list",
+                showmenu && "menu__list--show-menu",
                 darkModeTheme && "menu__list--dark-mode"
-              }`}
+              )}
             >
-              <li>
-                <Link
-                  href={`${baseUrl}/profile/createTask`}
-                  onClick={handleMenuClick}
-                >
-                  create task
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`${baseUrl}/profile/manageTask`}
-                  onClick={handleMenuClick}
-                >
-                  manage task
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`${baseUrl}/profile/experience`}
-                  onClick={handleMenuClick}
-                >
-                  experience
-                </Link>
-              </li>
-              <li>
-                <Link href={`${baseUrl}/profile`} onClick={handleMenuClick}>
-                  profile
-                </Link>
-              </li>
-              <li>
+              {menuElements.map((menuElement) => (
+                <li className="menu__element" key={menuElement.href}>
+                  <Link
+                    href={`${baseUrl}${menuElement.href}`}
+                    onClick={handleMenuClick}
+                  >
+                    {menuElement.text}
+                  </Link>
+                </li>
+              ))}
+              <li className="menu__element">
                 <Button
                   onClick={handleLogout}
                   text="log out"

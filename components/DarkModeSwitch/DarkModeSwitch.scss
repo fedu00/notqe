@@ -17,7 +17,7 @@
   .switch-button__icon-sun {
     background-color: transparent;
     position: relative;
-    z-index: 3;
+    z-index: $z-index-modal;
   }
 
   .switch-button__icon-sun {
@@ -28,12 +28,13 @@
   }
   .switch-button__icon-background {
     position: absolute;
-    transition: 0.4s;
+    transition: left $transition-duration-slow,
+      background-color $transition-duration-slow;
     height: 31px;
     width: 31px;
     top: 3px;
     border-radius: $border-radius-m;
-    z-index: 0;
+    z-index: $z-index-negative;
   }
   .switch-button__icon-background--light {
     background-color: $primary-dark-400;

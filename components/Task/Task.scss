@@ -22,7 +22,9 @@
   .task__textarea {
     resize: none;
     max-height: 250px;
-    transition: 0.4s;
+    transition: height $transition-duration-slow,
+      background-color $transition-duration-slow,
+      color $transition-duration-slow;
   }
 
   .task__textarea::-webkit-scrollbar {
@@ -37,7 +39,8 @@
 
     svg {
       cursor: pointer;
-      transition: 0.4s;
+      transition: color $transition-duration-slow,
+        transform $transition-duration-slow;
     }
 
     svg:hover {
@@ -84,7 +87,7 @@
 .task--health-bgc {
   background-color: $pink-color;
 }
-.task-work-bgc {
+.task--work-bgc {
   background-color: $blue-color;
 }
 .task--study-bgc {

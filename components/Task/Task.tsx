@@ -10,9 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { updateUserTaskValue } from "@/redux/store/userSlice";
 import { useTheme } from "@/context/themeContext";
-import { Inter } from "next/font/google";
 import axios from "axios";
-const inter = Inter({ subsets: ["latin"] });
+import clsx from "clsx";
 
 const getImportanceTaskNumber = (importance: string): string => {
   switch (importance) {
@@ -161,9 +160,11 @@ export default function Task({
 
   return (
     <div
-      className={`task task--${category}-bgc ${
+      className={clsx(
+        "task",
+        `task--${category}-bgc`,
         edit && (darkModeTheme ? "task--dark-edit-mode" : "task--edit-mode")
-      }`}
+      )}
     >
       <input
         ref={textareaRef}
@@ -179,7 +180,7 @@ export default function Task({
         value={currentTask.description}
         style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
         disabled={!edit}
-        className={`task__textarea ${inter.className} `}
+        className="task__textarea"
         onChange={(event) => {
           handleTextareaHeight(event);
           setCurrentTask({ ...currentTask, description: event.target.value });
@@ -187,9 +188,10 @@ export default function Task({
       />
 
       <div
-        className={`task__icons-container ${
+        className={clsx(
+          "task__icons-container",
           darkModeTheme && "task__icons-container--dark"
-        } `}
+        )}
       >
         <AiFillCaretDown
           title={showDescription ? "hide description" : "show description"}
@@ -198,7 +200,7 @@ export default function Task({
           }}
           size={"30px"}
           color={darkModeTheme ? "#eeeee1" : "#22252a"}
-          className={`${showDescription && "task__icon--show-description"}`}
+          className={clsx(showDescription && "task__icon--show-description")}
         />
         <AiFillCheckCircle
           size={"30px"}
@@ -210,7 +212,7 @@ export default function Task({
           size={"30px"}
           color={darkModeTheme ? "#eeeee1" : "#22252a"}
           title="edit task"
-          className={`${edit && "task__icon--edit"}`}
+          className={clsx(edit && "task__icon--edit")}
           onClick={handleEditTask}
         />
         <MdDelete
@@ -221,9 +223,10 @@ export default function Task({
         />
       </div>
       <div
-        className={`task__importance ${
+        className={clsx(
+          "task__importance",
           darkModeTheme && "task__importance--dark"
-        } `}
+        )}
       >
         {importanceNumber}
       </div>
