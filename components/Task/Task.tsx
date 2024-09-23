@@ -158,6 +158,8 @@ export default function Task({
     }
   };
 
+  const iconColor: string = darkModeTheme ? "#eeeee1" : "#22252a";
+
   return (
     <div
       className={clsx(
@@ -199,18 +201,18 @@ export default function Task({
             setShowDescription(!showDescription);
           }}
           size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          color={iconColor}
           className={clsx(showDescription && "task__icon--show-description")}
         />
         <AiFillCheckCircle
           size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          color={iconColor}
           onClick={handleFinishTask}
           title="finish task"
         />
         <MdEdit
           size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          color={iconColor}
           title="edit task"
           className={clsx(edit && "task__icon--edit")}
           onClick={handleEditTask}
@@ -218,7 +220,7 @@ export default function Task({
         <MdDelete
           title="delete task"
           size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          color={iconColor}
           onClick={handleDeleteTask}
         />
       </div>

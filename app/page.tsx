@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/store/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
 
 const TEST_USER_ACCOUNT = {
   email: "test4@test4.pl",
@@ -36,16 +36,9 @@ export default function Home() {
   return (
     <div>
       {isLoading ? (
-        <ClipLoader
-          color="#ffa868"
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <div className="button_container">
+        <div className="main-page">
           <Button
             text="sign up"
             onClick={() => {

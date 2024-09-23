@@ -31,6 +31,10 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    padding-bottom: $padding-m;
+    @media (max-width: $breakpoint-xs) {
+      width: 100%;
+    }
   }
 }
 
@@ -67,7 +71,7 @@ body {
 @media (max-width: $breakpoint-xl) {
   body {
     .theme-background {
-      padding: $padding-s;
+      // padding: $padding-s;
     }
   }
 }

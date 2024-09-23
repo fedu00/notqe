@@ -1,5 +1,6 @@
 "use client";
 import "./Input.scss";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 interface InputType {
   type: string;
   value: string;
@@ -27,7 +28,8 @@ export default function Input({
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className="input__error">{errorMessage}</p>}
+
+      {showError && <ErrorMessage errorMessage={errorMessage} />}
     </div>
   );
 }

@@ -1,39 +1,27 @@
-.create_task_page_container {
+.create-task {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.title_container {
-  display: flex;
-}
-.title_container h2 {
-  margin-right: $margin-m;
-  margin-top: 0px;
-  margin-bottom: 0;
-}
-
-.error_message {
-  position: absolute;
-  bottom: -16px;
-}
-
-@media (max-width: $breakpoint-xl) {
-  .create_task_page_container {
+  .create-task__title-container {
+    display: flex;
+    .create-task__title {
+      margin-right: $margin-m;
+      margin-top: 0px;
+      margin-bottom: 0;
+      @media (max-width: $breakpoint-xl) {
+        margin-bottom: $margin-m;
+        margin-right: 0;
+      }
+    }
+    @media (max-width: $breakpoint-xl) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  @media (max-width: $breakpoint-xl) {
     width: 70%;
   }
-  .title_container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .title_container h2 {
-    margin-bottom: $margin-m;
-    margin-right: 0;
-  }
-}
-
-@media (max-width: $breakpoint-m) {
-  .create_task_page_container {
+  @media (max-width: $breakpoint-m) {
     width: 90%;
   }
 }

@@ -2,24 +2,28 @@
 
 .theme-background {
   @include theme-container();
+  padding: $padding-m;
+  @media (max-width: $breakpoint-xl) {
+    padding: $padding-s;
+  }
 }
 
 .user-experience {
   padding: $padding-l;
   border-radius: $border-radius-s;
 
-  .user-experience__lvl {
+  .user-experience__lvl-container {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     margin-left: auto;
 
-    h1 {
+    .user-experience__lvl-value {
       font-size: 72px;
       font-weight: 500;
     }
 
-    p {
+    .user-experience__lvl {
       text-align: center;
       font-size: $font-size-l;
       margin: 0 0 $margin-m $margin-m;
@@ -36,9 +40,11 @@
       background-color: #d3d3d3;
       border-radius: $border-radius-s;
     }
-
-    p {
+    .user-experience__progres-bar-value {
       margin-left: $margin-s;
+    }
+    @media (max-width: $breakpoint-l) {
+      width: 100%;
     }
   }
 
@@ -47,24 +53,11 @@
     text-align: left;
     padding-left: $padding-m;
   }
-}
 
-@media (max-width: $breakpoint-xxxl) {
-  .user-experience {
+  @media (max-width: $breakpoint-xxxl) {
     margin-bottom: $margin-m;
   }
-}
-@media (max-width: $breakpoint-l) {
-  .user-experience {
-    .user-experience__progres-bar-background {
-      width: 250px;
-    }
-  }
-}
-@media (max-width: $breakpoint-xs) {
-  .user-experience {
-    .user-experience__progres-bar-background {
-      width: 200px;
-    }
+  @media (max-width: $breakpoint-l) {
+    width: 90%;
   }
 }

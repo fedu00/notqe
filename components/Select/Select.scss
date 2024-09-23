@@ -2,6 +2,7 @@
   position: relative;
   display: inline-block;
   margin-bottom: $margin-xl;
+  width: 320px;
   .select__field {
     padding: $padding-s $padding-xl;
     width: 320px;
@@ -12,8 +13,11 @@
     transition: background-color $transition-duration-slow;
     appearance: none;
     cursor: pointer;
+    @media (max-width: $breakpoint-xl) {
+      $font-size-m: $font-size-m;
+      width: 100%;
+    }
   }
-
   .select__arrow-icon {
     position: absolute;
     right: 10px;
@@ -21,15 +25,7 @@
     pointer-events: none;
     transform: translate(0, -50%);
   }
-}
-
-@media (max-width: $breakpoint-xl) {
-  .select {
-    .select__field {
-      $font-size-m: $font-size-m;
-      padding: $padding-xs $padding-m;
-      width: 100%;
-      margin-bottom: $margin-l;
-    }
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
   }
 }

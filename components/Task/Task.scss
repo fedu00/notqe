@@ -82,6 +82,10 @@
     border-color: $primary-light-100;
     color: $primary-light-100;
   }
+  @media (max-width: $breakpoint-xl) {
+    min-width: unset;
+    width: 100%;
+  }
 }
 
 .task--health-bgc {
@@ -102,10 +106,4 @@
 }
 .task--dark-edit-mode {
   border: 2px solid $primary-light-100;
-}
-
-@media (max-width: $breakpoint-xl) {
-  .task {
-    min-width: none;
-  }
 }

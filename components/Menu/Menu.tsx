@@ -19,8 +19,8 @@ import clsx from "clsx";
 // const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
 const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
 
-type menuElementsType = { href: string; text: string }[];
-const menuElements: menuElementsType = [
+type MenuElementsType = { href: string; text: string }[];
+const menuElements: MenuElementsType = [
   { href: "/profile/createTask", text: "create task" },
   { href: "/profile/manageTask", text: "manage task" },
   { href: "/profile/experience", text: "experience" },
@@ -58,6 +58,10 @@ export default function Menu() {
   const handleMenuClick = () => {
     setShowMenu(false);
   };
+
+  const toggleShowMenu = () => {
+    setShowMenu(!showmenu);
+  };
   const handleLogout = async () => {
     try {
       await axios.get("/api/users/logout");
@@ -76,14 +80,12 @@ export default function Menu() {
 
   return (
     <div className="menu">
-      <h1 className={clsx(josefin.className, "menu__logo")}>NOTQE</h1>
+      <h1 className={clsx(josefin.className, "menu__logo")}>notqe</h1>
       {isMobileSize && isUserLogIn && (
         <RxHamburgerMenu
-          className="menu__hamburger-menu"
+          className="menu__hamburger-menu-icon"
           color={darkModeTheme ? "#eeeee1" : "#3e4247"}
-          onClick={() => {
-            setShowMenu(!showmenu);
-          }}
+          onClick={toggleShowMenu}
           size={40}
         />
       )}

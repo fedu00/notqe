@@ -9,21 +9,11 @@
     border-radius: $border-radius-s;
     outline: none;
     transition: background-color $transition-duration-slow;
-  }
-
-  .input__error {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    color: $error-color;
-    font-size: $font-size-s;
-  }
-}
-
-@media (max-width: $breakpoint-xs) {
-  .input {
-    .input__field {
-      width: 280px;
+    @media (max-width: $breakpoint-xs) {
+      width: 100%;
     }
+  }
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
   }
 }

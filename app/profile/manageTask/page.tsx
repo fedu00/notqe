@@ -11,7 +11,7 @@ import { RootState } from "../../../redux/store/store";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 import Task from "@/components/Task/Task";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
 
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -76,29 +76,22 @@ export default function ManageTask() {
   const emptyTasksData: boolean = tasksData.length === 0;
   if (emptyTasksData) {
     return (
-      <div className="manage_task_container">
-        <div>
-          <h1>You don't have any tasks yet</h1>
+      <div>
+        <div className="manage-tasks--empty">
+          <h3>You don't have any tasks yet</h3>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="manage_tasks_page_container">
+    <div className="manage-tasks">
       {isLoading ? (
-        <ClipLoader
-          color="#ffa868"
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <div className="manage_task_container ">
-          <div>
-            <h2 className="manage_tasks_title">manage your tasks</h2>
+        <div className="manage-task__tasks-container">
+          <div className="manage-tasks__filters">
+            <h2 className="manage_tasks__title">manage your tasks</h2>
             <Select
               data={FULL_TASK_CATEGORY_LIST}
               value={currentCategory === "all" ? "default" : currentCategory}
@@ -114,7 +107,7 @@ export default function ManageTask() {
               placeholder="select task importance"
             />
           </div>
-          <div className="tasks_container theme-background">
+          <div className="manage-task__tasks-list theme-background">
             {currentTasksData.length > 0 ? (
               currentTasksData.map((task: DataType) => (
                 <Task

@@ -13,7 +13,8 @@ import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
 export default function CreateTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -74,33 +75,24 @@ export default function CreateTask() {
   };
 
   return (
-    <div className="create_task_page_container">
+    <div className="create-task">
       {isLoading ? (
-        <ClipLoader
-          color="#ffa868"
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
         <>
-          <div className="title_container">
-            <h2>Create a new task</h2>
+          <div className="create-task__title-container">
+            <h2 className="create-task__title">Create a new task</h2>
             <Button onClick={handleAddTask} text="create task" />
           </div>
           <form>
             <Input
               type="text"
               value={task.title}
-              errorMessage="this field cannot be empty"
               onChange={handleOnChange("title")}
               placeholder="enter title"
             />
             <Textarea
               value={task.description}
-              errorMessage="this field cannot be empty"
               onChange={handleOnChange("description")}
               placeholder="description..."
             />
@@ -117,7 +109,7 @@ export default function CreateTask() {
               onChange={handleOnChange("importanceLevel")}
             />
             {showError && (
-              <p className="error_message">You must complete all fields!</p>
+              <ErrorMessage errorMessage="You must complete all fields!" />
             )}
           </form>
         </>

@@ -8,7 +8,7 @@ import { login } from "@/redux/store/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
 
 type UserType = {
   email: string;
@@ -55,17 +55,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login_container">
+    <div className="login">
       <h2>Login your account</h2>
       {isLoading ? (
-        <ClipLoader
-          color="#ffa868"
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
         <form onSubmit={handleLogin}>
           <Input

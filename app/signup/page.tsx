@@ -6,7 +6,7 @@ import { validateEmail } from "@/helpers/validateEmail";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
 
 type FullUserType = {
   username: string;
@@ -75,17 +75,10 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className="signup_container">
+    <div className="signup">
       <h2>Create Account</h2>
       {isLoading ? (
-        <ClipLoader
-          color="#ffa868"
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
         <form
           autoComplete="off"

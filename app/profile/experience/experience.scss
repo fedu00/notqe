@@ -1,34 +1,22 @@
-.experience_container {
+.experience {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.tasks_experience_container {
-  margin-right: $margin-l;
-}
-
-.tasks_score_container {
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width: $breakpoint-xxxl) {
-  .experience_container {
+  .experience__scores-container {
+    margin-right: $margin-l;
+    .experience__scores-group {
+      display: flex;
+      justify-content: center;
+      @media (max-width: $breakpoint-xl) {
+        flex-wrap: wrap;
+      }
+    }
+    @media (max-width: $breakpoint-xxxl) {
+      margin-right: 0px;
+    }
+  }
+  @media (max-width: $breakpoint-xxxl) {
     flex-direction: column-reverse;
     align-items: center;
-  }
-  .tasks_experience_container {
-    margin-right: 0px;
-  }
-}
-
-@media (max-width: $breakpoint-l) {
-  .experience_container {
-    width: 300px;
-  }
-  .category_tasks,
-  .importance_tasks {
-    flex-wrap: wrap;
   }
 }

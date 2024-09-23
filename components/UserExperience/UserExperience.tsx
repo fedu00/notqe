@@ -49,9 +49,9 @@ export default function UserExperience({
 
   return (
     <div className="user-experience theme-background">
-      <div className="user-experience__lvl">
-        <h1>{currentLvl}</h1>
-        <p>lvl</p>
+      <div className="user-experience__lvl-container">
+        <h3 className="user-experience__lvl-value">{currentLvl}</h3>
+        <p className="user-experience__lvl">lvl</p>
       </div>
       <div className="user-experience__progres-bar-background">
         <div
@@ -60,7 +60,7 @@ export default function UserExperience({
             backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgres}%, rgba(0, 0, 0, 0) ${lvlProgres}%)`,
           }}
         ></div>
-        <p>{lvlProgres}%</p>
+        <p className="user-experience__progres-bar-value">{lvlProgres}%</p>
       </div>
       <p className="user-experience__tasks">
         tasks for next lvl: {taskForNextLvl}
