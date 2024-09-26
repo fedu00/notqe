@@ -8,14 +8,20 @@
   padding: $padding-xs;
   margin: $margin-xs;
   border-radius: $border-radius-s;
-  .task-score__title {
+  @media (max-width: $breakpoint-xl) {
+    width: 130px;
+    margin: $margin-xxs;
+    padding: $padding-xxs;
+  }
+
+  &__title {
     text-align: center;
     @media (max-width: $breakpoint-xl) {
       font-size: $font-size-m;
     }
   }
 
-  .task-score__score {
+  &__score {
     text-align: center;
     font-size: $font-size-xxl;
     @media (max-width: $breakpoint-xl) {
@@ -23,21 +29,16 @@
     }
   }
 
-  .task-score__title--health {
+  &__title--health {
     color: $pink-color;
   }
-  .task-score__title--work {
+  &__title--work {
     color: $blue-color;
   }
-  .task-score__title--study {
+  &__title--study {
     color: $green-color;
   }
-  .task-score__title--other {
+  &__title--other {
     color: $orange-color;
-  }
-  @media (max-width: $breakpoint-xl) {
-    width: 130px;
-    margin: $margin-xxs;
-    padding: $padding-xxs;
   }
 }

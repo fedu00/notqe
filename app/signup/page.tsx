@@ -7,6 +7,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import Loader from "@/components/Loader/Loader";
+import Form from "@/components/Form/Form";
 
 type FullUserType = {
   username: string;
@@ -80,8 +81,8 @@ export default function SignUpPage() {
       {isLoading ? (
         <Loader />
       ) : (
-        <form
-          autoComplete="off"
+        <Form
+          autoComplete={false}
           onSubmit={(event) => {
             event.preventDefault();
             handleSignup(event);
@@ -112,7 +113,7 @@ export default function SignUpPage() {
             showError={showError.password}
           />
           <Button type="submit" text="create account" />
-        </form>
+        </Form>
       )}
     </div>
   );

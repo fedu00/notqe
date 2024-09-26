@@ -4,27 +4,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  .error-container {
-    padding: 30px;
-    border-radius: 5px;
-    background-color: #3e4247;
-    color: #eeeee1;
-    .error-message {
-      font-size: 50px;
-      color: #de4747;
-      @media (max-width: $breakpoint-xl) {
-        font-size: 28px;
-      }
-    }
-    .error-text {
-      font-size: 28px;
-      margin-top: 20px;
-      @media (max-width: $breakpoint-xl) {
-        font-size: 16px;
-      }
-    }
+
+  &__container {
+    padding: $padding-xl;
+    border-radius: $border-radius-s;
+    background-color: $primary-dark-300;
+    color: $primary-light-100;
     @media (max-width: $breakpoint-xl) {
-      padding: 20px;
+      padding: $padding-m;
+    }
+  }
+
+  &__message {
+    font-size: $font-size-xxxl;
+    color: $error-color;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__text {
+    font-size: $padding-xl;
+    margin-top: $margin-l;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $padding-m;
     }
   }
 }

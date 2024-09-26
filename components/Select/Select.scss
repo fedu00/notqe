@@ -1,9 +1,13 @@
 .select {
   position: relative;
   display: inline-block;
-  margin-bottom: $margin-xl;
+  margin-bottom: $margin-l;
   width: 320px;
-  .select__field {
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+
+  &__field {
     padding: $padding-s $padding-xl;
     width: 320px;
     font-size: $font-size-l;
@@ -18,14 +22,12 @@
       width: 100%;
     }
   }
-  .select__arrow-icon {
+
+  &__arrow-icon {
     position: absolute;
     right: 10px;
     top: 50%;
     pointer-events: none;
     transform: translate(0, -50%);
-  }
-  @media (max-width: $breakpoint-xs) {
-    width: 100%;
   }
 }

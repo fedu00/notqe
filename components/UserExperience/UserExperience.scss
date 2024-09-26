@@ -2,62 +2,58 @@
 
 .theme-background {
   @include theme-container();
-  padding: $padding-m;
-  @media (max-width: $breakpoint-xl) {
-    padding: $padding-s;
-  }
 }
 
 .user-experience {
   padding: $padding-l;
   border-radius: $border-radius-s;
-
-  .user-experience__lvl-container {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    margin-left: auto;
-
-    .user-experience__lvl-value {
-      font-size: 72px;
-      font-weight: 500;
-    }
-
-    .user-experience__lvl {
-      text-align: center;
-      font-size: $font-size-l;
-      margin: 0 0 $margin-m $margin-m;
-    }
-  }
-
-  .user-experience__progres-bar-background {
-    display: flex;
-    width: 350px;
-
-    .user-experience__progres-bar-fill {
-      height: 20px;
-      width: 90%;
-      background-color: #d3d3d3;
-      border-radius: $border-radius-s;
-    }
-    .user-experience__progres-bar-value {
-      margin-left: $margin-s;
-    }
-    @media (max-width: $breakpoint-l) {
-      width: 100%;
-    }
-  }
-
-  .user-experience__tasks {
-    margin-top: $margin-s;
-    text-align: left;
-    padding-left: $padding-m;
-  }
-
   @media (max-width: $breakpoint-xxxl) {
     margin-bottom: $margin-m;
   }
   @media (max-width: $breakpoint-l) {
     width: 90%;
+  }
+
+  &__lvl-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-left: auto;
+  }
+
+  &__lvl-value {
+    font-size: 72px;
+    font-weight: 500;
+  }
+
+  &__lvl {
+    text-align: center;
+    font-size: $font-size-l;
+    margin: 0 0 $margin-m $margin-m;
+  }
+
+  &__progres-bar-background {
+    display: flex;
+    width: 350px;
+    @media (max-width: $breakpoint-l) {
+      width: 100%;
+    }
+  }
+
+  &__progres-bar-fill {
+    height: 20px;
+    width: 90%;
+    background-color: $primary-light-300;
+    border-radius: $border-radius-s;
+  }
+
+  &__progres-bar-value {
+    margin-left: $margin-s;
+  }
+
+  &__tasks {
+    margin-top: $margin-s;
+    text-align: left;
+    padding-left: $padding-m;
   }
 }

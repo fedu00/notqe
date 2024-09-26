@@ -6,20 +6,41 @@
   flex-direction: column;
   position: relative;
   min-width: 500px;
+  @media (max-width: $breakpoint-xl) {
+    min-width: unset;
+    width: 100%;
+  }
 
-  .task__input,
-  .task__textarea {
+  &--health-bgc {
+    background-color: $pink-color;
+  }
+  &--work-bgc {
+    background-color: $blue-color;
+  }
+  &--study-bgc {
+    background-color: $green-color;
+  }
+  &--other-bgc {
+    background-color: $orange-color;
+  }
+
+  &--edit-mode {
+    border: 2px solid;
+  }
+
+  &__input,
+  &__textarea {
     outline: none;
     border: none;
     background: none;
   }
 
-  .task__input {
+  &__input {
     font-size: $padding-m;
     padding-bottom: $margin-m;
   }
 
-  .task__textarea {
+  &__textarea {
     resize: none;
     max-height: 250px;
     transition: height $transition-duration-slow,
@@ -27,11 +48,11 @@
       color $transition-duration-slow;
   }
 
-  .task__textarea::-webkit-scrollbar {
+  &__textarea::-webkit-scrollbar {
     display: none;
   }
 
-  .task__icons-container {
+  &__icons-container {
     position: absolute;
     bottom: 7px;
     right: 10px;
@@ -42,30 +63,13 @@
       transition: color $transition-duration-slow,
         transform $transition-duration-slow;
     }
-
-    svg:hover {
-      fill: $primary-light-100;
-    }
-
-    .task__icon--show-description {
-      transform: rotate(180deg);
-    }
-
-    .task__icon--edit {
-      fill: $primary-light-100;
-    }
   }
 
-  .task__icons-container--dark {
-    svg:hover {
-      fill: $primary-dark-400;
-    }
-    .task__icon--edit {
-      fill: $primary-dark-400;
-    }
+  &__icon--show-description {
+    transform: rotate(180deg);
   }
 
-  .task__importance {
+  &__importance {
     position: absolute;
     top: 7px;
     right: 10px;
@@ -74,36 +78,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid $primary-dark-400;
+    transition: color $transition-duration-slow,
+      border-color $transition-duration-slow;
+    border: 2px solid;
     border-radius: $border-radius-m;
   }
-
-  .task__importance--dark {
-    border-color: $primary-light-100;
-    color: $primary-light-100;
-  }
-  @media (max-width: $breakpoint-xl) {
-    min-width: unset;
-    width: 100%;
-  }
-}
-
-.task--health-bgc {
-  background-color: $pink-color;
-}
-.task--work-bgc {
-  background-color: $blue-color;
-}
-.task--study-bgc {
-  background-color: $green-color;
-}
-.task--other-bgc {
-  background-color: $orange-color;
-}
-
-.task--edit-mode {
-  border: 2px solid $primary-dark-400;
-}
-.task--dark-edit-mode {
-  border: 2px solid $primary-light-100;
 }

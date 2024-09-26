@@ -15,6 +15,7 @@ import Select from "@/components/Select/Select";
 import axios from "axios";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Form from "@/components/Form/Form";
 
 export default function CreateTask() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -84,7 +85,8 @@ export default function CreateTask() {
             <h2 className="create-task__title">Create a new task</h2>
             <Button onClick={handleAddTask} text="create task" />
           </div>
-          <form>
+          {/* <form> */}
+          <Form>
             <Input
               type="text"
               value={task.title}
@@ -108,10 +110,13 @@ export default function CreateTask() {
               placeholder="select importance level"
               onChange={handleOnChange("importanceLevel")}
             />
-            {showError && (
+            {showError ? (
               <ErrorMessage errorMessage="You must complete all fields!" />
+            ) : (
+              <span>&nbsp;</span>
             )}
-          </form>
+            {/* </form> */}
+          </Form>
         </>
       )}
     </div>

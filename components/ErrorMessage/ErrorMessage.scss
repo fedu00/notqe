@@ -1,7 +1,5 @@
-#error-message {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
+.error-message {
   color: $error-color;
   font-size: $font-size-s;
+  width: 100%;
 }

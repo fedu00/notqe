@@ -73,7 +73,7 @@ export default function ManageTask() {
     setCurrentTasksData(newTasksData);
   };
 
-  const emptyTasksData: boolean = tasksData.length === 0;
+  const emptyTasksData = tasksData.length === 0;
   if (emptyTasksData) {
     return (
       <div>
@@ -89,7 +89,7 @@ export default function ManageTask() {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="manage-task__tasks-container">
+        <div className="manage-tasks__tasks-container">
           <div className="manage-tasks__filters">
             <h2 className="manage_tasks__title">manage your tasks</h2>
             <Select
@@ -107,7 +107,7 @@ export default function ManageTask() {
               placeholder="select task importance"
             />
           </div>
-          <div className="manage-task__tasks-list theme-background">
+          <div className="manage-tasks__tasks-list theme-background">
             {currentTasksData.length > 0 ? (
               currentTasksData.map((task: DataType) => (
                 <Task

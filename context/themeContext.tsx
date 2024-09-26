@@ -2,31 +2,35 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 interface ThemeContextType {
-  darkModeTheme: boolean;
+  theme: string;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  darkModeTheme: true,
+  theme: "dark",
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }) {
-  const [darkModeTheme, setDarkModeTheme] = useState(false);
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    setDarkModeTheme(prefersDarkMode);
+    if (prefersDarkMode) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
   }, []);
 
   const toggleTheme = () => {
-    setDarkModeTheme((prev) => !prev);
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   return (
-    <ThemeContext.Provider value={{ darkModeTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

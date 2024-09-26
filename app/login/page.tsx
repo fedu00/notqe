@@ -9,6 +9,7 @@ import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loader from "@/components/Loader/Loader";
+import Form from "@/components/Form/Form";
 
 type UserType = {
   email: string;
@@ -60,7 +61,7 @@ export default function LoginPage() {
       {isLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleLogin}>
+        <Form onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="enter your email"
@@ -78,7 +79,7 @@ export default function LoginPage() {
             showError={showError}
           />
           <Button text="log in" type="submit" />
-        </form>
+        </Form>
       )}
     </div>
   );

@@ -2,22 +2,22 @@
 
 .theme-background {
   @include theme-container();
-  padding: $padding-m;
-  @media (max-width: $breakpoint-xl) {
-    padding: $padding-s;
-  }
 }
 
 .profile {
   max-width: 600px;
-  .profile__title {
-    margin-top: 0px;
-  }
+  padding: $padding-m;
   @media (max-width: $breakpoint-xl) {
     max-width: unset;
     width: 80%;
+    padding: $padding-s;
   }
+
   @media (max-width: $breakpoint-l) {
     width: 90%;
+  }
+
+  &__title {
+    margin-top: 0px;
   }
 }

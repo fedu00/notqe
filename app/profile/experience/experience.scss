@@ -2,21 +2,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  .experience__scores-container {
+  @media (max-width: $breakpoint-xxxl) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  &__scores-container {
     margin-right: $margin-l;
-    .experience__scores-group {
-      display: flex;
-      justify-content: center;
-      @media (max-width: $breakpoint-xl) {
-        flex-wrap: wrap;
-      }
-    }
     @media (max-width: $breakpoint-xxxl) {
       margin-right: 0px;
     }
   }
-  @media (max-width: $breakpoint-xxxl) {
-    flex-direction: column-reverse;
-    align-items: center;
+
+  &__scores-group {
+    display: flex;
+    justify-content: center;
+    @media (max-width: $breakpoint-xl) {
+      flex-wrap: wrap;
+    }
   }
 }

@@ -7,12 +7,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/store/authSlice";
 import { RootState } from "../../redux/store/store";
-import { useTheme } from "@/context/themeContext";
 import { Josefin_Sans } from "next/font/google";
 import Button from "../Button/Button";
 import axios from "axios";
 import Link from "next/link";
-import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import clsx from "clsx";
 
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -40,7 +39,6 @@ export default function Menu() {
   const dispatch = useDispatch();
   const { auth } = useSelector((state: RootState) => state);
   const { isUserLogIn } = auth;
-  const { darkModeTheme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -83,10 +81,9 @@ export default function Menu() {
       <h1 className={clsx(josefin.className, "menu__logo")}>notqe</h1>
       {isMobileSize && isUserLogIn && (
         <RxHamburgerMenu
-          className="menu__hamburger-menu-icon"
-          color={darkModeTheme ? "#eeeee1" : "#3e4247"}
+          className="menu__hamburger-icon"
           onClick={toggleShowMenu}
-          size={40}
+          size="40px"
         />
       )}
       <div className="menu__menu-container">
@@ -95,8 +92,7 @@ export default function Menu() {
             <ul
               className={clsx(
                 "menu__list",
-                showmenu && "menu__list--show-menu",
-                darkModeTheme && "menu__list--dark-mode"
+                showmenu && "menu__list--show-menu"
               )}
             >
               {menuElements.map((menuElement) => (
@@ -118,13 +114,13 @@ export default function Menu() {
               </li>
               {isMobileSize && (
                 <li>
-                  <DarkModeSwitch />
+                  <ThemeSwitch />
                 </li>
               )}
             </ul>
           </>
         )}
-        {!isMobileSize && <DarkModeSwitch />}
+        {!isMobileSize && <ThemeSwitch />}
       </div>
     </div>
   );

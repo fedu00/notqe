@@ -4,7 +4,7 @@ import { useRef } from "react";
 import clsx from "clsx";
 interface ButtonType {
   text: string;
-  onClick?: () => any | undefined;
+  onClick?: () => void;
   type?: "submit" | "reset" | "button";
   grayButton?: boolean;
 }

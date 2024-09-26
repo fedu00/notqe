@@ -1,5 +1,10 @@
 .textarea {
-  .textarea__field {
+  margin-bottom: $margin-m;
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
+  }
+
+  &__field {
     resize: none;
     padding: $padding-s $padding-xl;
     width: 320px;
@@ -7,17 +12,14 @@
     border: none;
     border-radius: $border-radius-s;
     outline: none;
-    margin-bottom: $margin-xl;
     transition: background-color $transition-duration-slow;
+
     @media (max-width: $breakpoint-xl) {
       padding: $padding-xs $padding-m;
-      margin-bottom: $margin-l;
     }
+
     @media (max-width: $breakpoint-xs) {
       width: 100%;
     }
-  }
-  @media (max-width: $breakpoint-xs) {
-    width: 100%;
   }
 }

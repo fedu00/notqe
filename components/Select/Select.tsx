@@ -7,7 +7,7 @@ interface SelectType {
   value: string;
   placeholder: string;
 }
-export default function Selectt({
+export default function Select({
   data,
   onChange,
   value,

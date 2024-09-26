@@ -29,7 +29,11 @@ export default function Input({
         placeholder={placeholder}
       />
 
-      {showError && <ErrorMessage errorMessage={errorMessage} />}
+      {showError ? (
+        <ErrorMessage errorMessage={errorMessage} />
+      ) : (
+        <span>&nbsp;</span>
+      )}
     </div>
   );
 }

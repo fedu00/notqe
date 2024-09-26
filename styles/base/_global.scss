@@ -1,77 +1,85 @@
+[theme-mode="light"] {
+  --primary-background-color: #{$primary-light-200};
+  --secondary-background-color: #{$primary-light-100};
+  --button-background-color: #{$primary-dark-200};
+  --button-hover-background-color: #{$primary-dark-300};
+  --gray-button-background-color: #{$primary-dark-100};
+  --gray-button-hover-background-color: #{$primary-dark-200};
+  --primary-svg-color: #{$primary-dark-300};
+  --sun-svg-color: #{$primary-light-200};
+  --svg-background-position: #{$svg-background-left-spacing-small};
+  --svg-background-color: #{$primary-dark-400};
+}
+
+[theme-mode="dark"] {
+  --primary-background-color: #{$primary-dark-400};
+  --secondary-background-color: #{$primary-dark-300};
+  --button-background-color: #{$orange-color};
+  --button-hover-background-color: #{$light-orange-color};
+  --gray-button-background-color: #{$primary-dark-100};
+  --gray-button-hover-background-color: #{$primary-dark-200};
+  --primary-svg-color: #{$primary-light-100};
+  --sun-svg-color: #{$light-orange-color};
+  --svg-background-position: #{$svg-background-left-spacing-medium};
+  --svg-background-color: #{$light-orange-color};
+}
+
 body {
-  background-color: $primary-light-200;
+  background-color: var(--primary-background-color);
   transition: background-color $transition-duration-slow;
+  ul {
+    background-color: var(--primary-background-color);
+    transition: background-color $transition-duration-slow;
+  }
   button {
-    background-color: $primary-dark-200;
-    color: $primary-light-100;
+    background-color: var(--button-background-color);
   }
   button:hover {
-    background-color: $primary-dark-300;
+    background-color: var(--button-hover-background-color);
   }
   .button--gray {
-    background-color: $primary-dark-100;
+    background-color: var(--gray-button-background-color);
   }
   .button--gray:hover {
-    background-color: $primary-dark-200;
+    background-color: var(--gray-button-hover-background-color);
   }
 
   select,
   textarea,
   input {
-    background-color: $primary-light-100;
-    color: $primary-dark-300;
+    background-color: var(--secondary-background-color);
   }
-
-  .theme-background {
-    background-color: $primary-light-100;
+  svg {
+    color: var(--primary-svg-color);
   }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    padding-bottom: $padding-m;
-    @media (max-width: $breakpoint-xs) {
-      width: 100%;
-    }
+  svg:hover {
+    color: var(--secondary-background-color);
   }
-}
-
-.dark-mode {
-  background-color: $primary-dark-400;
-
-  button {
-    background-color: $orange-color;
+  .switch-button {
+    background-color: var(--primary-background-color);
+    border-color: var(--svg-background-color);
+  }
+  .switch-button__icon-moon {
     color: $primary-dark-400;
   }
-  button:hover {
-    background-color: $light-orange-color;
+  .switch-button__icon-sun {
+    color: var(--sun-svg-color);
   }
-  .button--gray {
-    background-color: $primary-dark-100;
-    color: $primary-light-100;
+  .switch-button__icon-background {
+    background-color: var(--svg-background-color);
+    left: var(--svg-background-position);
   }
-  .button--gray:hover {
-    background-color: $primary-dark-200;
+  .menu__hamburger-icon:hover {
+    color: var(--primary-svg-color);
   }
-
-  select,
-  textarea,
-  input {
-    background-color: $primary-dark-300;
-    color: $primary-light-100;
+  .task__importance {
+    border-color: var(--primary-svg-color);
+  }
+  .task--edit-mode {
+    border-color: var(--primary-svg-color);
   }
 
   .theme-background {
-    background-color: $primary-dark-300;
-  }
-}
-
-@media (max-width: $breakpoint-xl) {
-  body {
-    .theme-background {
-      // padding: $padding-s;
-    }
+    background-color: var(--secondary-background-color);
   }
 }
