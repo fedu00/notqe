@@ -33,7 +33,7 @@ const josefin = Josefin_Sans({
 
 export default function Menu() {
   const router = useRouter();
-  const [showmenu, setShowMenu] = useState<boolean>(false);
+  const [showmenu, setShowMenu] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
   const dispatch = useDispatch();

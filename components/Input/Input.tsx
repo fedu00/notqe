@@ -32,7 +32,9 @@ export default function Input({
       {showError ? (
         <ErrorMessage errorMessage={errorMessage} />
       ) : (
-        <span>&nbsp;</span>
+        <span>
+          <br></br>
+        </span>
       )}
     </div>
   );

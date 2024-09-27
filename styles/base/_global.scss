@@ -65,7 +65,7 @@ body {
   .switch-button__icon-sun {
     color: var(--sun-svg-color);
   }
-  .switch-button__icon-background {
+  .switch-button:after {
     background-color: var(--svg-background-color);
     left: var(--svg-background-position);
   }

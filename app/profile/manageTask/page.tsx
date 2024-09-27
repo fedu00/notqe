@@ -14,10 +14,10 @@ import Task from "@/components/Task/Task";
 import Loader from "@/components/Loader/Loader";
 
 export default function ManageTask() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
-  const [currentCategory, setCurrentCategory] = useState<string>("all");
-  const [currentImportance, setCurrentImportance] = useState<string>("all");
+  const [currentCategory, setCurrentCategory] = useState("all");
+  const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
   const { userData } = useSelector((state: RootState) => state);
   const { userId } = userData;

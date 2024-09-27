@@ -55,18 +55,16 @@ export default function Task({
   setTasksData,
 }: TaskComponentType) {
   const { title, description, category, importanceLevel } = task;
-  const [isUserTasksDataStale, setIsUserTasksDataStale] =
-    useState<boolean>(false);
-
+  const [isUserTasksDataStale, setIsUserTasksDataStale] = useState(false);
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
     category,
     importanceLevel,
   });
-  const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [edit, setEdit] = useState<boolean>(false);
-  const [textareaHeight, setTextareaHeight] = useState<number>(32);
+  const [showDescription, setShowDescription] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(32);
 
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state);

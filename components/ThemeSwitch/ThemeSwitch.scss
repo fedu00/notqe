@@ -12,6 +12,18 @@
   justify-content: space-between;
   margin: 0;
 
+  &:after {
+    content: "";
+    position: absolute;
+    height: 31px;
+    width: 31px;
+    top: 3px;
+    border-radius: $border-radius-m;
+    z-index: $z-index-negative;
+    transition: left $transition-duration-slow,
+      background-color $transition-duration-slow;
+  }
+
   &__icon-moon,
   &__icon-sun {
     background-color: transparent;
@@ -25,16 +37,5 @@
 
   &__icon-moon {
     margin-right: 2px;
-  }
-
-  &__icon-background {
-    position: absolute;
-    transition: left $transition-duration-slow,
-      background-color $transition-duration-slow;
-    height: 31px;
-    width: 31px;
-    top: 3px;
-    border-radius: $border-radius-m;
-    z-index: $z-index-negative;
   }
 }

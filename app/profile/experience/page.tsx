@@ -8,7 +8,7 @@ import Loader from "@/components/Loader/Loader";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { userData } = useSelector((state: RootState) => state);
 
   useEffect(() => {

@@ -32,7 +32,7 @@ export default function SignUpPage() {
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange =
     (field: keyof FullUserType) =>

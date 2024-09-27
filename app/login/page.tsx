@@ -18,12 +18,12 @@ type UserType = {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [showError, setShowError] = useState<boolean>(false);
+  const [showError, setShowError] = useState(false);
   const [user, setUser] = useState<UserType>({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleOnChange =

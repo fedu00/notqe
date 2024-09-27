@@ -15,7 +15,7 @@ const TEST_USER_ACCOUNT = {
 
 export default function Home() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 

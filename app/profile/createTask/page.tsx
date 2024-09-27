@@ -18,14 +18,14 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Form from "@/components/Form/Form";
 
 export default function CreateTask() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
     category: "default",
     importanceLevel: "default",
   });
-  const [showError, setShowError] = useState<boolean>(false);
+  const [showError, setShowError] = useState(false);
   const { userData } = useSelector((state: RootState) => state);
 
   useEffect(() => {
@@ -85,7 +85,6 @@ export default function CreateTask() {
             <h2 className="create-task__title">Create a new task</h2>
             <Button onClick={handleAddTask} text="create task" />
           </div>
-          {/* <form> */}
           <Form>
             <Input
               type="text"
@@ -113,9 +112,10 @@ export default function CreateTask() {
             {showError ? (
               <ErrorMessage errorMessage="You must complete all fields!" />
             ) : (
-              <span>&nbsp;</span>
+              <span>
+                <br></br>
+              </span>
             )}
-            {/* </form> */}
           </Form>
         </>
       )}
