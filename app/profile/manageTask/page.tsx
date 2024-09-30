@@ -1,10 +1,6 @@
 "use client";
 import "./manageTask.scss";
 import { useEffect, useState } from "react";
-import {
-  FULL_TASK_CATEGORY_LIST,
-  FULL_TASK_LVL_IMPORTANCE_LIST,
-} from "@/constans/constans";
 import { DataType } from "@/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -13,17 +9,54 @@ import axios from "axios";
 import Task from "@/components/Task/Task";
 import Loader from "@/components/Loader/Loader";
 
+enum CategoryTaskType {
+  ALL = "all",
+  HEALTH = "health",
+  WORK = "work",
+  STUDY = "study",
+  OTHER = "other",
+}
+
+enum ImportanceLvlTaskType {
+  ALL = "all",
+  NO_IMPORTANT = "no important",
+  LESS_IMPORTANT = "less important",
+  MEDIUM = "medium",
+  IMPORTANT = "important",
+  VERY_IMPORTANT = "very important",
+}
+
+const FULL_TASK_CATEGORY_LIST: CategoryTaskType[] = [
+  CategoryTaskType.ALL,
+  CategoryTaskType.HEALTH,
+  CategoryTaskType.WORK,
+  CategoryTaskType.STUDY,
+  CategoryTaskType.OTHER,
+];
+
+const FULL_TASK_LVL_IMPORTANCE_LIST: ImportanceLvlTaskType[] = [
+  ImportanceLvlTaskType.ALL,
+  ImportanceLvlTaskType.NO_IMPORTANT,
+  ImportanceLvlTaskType.LESS_IMPORTANT,
+  ImportanceLvlTaskType.MEDIUM,
+  ImportanceLvlTaskType.IMPORTANT,
+  ImportanceLvlTaskType.VERY_IMPORTANT,
+];
+
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState(true);
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
-  const [currentCategory, setCurrentCategory] = useState("all");
+  const [currentCategory, setCurrentCategory] = useState(CategoryTaskType.ALL);
   const [currentImportance, setCurrentImportance] = useState("all");
-  const [currentTasksData, setCurrentTasksData] = useState<DataType[] | []>([]);
+  const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
   const { userData } = useSelector((state: RootState) => state);
   const { userId } = userData;
 
   const getFilteredTasks = () => {
-    if (currentCategory === "all" && currentImportance === "all") {
+    if (
+      currentCategory === CategoryTaskType.ALL &&
+      currentImportance === ImportanceLvlTaskType.ALL
+    ) {
       setCurrentTasksData(tasksData);
     } else {
       const categoryFilteredTasks = tasksData.filter(
@@ -94,16 +127,28 @@ export default function ManageTask() {
             <h2 className="manage_tasks__title">manage your tasks</h2>
             <Select
               data={FULL_TASK_CATEGORY_LIST}
-              value={currentCategory === "all" ? "default" : currentCategory}
-              onChange={(event) => setCurrentCategory(event.target.value)}
+              value={
+                currentCategory === CategoryTaskType.ALL
+                  ? "default"
+                  : currentCategory
+              }
+              onChange={(event) =>
+                setCurrentCategory(event.target.value as CategoryTaskType)
+              }
               placeholder="select category"
             />
             <Select
               data={FULL_TASK_LVL_IMPORTANCE_LIST}
               value={
-                currentImportance === "all" ? "default" : currentImportance
+                currentImportance === ImportanceLvlTaskType.ALL
+                  ? "default"
+                  : currentImportance
               }
-              onChange={(event) => setCurrentImportance(event.target.value)}
+              onChange={(event) =>
+                setCurrentImportance(
+                  event.target.value as ImportanceLvlTaskType
+                )
+              }
               placeholder="select task importance"
             />
           </div>

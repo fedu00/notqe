@@ -47,6 +47,8 @@ const getTaskImportance = (importance: string): string => {
   }
 };
 
+const MIN_TEXTAREA_HEIGHT = 32;
+
 export default function Task({
   task,
   id,
@@ -64,7 +66,7 @@ export default function Task({
   });
   const [showDescription, setShowDescription] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [textareaHeight, setTextareaHeight] = useState(32);
+  const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state);
