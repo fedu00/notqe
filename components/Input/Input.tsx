@@ -28,14 +28,7 @@ export default function Input({
         onChange={onChange}
         placeholder={placeholder}
       />
-
-      {showError ? (
-        <ErrorMessage errorMessage={errorMessage} />
-      ) : (
-        <span>
-          <br></br>
-        </span>
-      )}
+      <ErrorMessage errorMessage={errorMessage} showError={showError} />
     </div>
   );
 }

@@ -109,13 +109,10 @@ export default function CreateTask() {
               placeholder="select importance level"
               onChange={handleOnChange("importanceLevel")}
             />
-            {showError ? (
-              <ErrorMessage errorMessage="You must complete all fields!" />
-            ) : (
-              <span>
-                <br></br>
-              </span>
-            )}
+            <ErrorMessage
+              showError={showError}
+              errorMessage="You must complete all fields!"
+            />
           </Form>
         </>
       )}

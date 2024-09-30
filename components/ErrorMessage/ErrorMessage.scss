@@ -1,5 +1,8 @@
-.error-message {
-  color: $error-color;
-  font-size: $font-size-s;
-  width: 100%;
+.error {
+  height: $error-container-height;
+  &-message {
+    color: $error-color;
+    font-size: $font-size-s;
+    width: 100%;
+  }
 }
