@@ -1,12 +1,13 @@
 "use client";
-import styles from "./signup.module.scss";
+import "./signup.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
+import Form from "@/components/Form/Form";
 
 type FullUserType = {
   username: string;
@@ -31,7 +32,7 @@ export default function SignUpPage() {
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange =
     (field: keyof FullUserType) =>
@@ -75,20 +76,13 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className={styles.signup_container}>
+    <div className="signup">
       <h2>Create Account</h2>
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <form
-          autoComplete="off"
+        <Form
+          autoComplete={false}
           onSubmit={(event) => {
             event.preventDefault();
             handleSignup(event);
@@ -119,7 +113,7 @@ export default function SignUpPage() {
             showError={showError.password}
           />
           <Button type="submit" text="create account" />
-        </form>
+        </Form>
       )}
     </div>
   );

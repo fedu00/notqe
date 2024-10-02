@@ -1,32 +1,39 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
+enum AppModeTypes {
+  DARK = "dark",
+  LIGHT = "light",
+}
+
 interface ThemeContextType {
-  darkModeTheme: boolean;
+  theme: AppModeTypes;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  darkModeTheme: true,
+  theme: AppModeTypes.DARK,
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }) {
-  const [darkModeTheme, setDarkModeTheme] = useState(false);
+  const [theme, setTheme] = useState(AppModeTypes.DARK);
 
   useEffect(() => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    setDarkModeTheme(prefersDarkMode);
+    setTheme(prefersDarkMode ? AppModeTypes.DARK : AppModeTypes.LIGHT);
   }, []);
 
   const toggleTheme = () => {
-    setDarkModeTheme((prev) => !prev);
+    setTheme(
+      theme === AppModeTypes.DARK ? AppModeTypes.LIGHT : AppModeTypes.DARK
+    );
   };
 
   return (
-    <ThemeContext.Provider value={{ darkModeTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

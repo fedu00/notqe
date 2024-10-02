@@ -1,5 +1,6 @@
 $primary-light-100: #eeeee1;
 $primary-light-200: #d0c2bd;
+$primary-light-300: #d3d3d3;
 
 $primary-dark-100: #979797;
 $primary-dark-200: #565b61;
@@ -13,7 +14,7 @@ $pink-color: #fe56aaab;
 $blue-color: #6c87ffb0;
 $green-color: #0db985ab;
 
-$margin-xxs: 4px;
+$margin-xxs: 6px;
 $margin-xs: 8px;
 $margin-s: 12px;
 $margin-m: 16px;
@@ -40,6 +41,7 @@ $font-size-m: 16px;
 $font-size-l: 20px;
 $font-size-xl: 24px;
 $font-size-xxl: 32px;
+$font-size-xxxl: 50px;
 
 $breakpoint-xs: 400px;
 $breakpoint-s: 450px;
@@ -48,3 +50,16 @@ $breakpoint-l: 600px;
 $breakpoint-xl: 800px;
 $breakpoint-xxl: 1000px;
 $breakpoint-xxxl: 1200px;
+
+$z-index-negative: 0;
+$z-index-default: 1;
+$z-index-navbar: 2;
+$z-index-modal: 3;
+
+$transition-duration-fast: 0.3s;
+$transition-duration-slow: 0.4s;
+
+$svg-background-left-spacing-small: 3px;
+$svg-background-left-spacing-medium: 41px;
+
+$error-container-height: 18px;

@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import UserExperience from "@/components/UserExperience/UserExperience";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { userData } = useSelector((state: RootState) => state);
 
   useEffect(() => {
@@ -26,20 +26,13 @@ export default function Experience() {
   } = importanceLevel;
 
   return (
-    <div className={"experience_container"}>
+    <div className="experience">
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
         <>
-          <div className={"tasks_experience_container"}>
-            <div className={`tasks_score_container`}>
+          <div className="experience__scores-container">
+            <div className="experience__scores-group">
               <TaskScore
                 score={health}
                 title={"health"}
@@ -57,7 +50,7 @@ export default function Experience() {
                 selectedClass={"other"}
               />
             </div>
-            <div className={`tasks_score_container`}>
+            <div className="experience__scores-group">
               <TaskScore score={noImportant} title={"no important"} />
               <TaskScore score={lessImportant} title={"less important"} />
               <TaskScore score={mediumImportant} title={"medium"} />

@@ -21,8 +21,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className={`profile_message theme-background`}>
-      <h2>welcome on your account {username}</h2>
+    <div className="profile theme-background">
+      <h2 className="profile__title">welcome on your account {username}</h2>
       <p>
         Build your future brick by brick. The NOTQE application can help you
         with this - organize your tasks and check your plans for today before

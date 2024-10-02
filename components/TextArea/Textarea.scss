@@ -1,32 +1,25 @@
-.textarea__field {
-  resize: none;
-  padding: $padding-s $padding-xl;
-  width: 320px;
-  font-size: $font-size-l;
-  border: none;
-  border-radius: $border-radius-s;
-  outline: none;
-  margin-bottom: $margin-xl;
-  transition: background-color 0.4s;
-}
-
-.textarea__field--error {
-  margin-bottom: 0;
-}
-
-.textarea__error {
-  color: $error-color;
-  font-size: $font-size-s;
-  margin: 0 0 17px 10px;
-}
-
-@media (max-width: $breakpoint-xl) {
-  .textarea__field {
-    font-size: 16px;
-    padding: $padding-xs $padding-m;
-    margin-bottom: $margin-l;
+.textarea {
+  margin-bottom: $margin-m;
+  @media (max-width: $breakpoint-xs) {
+    width: 100%;
   }
-  .textarea__error {
-    margin: 0 0 11px 6px;
+
+  &__field {
+    resize: none;
+    padding: $padding-s $padding-xl;
+    width: 320px;
+    font-size: $font-size-l;
+    border: none;
+    border-radius: $border-radius-s;
+    outline: none;
+    transition: background-color $transition-duration-slow;
+
+    @media (max-width: $breakpoint-xl) {
+      padding: $padding-xs $padding-m;
+    }
+
+    @media (max-width: $breakpoint-xs) {
+      width: 100%;
+    }
   }
 }

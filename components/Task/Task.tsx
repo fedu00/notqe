@@ -9,10 +9,8 @@ import { TaskComponentType, TaskType } from "@/types/types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { updateUserTaskValue } from "@/redux/store/userSlice";
-import { useTheme } from "@/context/themeContext";
-import { Inter } from "next/font/google";
 import axios from "axios";
-const inter = Inter({ subsets: ["latin"] });
+import clsx from "clsx";
 
 const getImportanceTaskNumber = (importance: string): string => {
   switch (importance) {
@@ -49,6 +47,8 @@ const getTaskImportance = (importance: string): string => {
   }
 };
 
+const MIN_TEXTAREA_HEIGHT = 32;
+
 export default function Task({
   task,
   id,
@@ -57,29 +57,26 @@ export default function Task({
   setTasksData,
 }: TaskComponentType) {
   const { title, description, category, importanceLevel } = task;
-  const [isUserTasksDataStale, setIsUserTasksDataStale] =
-    useState<boolean>(false);
-
+  const [isUserTasksDataStale, setIsUserTasksDataStale] = useState(false);
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
     category,
     importanceLevel,
   });
-  const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [edit, setEdit] = useState<boolean>(false);
-  const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
+  const [showDescription, setShowDescription] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state);
-  const { darkModeTheme } = useTheme();
   const textareaRef = useRef(null);
 
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    if (event.target.scrollHeight > textareaHeaight) {
-      setTextareaHeaight(event.target.scrollHeight);
+    if (event.target.scrollHeight > textareaHeight) {
+      setTextareaHeight(event.target.scrollHeight);
     }
   };
 
@@ -161,9 +158,11 @@ export default function Task({
 
   return (
     <div
-      className={`task task--${category}-bgc ${
-        edit && (darkModeTheme ? "task--dark-edit-mode" : "task--edit-mode")
-      }`}
+      className={clsx(
+        "task",
+        `task--${category}-bgc`,
+        edit && "task--edit-mode"
+      )}
     >
       <input
         ref={textareaRef}
@@ -177,56 +176,38 @@ export default function Task({
       />
       <textarea
         value={currentTask.description}
-        style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
+        style={{ height: showDescription ? textareaHeight + "px" : "0px" }}
         disabled={!edit}
-        className={`task__textarea ${inter.className} `}
+        className="task__textarea"
         onChange={(event) => {
           handleTextareaHeight(event);
           setCurrentTask({ ...currentTask, description: event.target.value });
         }}
       />
 
-      <div
-        className={`task__icons-container ${
-          darkModeTheme && "task__icons-container--dark"
-        } `}
-      >
+      <div className="task__icons-container">
         <AiFillCaretDown
           title={showDescription ? "hide description" : "show description"}
           onClick={() => {
             setShowDescription(!showDescription);
           }}
-          size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
-          className={`${showDescription && "task__icon--show-description"}`}
+          size="30px"
+          className={clsx(showDescription && "task__icon--show-description")}
         />
         <AiFillCheckCircle
-          size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          size="30px"
           onClick={handleFinishTask}
           title="finish task"
         />
         <MdEdit
-          size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
+          size="30px"
           title="edit task"
-          className={`${edit && "task__icon--edit"}`}
+          className={clsx(edit && "task__icon--edit")}
           onClick={handleEditTask}
         />
-        <MdDelete
-          title="delete task"
-          size={"30px"}
-          color={darkModeTheme ? "#eeeee1" : "#22252a"}
-          onClick={handleDeleteTask}
-        />
+        <MdDelete title="delete task" size="30px" onClick={handleDeleteTask} />
       </div>
-      <div
-        className={`task__importance ${
-          darkModeTheme && "task__importance--dark"
-        } `}
-      >
-        {importanceNumber}
-      </div>
+      <div className="task__importance">{importanceNumber}</div>
     </div>
   );
 }

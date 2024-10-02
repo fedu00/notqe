@@ -14,8 +14,8 @@ export default function Select({
   placeholder = "default",
 }: SelectType) {
   return (
-    <div className={"select"}>
-      <select className={"select__field"} onChange={onChange} value={value}>
+    <div className="select">
+      <select className="select__field" onChange={onChange} value={value}>
         <option value="default" disabled>
           {placeholder}
         </option>
@@ -23,7 +23,7 @@ export default function Select({
           <option key={category}>{category}</option>
         ))}
       </select>
-      <BiSolidDownArrow className={"select__arrow-icon"} />
+      <BiSolidDownArrow className="select__arrow-icon" />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import styles from "./login.module.scss";
+import "./login.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -8,7 +8,8 @@ import { login } from "@/redux/store/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
+import Form from "@/components/Form/Form";
 
 type UserType = {
   email: string;
@@ -17,12 +18,12 @@ type UserType = {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [showError, setShowError] = useState<boolean>(false);
+  const [showError, setShowError] = useState(false);
   const [user, setUser] = useState<UserType>({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleOnChange =
@@ -55,19 +56,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.login_container}>
+    <div className="login">
       <h2>Login your account</h2>
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <form onSubmit={handleLogin}>
+        <Form onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="enter your email"
@@ -85,7 +79,7 @@ export default function LoginPage() {
             showError={showError}
           />
           <Button text="log in" type="submit" />
-        </form>
+        </Form>
       )}
     </div>
   );

@@ -1,64 +1,59 @@
+@import "../../styles/utils/mixins";
+
+.theme-background {
+  @include theme-container();
+}
+
 .user-experience {
   padding: $padding-l;
   border-radius: $border-radius-s;
+  @media (max-width: $breakpoint-xxxl) {
+    margin-bottom: $margin-m;
+  }
+  @media (max-width: $breakpoint-l) {
+    width: 90%;
+  }
 
-  .user-experience__lvl {
+  &__lvl-container {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     margin-left: auto;
-
-    h1 {
-      font-size: 72px;
-      font-weight: 500;
-    }
-
-    p {
-      text-align: center;
-      font-size: $font-size-l;
-      margin: 0 0 $margin-m $margin-m;
-    }
   }
 
-  .user-experience__progres-bar-background {
+  &__lvl-value {
+    font-size: 72px;
+    font-weight: 500;
+  }
+
+  &__lvl {
+    text-align: center;
+    font-size: $font-size-l;
+    margin: 0 0 $margin-m $margin-m;
+  }
+
+  &__progres-bar-background {
     display: flex;
     width: 350px;
-
-    .user-experience__progres-bar-fill {
-      height: 20px;
-      width: 90%;
-      background-color: #d3d3d3;
-      border-radius: $border-radius-s;
-    }
-
-    p {
-      margin-left: $margin-s;
+    @media (max-width: $breakpoint-l) {
+      width: 100%;
     }
   }
 
-  .user-experience__tasks {
+  &__progres-bar-fill {
+    height: 20px;
+    width: 90%;
+    background-color: $primary-light-300;
+    border-radius: $border-radius-s;
+  }
+
+  &__progres-bar-value {
+    margin-left: $margin-s;
+  }
+
+  &__tasks {
     margin-top: $margin-s;
     text-align: left;
     padding-left: $padding-m;
-  }
-}
-
-@media (max-width: $breakpoint-xxxl) {
-  .user-experience {
-    margin-bottom: $margin-m;
-  }
-}
-@media (max-width: $breakpoint-l) {
-  .user-experience {
-    .user-experience__progres-bar-background {
-      width: 250px;
-    }
-  }
-}
-@media (max-width: $breakpoint-xs) {
-  .user-experience {
-    .user-experience__progres-bar-background {
-      width: 200px;
-    }
   }
 }

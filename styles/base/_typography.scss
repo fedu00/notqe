@@ -1,5 +1,16 @@
+[theme-mode="light"] {
+  --text-color: #{$primary-dark-400};
+  --button-color: #{$primary-light-100};
+  --form-field-color: #{$primary-dark-300};
+}
+[theme-mode="dark"] {
+  --text-color: #{$primary-light-100};
+  --button-color: #{$primary-dark-400};
+  --form-field-color: #{$primary-light-100};
+}
+
 html {
-  font-size: 16px;
+  font-size: $font-size-m;
   line-height: 1.5;
 }
 
@@ -9,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: $primary-dark-400;
+  color: var(--text-color);
 }
 h2 {
   font-weight: 500;
@@ -18,26 +29,27 @@ h2 {
 }
 
 a {
-  color: $primary-dark-400;
+  color: var(--text-color);
   text-decoration: none;
 }
 
 p {
-  color: $primary-dark-400;
+  color: var(--text-color);
 }
 
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6 {
-  color: $primary-light-100;
-}
-body.dark-mode p {
-  color: $primary-light-100;
+span {
+  font-size: $font-size-s;
 }
 
-body.dark-mode a {
-  color: $primary-light-100;
+button {
+  color: var(--button-color);
+}
+select,
+textarea,
+input {
+  color: var(--form-field-color);
+}
+
+.task__importance {
+  color: var(--form-field-color);
 }

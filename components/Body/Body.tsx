@@ -1,19 +1,22 @@
 "use client";
-import { Inter } from "next/font/google";
 import "./Body.scss";
-import Menu from "../Menu/Menu";
 import { useTheme } from "@/context/themeContext";
+import { Inter } from "next/font/google";
+import clsx from "clsx";
+import Menu from "../Menu/Menu";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Body({ children }) {
-  const { darkModeTheme } = useTheme();
+  const { theme } = useTheme();
+  useEffect(() => {
+    document.documentElement.setAttribute("theme-mode", theme);
+  }, [theme]);
+
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body
-        className={`${inter.className} body ${darkModeTheme && "dark-mode"}
-        `}
-      >
+      <body className={clsx(inter.className, "body")}>
         <Menu />
         <main>{children}</main>
       </body>

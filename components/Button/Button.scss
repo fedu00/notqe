@@ -5,7 +5,7 @@
   cursor: pointer;
   margin: 0 $margin-l $margin-l 0;
   font-size: $font-size-m;
-  transition: transform 0.3s;
+  transition: transform $transition-duration-fast;
 }
 
 @keyframes buttonAnimation {
