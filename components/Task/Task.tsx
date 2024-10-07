@@ -5,49 +5,54 @@ import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { TaskComponentType, TaskType } from "@/types/types";
+import { DataType } from "@/types/DataType";
+import { TaskType } from "@/types/TaskType";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { updateUserTaskValue } from "@/redux/store/userSlice";
+import { Dispatch, SetStateAction } from "react";
+import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import axios from "axios";
 import clsx from "clsx";
 
-const getImportanceTaskNumber = (importance: string): string => {
-  switch (importance) {
-    case "all":
-      return "all";
-    case "very important":
-      return "5";
-    case "important":
-      return "4";
-    case "medium":
-      return "3";
-    case "less important":
-      return "2";
-    case "no important":
-      return "1";
-    default:
-      return "";
-  }
-};
-const getTaskImportance = (importance: string): string => {
-  switch (importance) {
-    case "very important":
-      return "veryImportant";
-    case "important":
-      return "important";
-    case "medium":
-      return "mediumImportant";
-    case "less important":
-      return "lessImportant";
-    case "no important":
-      return "noImportant";
-    default:
-      return "noImportant";
-  }
+interface TaskComponentType {
+  task: TaskType;
+  id: string;
+  userID: string;
+  handleUpdateTasks(id: string): void;
+  setTasksData: Dispatch<SetStateAction<DataType[] | []>>;
+}
+const importanceTaskNumber: {
+  [key in ImportanceLevelTasksType]: string;
+} = {
+  [ImportanceLevelTasksType.VERY_IMPORTANT]: "5",
+  [ImportanceLevelTasksType.IMPORTANT]: "4",
+  [ImportanceLevelTasksType.MEDIUM]: "3",
+  [ImportanceLevelTasksType.LESS_IMPORTANT]: "2",
+  [ImportanceLevelTasksType.NO_IMPORTANT]: "1",
 };
 
-const MIN_TEXTAREA_HEIGHT = 32;
+const importanceTaskValue: {
+  [key in ImportanceLevelTasksType]: string;
+} = {
+  [ImportanceLevelTasksType.VERY_IMPORTANT]: "veryImportant",
+  [ImportanceLevelTasksType.IMPORTANT]: "important",
+  [ImportanceLevelTasksType.MEDIUM]: "mediumImportant",
+  [ImportanceLevelTasksType.LESS_IMPORTANT]: "lessImportant",
+  [ImportanceLevelTasksType.NO_IMPORTANT]: "noImportant",
+};
+
+const getImportanceTaskNumber = (
+  importance: ImportanceLevelTasksType
+): string => {
+  return importanceTaskNumber[importance];
+};
+
+const getTaskImportance = (importance: ImportanceLevelTasksType): string => {
+  return importanceTaskValue[importance];
+};
+
+const MIN_TEXTAREA_HEIGHT: number = 32;
 
 export default function Task({
   task,
@@ -70,7 +75,7 @@ export default function Task({
 
   const dispatch = useDispatch();
   const { userData } = useSelector((state: RootState) => state);
-  const textareaRef = useRef(null);
+  const inputRef = useRef<null | HTMLInputElement>(null);
 
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -165,7 +170,7 @@ export default function Task({
       )}
     >
       <input
-        ref={textareaRef}
+        ref={inputRef}
         value={currentTask.title}
         disabled={!edit}
         maxLength={25}

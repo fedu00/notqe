@@ -1,13 +1,15 @@
 import "./UserExperience.scss";
-import { DoneTasksType } from "@/types/types";
+import { DoneTasksType } from "@/types/DoneTasksType";
 
-type CurrentLvlInformationType =
-  | {
-      currentLvl: number;
-      lvlProgres: number;
-      taskForNextLvl: string;
-    }
-  | undefined;
+interface CurrentLvlInformationType {
+  currentLvl: number;
+  lvlProgresInPercent: number;
+  taskForNextLvl: string;
+}
+
+const inicialLvlValue: number = 6;
+const maxlvl: number = 99999;
+const nextLvlIncreasePoints: number = 2;
 
 export default function UserExperience({
   doneTasksData,
@@ -22,30 +24,33 @@ export default function UserExperience({
 
   const getCurrentLvlInformation = (
     doneTasks: number
-  ): CurrentLvlInformationType => {
-    let lvlRequirement = 6;
-    let requiredPointsForNextLvl = 6;
-    for (let lvl = 0; lvl < 99999; lvl++) {
-      if (doneTasks >= requiredPointsForNextLvl) {
-        lvlRequirement = lvlRequirement + 2;
-        requiredPointsForNextLvl = requiredPointsForNextLvl + lvlRequirement;
+  ): CurrentLvlInformationType | undefined => {
+    let currentLvlPointsRequirement = inicialLvlValue;
+    let nextLvlPointsRequirement = inicialLvlValue;
+    for (let currentlvl = 0; currentlvl < maxlvl; currentlvl++) {
+      if (doneTasks >= nextLvlPointsRequirement) {
+        currentLvlPointsRequirement =
+          currentLvlPointsRequirement + nextLvlIncreasePoints;
+        nextLvlPointsRequirement =
+          nextLvlPointsRequirement + currentLvlPointsRequirement;
       } else {
         const doneTasksOnThisLvl =
-          doneTasks - (requiredPointsForNextLvl - lvlRequirement);
-        const lvlProgres = Math.floor(
-          (doneTasksOnThisLvl / lvlRequirement) * 100
+          doneTasks - (nextLvlPointsRequirement - currentLvlPointsRequirement);
+        const lvlProgresInPercent = Math.floor(
+          (doneTasksOnThisLvl / currentLvlPointsRequirement) * 100
         );
         return {
-          currentLvl: lvl,
-          lvlProgres,
-          taskForNextLvl: `${doneTasksOnThisLvl}/${lvlRequirement}`,
+          currentLvl: currentlvl,
+          lvlProgresInPercent,
+          taskForNextLvl: `${doneTasksOnThisLvl}/${currentLvlPointsRequirement}`,
         };
       }
     }
   };
 
   const currentLvlInformation = getCurrentLvlInformation(doneTasks);
-  const { currentLvl, lvlProgres, taskForNextLvl } = currentLvlInformation!;
+  const { currentLvl, lvlProgresInPercent, taskForNextLvl } =
+    currentLvlInformation!;
 
   return (
     <div className="user-experience theme-background">
@@ -57,10 +62,12 @@ export default function UserExperience({
         <div
           className="user-experience__progres-bar-fill"
           style={{
-            backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgres}%, rgba(0, 0, 0, 0) ${lvlProgres}%)`,
+            backgroundImage: `linear-gradient(to right, #ffa768c5 ${lvlProgresInPercent}%, rgba(0, 0, 0, 0) ${lvlProgresInPercent}%)`,
           }}
         ></div>
-        <p className="user-experience__progres-bar-value">{lvlProgres}%</p>
+        <p className="user-experience__progres-bar-value">
+          {lvlProgresInPercent}%
+        </p>
       </div>
       <p className="user-experience__tasks">
         tasks for next lvl: {taskForNextLvl}

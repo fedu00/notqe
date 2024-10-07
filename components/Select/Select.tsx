@@ -1,8 +1,10 @@
 "use client";
 import "./Select.scss";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
+import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 interface SelectType {
-  data: string[];
+  data: ExtendedCategoryTaskType[] | ExtendedImportanceLevelTaskType[];
   onChange(event: React.ChangeEvent<HTMLSelectElement>): void;
   value: string;
   placeholder: string;
