@@ -1,13 +1,13 @@
 "use client";
 import "./createTask.scss";
 import { useState, useEffect } from "react";
-import {
-  TASK_CATEGORY_LIST,
-  TASK_LVL_IMPORTANCE_LIST,
-} from "@/constans/constans";
-import { TaskType } from "@/types/types";
+import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
+import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
+import { TaskType } from "@/types/TaskType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
+import { CategoryTasksType } from "@/types/CategoryTasksType";
+import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -22,9 +22,11 @@ export default function CreateTask() {
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
-    category: "default",
-    importanceLevel: "default",
+    category: CategoryTasksType.OTHER,
+    importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
   });
+  const [categoryIsSelected, setCategoryIsSelected] = useState(false);
+  const [importanceIsSelected, setImportanceIsSelected] = useState(false);
   const [showError, setShowError] = useState(false);
   const { userData } = useSelector((state: RootState) => state);
 
@@ -41,13 +43,17 @@ export default function CreateTask() {
     ) => {
       setTask((prev) => ({ ...task, [field]: event.target.value }));
       setShowError(false);
+      if (field === "category") {
+        setCategoryIsSelected(true);
+      }
+      if (field === "importanceLevel") {
+        setImportanceIsSelected(true);
+      }
     };
 
   const handleAddTask = async () => {
     const titleIsnotEmpty: boolean = task.title.length > 0;
     const descriptionIsnotEmptyy: boolean = task.description.length > 0;
-    const categoryIsSelected: boolean = task.category != "default";
-    const importanceIsSelected: boolean = task.importanceLevel != "default";
 
     if (
       titleIsnotEmpty &&
@@ -64,9 +70,11 @@ export default function CreateTask() {
         setTask({
           title: "",
           description: "",
-          category: "default",
-          importanceLevel: "default",
+          category: CategoryTasksType.OTHER,
+          importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
         });
+        setCategoryIsSelected(false);
+        setImportanceIsSelected(false);
       } catch (error) {
         console.log(error);
       }

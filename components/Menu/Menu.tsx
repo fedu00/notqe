@@ -18,8 +18,8 @@ import clsx from "clsx";
 // const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
 const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
 
-type MenuElementsType = { href: string; text: string }[];
-const menuElements: MenuElementsType = [
+type MenuElementsType = { href: string; text: string };
+const menuElements: MenuElementsType[] = [
   { href: "/profile/createTask", text: "create task" },
   { href: "/profile/manageTask", text: "manage task" },
   { href: "/profile/experience", text: "experience" },

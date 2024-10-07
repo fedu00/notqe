@@ -1,7 +1,7 @@
 import "./TaskScore.scss";
 
 interface TaskScoreType {
-  score: string | number;
+  score: number;
   title: string;
   selectedClass?: string;
 }

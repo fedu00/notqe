@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
-import { NEW_USER_DONE_TASKS_DATA } from "@/constans/constans";
+import { NEW_USER_DONE_TASKS_DATA } from "@/constants/newUserDoneTasksData";
 
 connectMongoDB();
 

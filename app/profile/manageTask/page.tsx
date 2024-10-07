@@ -1,52 +1,42 @@
 "use client";
 import "./manageTask.scss";
 import { useEffect, useState } from "react";
-import { DataType } from "@/types/types";
+import { DataType } from "@/types/DataType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
+import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
+import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 import Task from "@/components/Task/Task";
 import Loader from "@/components/Loader/Loader";
 
-enum CategoryTaskType {
-  ALL = "all",
-  HEALTH = "health",
-  WORK = "work",
-  STUDY = "study",
-  OTHER = "other",
-}
-
-enum ImportanceLvlTaskType {
-  ALL = "all",
-  NO_IMPORTANT = "no important",
-  LESS_IMPORTANT = "less important",
-  MEDIUM = "medium",
-  IMPORTANT = "important",
-  VERY_IMPORTANT = "very important",
-}
-
-const FULL_TASK_CATEGORY_LIST: CategoryTaskType[] = [
-  CategoryTaskType.ALL,
-  CategoryTaskType.HEALTH,
-  CategoryTaskType.WORK,
-  CategoryTaskType.STUDY,
-  CategoryTaskType.OTHER,
+const FULL_TASK_CATEGORY_LIST: Omit<
+  ExtendedCategoryTaskType[],
+  ExtendedCategoryTaskType.DEFAULT
+> = [
+  ExtendedCategoryTaskType.ALL,
+  ExtendedCategoryTaskType.HEALTH,
+  ExtendedCategoryTaskType.WORK,
+  ExtendedCategoryTaskType.STUDY,
+  ExtendedCategoryTaskType.OTHER,
 ];
 
-const FULL_TASK_LVL_IMPORTANCE_LIST: ImportanceLvlTaskType[] = [
-  ImportanceLvlTaskType.ALL,
-  ImportanceLvlTaskType.NO_IMPORTANT,
-  ImportanceLvlTaskType.LESS_IMPORTANT,
-  ImportanceLvlTaskType.MEDIUM,
-  ImportanceLvlTaskType.IMPORTANT,
-  ImportanceLvlTaskType.VERY_IMPORTANT,
+const FULL_TASK_LVL_IMPORTANCE_LIST: ExtendedImportanceLevelTaskType[] = [
+  ExtendedImportanceLevelTaskType.ALL,
+  ExtendedImportanceLevelTaskType.NO_IMPORTANT,
+  ExtendedImportanceLevelTaskType.LESS_IMPORTANT,
+  ExtendedImportanceLevelTaskType.MEDIUM,
+  ExtendedImportanceLevelTaskType.IMPORTANT,
+  ExtendedImportanceLevelTaskType.VERY_IMPORTANT,
 ];
 
 export default function ManageTask() {
   const [isLoading, setIsLoading] = useState(true);
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
-  const [currentCategory, setCurrentCategory] = useState(CategoryTaskType.ALL);
+  const [currentCategory, setCurrentCategory] = useState(
+    ExtendedCategoryTaskType.ALL
+  );
   const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
   const { userData } = useSelector((state: RootState) => state);
@@ -54,19 +44,23 @@ export default function ManageTask() {
 
   const getFilteredTasks = () => {
     if (
-      currentCategory === CategoryTaskType.ALL &&
-      currentImportance === ImportanceLvlTaskType.ALL
+      currentCategory === ExtendedCategoryTaskType.ALL &&
+      currentImportance === ExtendedImportanceLevelTaskType.ALL
     ) {
       setCurrentTasksData(tasksData);
     } else {
-      const categoryFilteredTasks = tasksData.filter(
-        (task: DataType) =>
-          task.task.category === currentCategory || currentCategory === "all"
-      );
+      const categoryFilteredTasks = tasksData.filter((task: DataType) => {
+        const categoryUpperCase = task.task.category.toUpperCase();
+        const taskCategory = ExtendedCategoryTaskType[categoryUpperCase];
+        return (
+          currentCategory === taskCategory ||
+          currentCategory === ExtendedCategoryTaskType.ALL
+        );
+      });
       const filteredTasks = categoryFilteredTasks.filter(
         (task: DataType) =>
           task.task.importanceLevel === currentImportance ||
-          currentImportance === "all"
+          currentImportance === ExtendedImportanceLevelTaskType.ALL
       );
       setCurrentTasksData(filteredTasks);
     }
@@ -128,25 +122,27 @@ export default function ManageTask() {
             <Select
               data={FULL_TASK_CATEGORY_LIST}
               value={
-                currentCategory === CategoryTaskType.ALL
+                currentCategory === ExtendedCategoryTaskType.ALL
                   ? "default"
                   : currentCategory
               }
               onChange={(event) =>
-                setCurrentCategory(event.target.value as CategoryTaskType)
+                setCurrentCategory(
+                  event.target.value as ExtendedCategoryTaskType
+                )
               }
               placeholder="select category"
             />
             <Select
               data={FULL_TASK_LVL_IMPORTANCE_LIST}
               value={
-                currentImportance === ImportanceLvlTaskType.ALL
+                currentImportance === ExtendedImportanceLevelTaskType.ALL
                   ? "default"
                   : currentImportance
               }
               onChange={(event) =>
                 setCurrentImportance(
-                  event.target.value as ImportanceLvlTaskType
+                  event.target.value as ExtendedImportanceLevelTaskType
                 )
               }
               placeholder="select task importance"
