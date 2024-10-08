@@ -3,9 +3,9 @@ import "./manageTask.scss";
 import { useEffect, useState } from "react";
 import { DataType } from "@/types/DataType";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
+import { getUserId } from "@/redux/slices/userSlice/userSelectors";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 import Task from "@/components/Task/Task";
@@ -39,8 +39,7 @@ export default function ManageTask() {
   );
   const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
-  const { userData } = useSelector((state: RootState) => state);
-  const { userId } = userData;
+  const userId = useSelector(getUserId);
 
   const getFilteredTasks = () => {
     if (
@@ -66,19 +65,6 @@ export default function ManageTask() {
     }
   };
 
-  useEffect(() => {
-    getFilteredTasks();
-  }, [currentCategory, tasksData, currentImportance]);
-
-  useEffect(() => {
-    if (userId != null && userId != "") {
-      setIsLoading(false);
-      getTask(userId);
-    } else {
-      console.log("we can not find your ID");
-    }
-  }, []);
-
   const getTask = async (userID: string) => {
     try {
       const response = await axios.get(
@@ -99,6 +85,19 @@ export default function ManageTask() {
     );
     setCurrentTasksData(newTasksData);
   };
+
+  useEffect(() => {
+    getFilteredTasks();
+  }, [currentCategory, tasksData, currentImportance]);
+
+  useEffect(() => {
+    if (userId != null && userId != "") {
+      setIsLoading(false);
+      getTask(userId);
+    } else {
+      console.log("we can not find your ID");
+    }
+  }, [userId]);
 
   const emptyTasksData = tasksData.length === 0;
   if (emptyTasksData) {

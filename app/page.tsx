@@ -3,7 +3,7 @@ import "./mainPage.scss";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "@/redux/store/authSlice";
+import { login } from "@/redux/slices/authSlice/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
 import Loader from "@/components/Loader/Loader";

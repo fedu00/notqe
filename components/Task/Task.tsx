@@ -8,10 +8,10 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { DataType } from "@/types/DataType";
 import { TaskType } from "@/types/TaskType";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { updateUserTaskValue } from "@/redux/store/userSlice";
+import { updateUserTaskValue } from "@/redux/slices/userSlice/userSlice";
 import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import axios from "axios";
 import clsx from "clsx";
 
@@ -74,7 +74,7 @@ export default function Task({
   const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
   const dispatch = useDispatch();
-  const { userData } = useSelector((state: RootState) => state);
+  const doneTasks = useSelector(getUserDoneTasks);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
   const handleTextareaHeight = (
@@ -117,12 +117,6 @@ export default function Task({
     );
   };
 
-  useEffect(() => {
-    if (isUserTasksDataStale) {
-      updateUserTasksData(userData.doneTasks);
-    }
-  }, [userData.doneTasks]);
-
   const handleDeleteTask = async () => {
     const response = await axios.delete(
       // `https://notqe.vercel.app/api/usersTasks?id=${id}`
@@ -160,6 +154,12 @@ export default function Task({
       setShowDescription(true);
     }
   };
+
+  useEffect(() => {
+    if (isUserTasksDataStale) {
+      updateUserTasksData(doneTasks);
+    }
+  }, [doneTasks]);
 
   return (
     <div

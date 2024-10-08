@@ -2,23 +2,21 @@
 import "./profile.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "@/redux/store/userSlice";
-import { RootState } from "../../redux/store/store";
+import { updateUserData } from "@/redux/slices/userSlice/userSlice";
+import { getUserName } from "@/redux/slices/userSlice/userSelectors";
 import axios from "axios";
 
 export default function ProfilePage() {
-  const { userData } = useSelector((state: RootState) => state);
-  const { username } = userData;
+  const username = useSelector(getUserName);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    getUserDetails();
-  }, []);
 
   const getUserDetails = async () => {
     const response = await axios.get("/api/users/userDetails");
-    dispatch(getUserData(response.data.data));
+    dispatch(updateUserData(response.data.data));
   };
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   return (
     <div className="profile theme-background">

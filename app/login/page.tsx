@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useDispatch } from "react-redux";
-import { login } from "@/redux/store/authSlice";
+import { login } from "@/redux/slices/authSlice/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";

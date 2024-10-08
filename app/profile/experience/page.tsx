@@ -2,20 +2,16 @@
 import "./experience.scss";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
+import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import UserExperience from "@/components/UserExperience/UserExperience";
 import Loader from "@/components/Loader/Loader";
 import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
   const [isLoading, setIsLoading] = useState(true);
-  const { userData } = useSelector((state: RootState) => state);
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
-  const { categories, importanceLevel } = userData.doneTasks;
+  const doneTasks = useSelector(getUserDoneTasks);
+  const { categories, importanceLevel } = doneTasks;
   const { health, other, study, work } = categories;
   const {
     noImportant,
@@ -24,6 +20,10 @@ export default function Experience() {
     important,
     veryImportant,
   } = importanceLevel;
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <div className="experience">
@@ -58,7 +58,7 @@ export default function Experience() {
               <TaskScore score={veryImportant} title={"very important"} />
             </div>
           </div>
-          <UserExperience doneTasksData={userData.doneTasks} />
+          <UserExperience doneTasksData={doneTasks} />
         </>
       )}
     </div>

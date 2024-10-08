@@ -5,9 +5,9 @@ import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/redux/store/authSlice";
-import { RootState } from "../../redux/store/store";
+import { logout } from "@/redux/slices/authSlice/authSlice";
 import { Josefin_Sans } from "next/font/google";
+import { getAuth } from "@/redux/slices/authSlice/authSelectors";
 import Button from "../Button/Button";
 import axios from "axios";
 import Link from "next/link";
@@ -37,21 +37,7 @@ export default function Menu() {
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
   const dispatch = useDispatch();
-  const { auth } = useSelector((state: RootState) => state);
-  const { isUserLogIn } = auth;
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobileSize && showmenu) {
-      setShowMenu(false);
-    }
-    if (!isUserLogIn) {
-      setShowMenu(false);
-    }
-  }, [isMobileSize, showmenu, isUserLogIn]);
+  const { isUserLogIn } = useSelector(getAuth);
 
   const handleMenuClick = () => {
     setShowMenu(false);
@@ -71,6 +57,19 @@ export default function Menu() {
       console.log("logout failed", error.message);
     }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileSize && showmenu) {
+      setShowMenu(false);
+    }
+    if (!isUserLogIn) {
+      setShowMenu(false);
+    }
+  }, [isMobileSize, showmenu, isUserLogIn]);
 
   if (!isMounted) {
     return null;

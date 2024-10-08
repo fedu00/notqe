@@ -5,9 +5,9 @@ import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
 import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
 import { TaskType } from "@/types/TaskType";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
 import { CategoryTasksType } from "@/types/CategoryTasksType";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { getUserData } from "@/redux/slices/userSlice/userSelectors";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -28,11 +28,7 @@ export default function CreateTask() {
   const [categoryIsSelected, setCategoryIsSelected] = useState(false);
   const [importanceIsSelected, setImportanceIsSelected] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { userData } = useSelector((state: RootState) => state);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
+  const userData = useSelector(getUserData);
 
   const handleOnChange =
     (field: keyof TaskType) =>
@@ -82,6 +78,10 @@ export default function CreateTask() {
       setShowError(true);
     }
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <div className="create-task">
