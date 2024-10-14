@@ -21,4 +21,5 @@ export const userSliceInitialState: UserSliceInitialStateType = {
       },
     },
   },
+  loading: "idle",
 };

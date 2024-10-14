@@ -19,4 +19,5 @@ export interface UserSliceInitialStateType {
       };
     };
   };
+  loading: "idle" | "pending" | "succeeded" | "failed";
 }
