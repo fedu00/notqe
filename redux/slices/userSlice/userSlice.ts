@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userSliceInitialState } from "./userSliceInitialState";
-import { fetchUserDetails } from "./userThunk";
+import { fetchUserDetails, finishUserTask } from "./userThunk";
 
 const userSlice = createSlice({
   name: "userData",
@@ -12,11 +12,6 @@ const userSlice = createSlice({
       state.userId = payload._id;
       state.doneTasks = payload.doneTasks;
     },
-    updateUserTaskValue: (state, { payload }) => {
-      const { category, taskImportance } = payload;
-      state.doneTasks.categories[category]++;
-      state.doneTasks.importanceLevel[taskImportance]++;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserDetails.fulfilled, (state, { payload }) => {
@@ -25,7 +20,12 @@ const userSlice = createSlice({
       state.userId = payload._id;
       state.doneTasks = payload.doneTasks;
     });
+    builder.addCase(finishUserTask.fulfilled, (state, { payload }) => {
+      const { category, taskImportance } = payload;
+      state.doneTasks.categories[category]++;
+      state.doneTasks.importanceLevel[taskImportance]++;
+    });
   },
 });
 export default userSlice.reducer;
-export const { updateUserData, updateUserTaskValue } = userSlice.actions;
+export const { updateUserData } = userSlice.actions;

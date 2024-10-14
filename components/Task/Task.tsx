@@ -1,6 +1,6 @@
 "use client";
 import "./Task.scss";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -8,10 +8,11 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { DataType } from "@/types/DataType";
 import { TaskType } from "@/types/TaskType";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserTaskValue } from "@/redux/slices/userSlice/userSlice";
 import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
+import { finishUserTask } from "@/redux/slices/userSlice/userThunk";
+import { AppDispatch } from "@/redux/store";
 import axios from "axios";
 import clsx from "clsx";
 
@@ -62,7 +63,6 @@ export default function Task({
   setTasksData,
 }: TaskComponentType) {
   const { title, description, category, importanceLevel } = task;
-  const [isUserTasksDataStale, setIsUserTasksDataStale] = useState(false);
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
@@ -73,7 +73,7 @@ export default function Task({
   const [edit, setEdit] = useState(false);
   const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const doneTasks = useSelector(getUserDoneTasks);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
@@ -87,33 +87,13 @@ export default function Task({
 
   const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
-  const updateUserTasksData = async (updateDoneTasks) => {
-    setIsUserTasksDataStale(false);
-    try {
-      const response = await axios.put("/api/users/login", {
-        userId: userID,
-        doneTasks: updateDoneTasks,
-      });
-      const responseDeleteTask = await axios.delete(
-        // `https://notqe.vercel.app/api/usersTasks?id=${id}`
-        `http://localhost:3000/api/usersTasks?id=${id}`
-      );
-      handleUpdateTasks(id);
-    } catch (error: any) {
-      console.log("login failed", error.message);
-    }
-  };
-
   const handleFinishTask = async () => {
     const taskImportance = getTaskImportance(importanceLevel);
-    dispatch(updateUserTaskValue({ category, taskImportance }));
-    setIsUserTasksDataStale(true);
     setTasksData((prevValue) => {
       return prevValue.filter((task) => task._id !== id);
     });
-    const response = await axios.delete(
-      // `https://notqe.vercel.app/api/usersTasks?id=${id}`
-      `http://localhost:3000/api/usersTasks?id=${id}`
+    dispatch(
+      finishUserTask({ taskId: id, category, taskImportance, doneTasks })
     );
   };
 
@@ -154,12 +134,6 @@ export default function Task({
       setShowDescription(true);
     }
   };
-
-  useEffect(() => {
-    if (isUserTasksDataStale) {
-      updateUserTasksData(doneTasks);
-    }
-  }, [doneTasks]);
 
   return (
     <div

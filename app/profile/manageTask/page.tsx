@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 import { getUserId } from "@/redux/slices/userSlice/userSelectors";
+import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import Select from "@/components/Select/Select";
 import axios from "axios";
 import Task from "@/components/Task/Task";
@@ -40,7 +41,18 @@ export default function ManageTask() {
   const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
   const userId = useSelector(getUserId);
+  const doneTasks = useSelector(getUserDoneTasks);
 
+  const updateUserDoneTasksValue = async () => {
+    try {
+      const response = axios.put("/api/users/login", {
+        userId: userId,
+        doneTasks: doneTasks,
+      });
+    } catch (error) {
+      console.log("something went wrong, we dont update your done tasks");
+    }
+  };
   const getFilteredTasks = () => {
     if (
       currentCategory === ExtendedCategoryTaskType.ALL &&
@@ -98,6 +110,10 @@ export default function ManageTask() {
       console.log("we can not find your ID");
     }
   }, [userId]);
+
+  useEffect(() => {
+    updateUserDoneTasksValue();
+  }, [doneTasks]);
 
   const emptyTasksData = tasksData.length === 0;
   if (emptyTasksData) {
