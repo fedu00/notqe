@@ -3,16 +3,16 @@ import MyTask from "@/models/taskModel";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request: any) {
-  const { userEmail, task } = await request.json();
+  const { userID, task } = await request.json();
   await connectMongoDB();
-  await MyTask.create({ userEmail, task });
+  await MyTask.create({ userID, task });
   return NextResponse.json({ message: "topic Created" }, { status: 201 });
 }
 
 export async function GET(request: NextRequest) {
-  const userEmail = request.nextUrl.searchParams.get("email");
+  const userID = request.nextUrl.searchParams.get("userID");
   await connectMongoDB();
-  const task = await MyTask.find({ userEmail });
+  const task = await MyTask.find({ userID });
   return NextResponse.json({ myTasks: task }, { status: 200 });
 }
 
@@ -26,10 +26,10 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
   const body = await request.json();
-  const { userEmail, task } = body;
+  const { userID, task } = body;
   await connectMongoDB();
   await MyTask.findByIdAndUpdate(id, {
-    userEmail,
+    userID,
     task,
   });
   return NextResponse.json({ message: "task update!" }, { status: 200 });

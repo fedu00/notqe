@@ -1,0 +1,41 @@
+.switch-button {
+  position: relative;
+  box-sizing: border-box;
+  height: 41px;
+  width: 80px;
+  border-radius: $border-radius-l;
+  border: 2px solid;
+  padding: $padding-xxs;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+
+  &:after {
+    content: "";
+    position: absolute;
+    height: 31px;
+    width: 31px;
+    top: 3px;
+    border-radius: $border-radius-m;
+    z-index: $z-index-negative;
+    transition: left $transition-duration-slow,
+      background-color $transition-duration-slow;
+  }
+
+  &__icon-moon,
+  &__icon-sun {
+    background-color: transparent;
+    position: relative;
+    z-index: $z-index-modal;
+  }
+
+  &__icon-sun {
+    margin-left: 1px;
+  }
+
+  &__icon-moon {
+    margin-right: 2px;
+  }
+}

@@ -1,0 +1,86 @@
+.task {
+  padding: $padding-xs $padding-xs $padding-xxl $padding-xs;
+  border-radius: $border-radius-s;
+  margin-bottom: $margin-m;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 500px;
+  @media (max-width: $breakpoint-xl) {
+    min-width: unset;
+    width: 100%;
+  }
+
+  &--health-bgc {
+    background-color: $pink-color;
+  }
+  &--work-bgc {
+    background-color: $blue-color;
+  }
+  &--study-bgc {
+    background-color: $green-color;
+  }
+  &--other-bgc {
+    background-color: $orange-color;
+  }
+
+  &--edit-mode {
+    border: 2px solid;
+  }
+
+  &__input,
+  &__textarea {
+    outline: none;
+    border: none;
+    background: none;
+  }
+
+  &__input {
+    font-size: $padding-m;
+    padding-bottom: $margin-m;
+  }
+
+  &__textarea {
+    resize: none;
+    max-height: 250px;
+    transition: height $transition-duration-slow,
+      background-color $transition-duration-slow,
+      color $transition-duration-slow;
+  }
+
+  &__textarea::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__icons-container {
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+    display: flex;
+
+    svg {
+      cursor: pointer;
+      transition: color $transition-duration-slow,
+        transform $transition-duration-slow;
+    }
+  }
+
+  &__icon--show-description {
+    transform: rotate(180deg);
+  }
+
+  &__importance {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color $transition-duration-slow,
+      border-color $transition-duration-slow;
+    border: 2px solid;
+    border-radius: $border-radius-m;
+  }
+}

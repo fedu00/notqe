@@ -1,20 +1,22 @@
-import "./TaskScore.css";
+import "./TaskScore.scss";
 
 interface TaskScoreType {
-  score: string | number;
+  score: number;
   title: string;
-  selectClass?: string;
+  selectedClass?: string;
 }
 
 export default function TaskScore({
   score,
   title,
-  selectClass,
+  selectedClass,
 }: TaskScoreType) {
   return (
-    <div className="task_score_container">
-      <h4 className={selectClass}>{title}</h4>
-      <p>{score}</p>
+    <div className="task-score theme-background">
+      <h4 className={`task-score__title task-score__title--${selectedClass}`}>
+        {title}
+      </h4>
+      <p className="task-score__score">{score}</p>
     </div>
   );
 }

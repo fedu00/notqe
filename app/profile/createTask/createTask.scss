@@ -1,0 +1,26 @@
+.create-task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: $breakpoint-xl) {
+    width: 70%;
+  }
+  @media (max-width: $breakpoint-m) {
+    width: 90%;
+  }
+
+  &__title-container {
+    display: flex;
+    @media (max-width: $breakpoint-xl) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__title {
+    margin: 0 $margin-m 0 0;
+    @media (max-width: $breakpoint-xl) {
+      margin: 0 0 $margin-m 0;
+    }
+  }
+}

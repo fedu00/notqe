@@ -1,0 +1,44 @@
+@import "../../styles/utils/mixins";
+
+.theme-background {
+  @include theme-container();
+}
+
+.task-score {
+  padding: $padding-xs;
+  margin: $margin-xs;
+  border-radius: $border-radius-s;
+  @media (max-width: $breakpoint-xl) {
+    width: 130px;
+    margin: $margin-xxs;
+    padding: $padding-xxs;
+  }
+
+  &__title {
+    text-align: center;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $font-size-m;
+    }
+  }
+
+  &__score {
+    text-align: center;
+    font-size: $font-size-xxl;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $font-size-m;
+    }
+  }
+
+  &__title--health {
+    color: $pink-color;
+  }
+  &__title--work {
+    color: $blue-color;
+  }
+  &__title--study {
+    color: $green-color;
+  }
+  &__title--other {
+    color: $orange-color;
+  }
+}
