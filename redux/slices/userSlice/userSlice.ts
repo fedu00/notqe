@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userSliceInitialState } from "./userSliceInitialState";
-import { fetchUserDetails, finishUserTask } from "./userThunk";
+import { finishUserTask } from "./userThunk/finishUserTask";
+import { fetchUserDetails } from "./userThunk/fetchUserDetails";
 
 const userSlice = createSlice({
   name: "userData",

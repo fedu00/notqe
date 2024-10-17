@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/slices/authSlice/authSlice";
 import { Josefin_Sans } from "next/font/google";
 import { getAuth } from "@/redux/slices/authSlice/authSelectors";
@@ -36,8 +36,8 @@ export default function Menu() {
   const [showmenu, setShowMenu] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
-  const dispatch = useDispatch();
-  const { isUserLogIn } = useSelector(getAuth);
+  const dispatch = useAppDispatch();
+  const { isUserLogIn } = useAppSelector(getAuth);
 
   const handleMenuClick = () => {
     setShowMenu(false);

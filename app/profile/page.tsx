@@ -1,14 +1,13 @@
 "use client";
 import "./profile.scss";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserDetails } from "@/redux/slices/userSlice/userThunk";
+import { fetchUserDetails } from "@/redux/slices/userSlice/userThunk/fetchUserDetails";
 import { getUserName } from "@/redux/slices/userSlice/userSelectors";
-import { AppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export default function ProfilePage() {
-  const username = useSelector(getUserName);
-  const dispatch = useDispatch<AppDispatch>();
+  const username = useAppSelector(getUserName);
+  const dispatch = useAppDispatch();
 
   const getUserDetails = async () => {
     dispatch(fetchUserDetails());

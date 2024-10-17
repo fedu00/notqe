@@ -1,3 +1,10 @@
+export enum LoadingStates {
+  IDLE = "idle",
+  PENDING = "pending",
+  SUCCEEDED = "succeeded",
+  DAILED = "failed",
+}
+
 export interface UserSliceInitialStateType {
   userData: {
     username: string;
@@ -19,5 +26,5 @@ export interface UserSliceInitialStateType {
       };
     };
   };
-  loading: "idle" | "pending" | "succeeded" | "failed";
+  loading: LoadingStates;
 }

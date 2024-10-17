@@ -1,7 +1,7 @@
 "use client";
 import "./experience.scss";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/hooks";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import UserExperience from "@/components/UserExperience/UserExperience";
 import Loader from "@/components/Loader/Loader";
@@ -10,7 +10,7 @@ import TaskScore from "@/components/TaskScore/TaskScore";
 export default function Experience() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const doneTasks = useSelector(getUserDoneTasks);
+  const doneTasks = useAppSelector(getUserDoneTasks);
   const { categories, importanceLevel } = doneTasks;
   const { health, other, study, work } = categories;
   const {

@@ -2,7 +2,7 @@
 import "./mainPage.scss";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@/redux/hooks";
 import { login } from "@/redux/slices/authSlice/authSlice";
 import Button from "@/components/Button/Button";
 import axios from "axios";
@@ -17,7 +17,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLoginTestAccount = async () => {
     try {

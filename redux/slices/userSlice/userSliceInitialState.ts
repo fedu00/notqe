@@ -1,4 +1,5 @@
 import { UserSliceInitialStateType } from "./UserSliceInitialState.Type";
+import { LoadingStates } from "./UserSliceInitialState.Type";
 
 export const userSliceInitialState: UserSliceInitialStateType = {
   userData: {
@@ -21,5 +22,5 @@ export const userSliceInitialState: UserSliceInitialStateType = {
       },
     },
   },
-  loading: "idle",
+  loading: LoadingStates.IDLE,
 };

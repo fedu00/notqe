@@ -2,7 +2,7 @@
 import "./manageTask.scss";
 import { useEffect, useState } from "react";
 import { DataType } from "@/types/DataType";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/hooks";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 import { getUserId } from "@/redux/slices/userSlice/userSelectors";
@@ -40,8 +40,8 @@ export default function ManageTask() {
   );
   const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
-  const userId = useSelector(getUserId);
-  const doneTasks = useSelector(getUserDoneTasks);
+  const userId = useAppSelector(getUserId);
+  const doneTasks = useAppSelector(getUserDoneTasks);
 
   const updateUserDoneTasksValue = async () => {
     try {

@@ -7,12 +7,11 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { DataType } from "@/types/DataType";
 import { TaskType } from "@/types/TaskType";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
-import { finishUserTask } from "@/redux/slices/userSlice/userThunk";
-import { AppDispatch } from "@/redux/store";
+import { finishUserTask } from "@/redux/slices/userSlice/userThunk/finishUserTask";
 import axios from "axios";
 import clsx from "clsx";
 
@@ -73,8 +72,8 @@ export default function Task({
   const [edit, setEdit] = useState(false);
   const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const doneTasks = useSelector(getUserDoneTasks);
+  const dispatch = useAppDispatch();
+  const doneTasks = useAppSelector(getUserDoneTasks);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
   const handleTextareaHeight = (

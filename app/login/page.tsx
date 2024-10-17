@@ -3,7 +3,7 @@ import "./login.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@/redux/hooks";
 import { login } from "@/redux/slices/authSlice/authSlice";
 import axios from "axios";
 import Input from "@/components/Input/Input";
@@ -24,7 +24,7 @@ export default function LoginPage() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleOnChange =
     (field: keyof UserType) => (event: React.ChangeEvent<HTMLInputElement>) => {
