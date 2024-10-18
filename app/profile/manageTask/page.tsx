@@ -8,7 +8,7 @@ import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevel
 import { getUserId } from "@/redux/slices/userSlice/userSelectors";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import Select from "@/components/Select/Select";
-import axios from "axios";
+import tasksApi from "@/apiClients/tasksApi";
 import Task from "@/components/Task/Task";
 import Loader from "@/components/Loader/Loader";
 
@@ -43,16 +43,6 @@ export default function ManageTask() {
   const userId = useAppSelector(getUserId);
   const doneTasks = useAppSelector(getUserDoneTasks);
 
-  const updateUserDoneTasksValue = async () => {
-    try {
-      const response = axios.put("/api/users/login", {
-        userId: userId,
-        doneTasks: doneTasks,
-      });
-    } catch (error) {
-      console.log("something went wrong, we dont update your done tasks");
-    }
-  };
   const getFilteredTasks = () => {
     if (
       currentCategory === ExtendedCategoryTaskType.ALL &&
@@ -79,10 +69,7 @@ export default function ManageTask() {
 
   const getTask = async (userID: string) => {
     try {
-      const response = await axios.get(
-        // "https://notqe.vercel.app/api/usersTasks?email=test@test.com"
-        `http://localhost:3000/api/usersTasks?userID=${userID}`
-      );
+      const response = await tasksApi.get(`?userID=${userID}`);
       const dataTasks: { myTasks: DataType[] | [] } = await response.data;
       setTasksData(dataTasks.myTasks);
       return response;
@@ -110,10 +97,6 @@ export default function ManageTask() {
       console.log("we can not find your ID");
     }
   }, [userId]);
-
-  useEffect(() => {
-    updateUserDoneTasksValue();
-  }, [doneTasks]);
 
   const emptyTasksData = tasksData.length === 0;
   if (emptyTasksData) {

@@ -9,14 +9,15 @@ import { logout } from "@/redux/slices/authSlice/authSlice";
 import { Josefin_Sans } from "next/font/google";
 import { getAuth } from "@/redux/slices/authSlice/authSelectors";
 import Button from "../Button/Button";
-import axios from "axios";
+import usersApi from "@/apiClients/usersAPi";
 import Link from "next/link";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import clsx from "clsx";
 
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 // const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
-const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
+// const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = "http://localhost:3000";
 
 type MenuElementsType = { href: string; text: string };
 const menuElements: MenuElementsType[] = [
@@ -48,7 +49,7 @@ export default function Menu() {
   };
   const handleLogout = async () => {
     try {
-      await axios.get("/api/users/logout");
+      await usersApi.get("/logout");
       console.log("logout successful!!!");
       sessionStorage.removeItem("userState");
       router.push("/");

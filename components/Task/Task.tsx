@@ -12,7 +12,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import { finishUserTask } from "@/redux/slices/userSlice/userThunk/finishUserTask";
-import axios from "axios";
+import tasksApi from "@/apiClients/tasksApi";
 import clsx from "clsx";
 
 interface TaskComponentType {
@@ -97,11 +97,7 @@ export default function Task({
   };
 
   const handleDeleteTask = async () => {
-    const response = await axios.delete(
-      // `https://notqe.vercel.app/api/usersTasks?id=${id}`
-      `http://localhost:3000/api/usersTasks?id=${id}`
-    );
-
+    await tasksApi.delete(`?id=${id}`);
     setTasksData((prevValue) => {
       return prevValue.filter((task) => task._id !== id);
     });
@@ -114,14 +110,10 @@ export default function Task({
       setEdit(false);
       setShowDescription(false);
       try {
-        const response = await axios.put(
-          // `https://notqe.vercel.app/api/usersTasks?id=${id}`,
-          `http://localhost:3000/api/usersTasks?id=${id}`,
-          {
-            userID: userID,
-            task: currentTask,
-          }
-        );
+        const response = await tasksApi.put(`?id=${id}`, {
+          userID: userID,
+          task: currentTask,
+        });
         if (!response.statusText) {
           throw new Error("Failed to update topic");
         }

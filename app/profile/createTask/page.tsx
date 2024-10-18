@@ -12,7 +12,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
-import axios from "axios";
+import tasksApi from "@/apiClients/tasksApi";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Form from "@/components/Form/Form";
@@ -58,11 +58,7 @@ export default function CreateTask() {
       importanceIsSelected
     ) {
       try {
-        const response = await axios.post(
-          // `https://notqe.vercel.app/api/usersTasks`,
-          "http://localhost:3000/api/usersTasks",
-          { userID: userData.userId, task: task }
-        );
+        await tasksApi.post("", { userID: userData.userId, task: task });
         setTask({
           title: "",
           description: "",

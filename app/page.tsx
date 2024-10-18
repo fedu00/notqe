@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { login } from "@/redux/slices/authSlice/authSlice";
 import Button from "@/components/Button/Button";
-import axios from "axios";
+import usersApi from "@/apiClients/usersAPi";
 import Loader from "@/components/Loader/Loader";
 
 const TEST_USER_ACCOUNT = {
@@ -22,7 +22,7 @@ export default function Home() {
   const handleLoginTestAccount = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/users/login", TEST_USER_ACCOUNT);
+      await usersApi.post("/login", TEST_USER_ACCOUNT);
       router.push("/profile");
       dispatch(login());
     } catch (error: any) {

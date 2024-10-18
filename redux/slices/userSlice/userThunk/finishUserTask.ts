@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NewUserDoneTasksDataType } from "@/types/NewUserDoneTasksDataType";
 import { ThunkApiConfigType } from "@/types/ThunkApiConfigType";
-import axios from "axios";
+import tasksApi from "@/apiClients/tasksApi";
+import usersApi from "@/apiClients/usersAPi";
 
 type FinishUserThunkReturnType = {
   category: string;
@@ -21,11 +22,29 @@ export const finishUserTask = createAsyncThunk<
   ThunkApiConfigType
 >(
   "userData/finishUserTask",
-  async ({ taskId, category, taskImportance }, { rejectWithValue }) => {
+  async (
+    { taskId, category, taskImportance },
+    { getState, rejectWithValue }
+  ) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/usersTasks?id=${taskId}`
-      );
+      await tasksApi.delete(`?id=${taskId}`);
+      const { userId, doneTasks } = getState().userData;
+
+      await usersApi.put("/login", {
+        userId: userId,
+        doneTasks: {
+          ...doneTasks,
+          categories: {
+            ...doneTasks.categories,
+            [category]: doneTasks.categories[category] + 1,
+          },
+          importanceLevel: {
+            ...doneTasks.importanceLevel,
+            [taskImportance]: doneTasks.importanceLevel[taskImportance] + 1,
+          },
+        },
+      });
+
       return { category, taskImportance };
     } catch (error) {
       return rejectWithValue("Something went wrong when you finished task");

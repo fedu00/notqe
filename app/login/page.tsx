@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useAppDispatch } from "@/redux/hooks";
 import { login } from "@/redux/slices/authSlice/authSlice";
-import axios from "axios";
+import usersApi from "@/apiClients/usersAPi";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loader from "@/components/Loader/Loader";
@@ -42,7 +42,7 @@ export default function LoginPage() {
     if (validateUserCredentials()) {
       try {
         setIsLoading(true);
-        const response = await axios.post("/api/users/login", user);
+        await usersApi.post("/login", user);
         router.push("/profile");
         dispatch(login());
       } catch (error: any) {
