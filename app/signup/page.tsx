@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-import usersApi from "@/apiClients/usersAPi";
+import clientApi from "@/apiClients/clientApi";
 import Loader from "@/components/Loader/Loader";
 import Form from "@/components/Form/Form";
 
@@ -63,7 +63,7 @@ export default function SignUpPage() {
     if (validateUserCredentials()) {
       try {
         setIsLoading(true);
-        const response = await usersApi.post("/signup", user);
+        const response = await clientApi.post("/users/signup", user);
         console.log("signup success", response);
         router.push("/login");
       } catch (error: any) {

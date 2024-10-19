@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
 import { useAppDispatch } from "@/redux/hooks";
 import { login } from "@/redux/slices/authSlice/authSlice";
-import usersApi from "@/apiClients/usersAPi";
+import clientApi from "@/apiClients/clientApi";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loader from "@/components/Loader/Loader";
@@ -42,7 +42,7 @@ export default function LoginPage() {
     if (validateUserCredentials()) {
       try {
         setIsLoading(true);
-        await usersApi.post("/login", user);
+        await clientApi.post("/users/login", user);
         router.push("/profile");
         dispatch(login());
       } catch (error: any) {

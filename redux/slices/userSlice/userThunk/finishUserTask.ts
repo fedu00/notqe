@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NewUserDoneTasksDataType } from "@/types/NewUserDoneTasksDataType";
 import { ThunkApiConfigType } from "@/types/ThunkApiConfigType";
-import tasksApi from "@/apiClients/tasksApi";
-import usersApi from "@/apiClients/usersAPi";
+import clientApi from "@/apiClients/clientApi";
 
 type FinishUserThunkReturnType = {
   category: string;
@@ -27,10 +26,10 @@ export const finishUserTask = createAsyncThunk<
     { getState, rejectWithValue }
   ) => {
     try {
-      await tasksApi.delete(`?id=${taskId}`);
+      await clientApi.delete(`/usersTasks/${taskId}`);
       const { userId, doneTasks } = getState().userData;
 
-      await usersApi.put("/login", {
+      await clientApi.put("/users/login", {
         userId: userId,
         doneTasks: {
           ...doneTasks,

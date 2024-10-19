@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const tasksApi = axios.create({
-  baseURL: "http://localhost:3000/api/usersTasks",
+const clientApi = axios.create({
+  baseURL: "http://localhost:3000/api",
   // just for build process, will be removed
   // baseURL: `https://notqe.vercel.app/api/usersTasks?id=${id}`,
   headers: {
@@ -9,4 +9,4 @@ const tasksApi = axios.create({
   },
 });
 
-export default tasksApi;
+export default clientApi;

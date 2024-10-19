@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NewUserDoneTasksDataType } from "@/types/NewUserDoneTasksDataType";
 import { ThunkApiConfigType } from "@/types/ThunkApiConfigType";
-import usersApi from "@/apiClients/usersAPi";
+import clientApi from "@/apiClients/clientApi";
 
 type FetchUserThunkReturnType = {
   username: string;
@@ -16,7 +16,7 @@ export const fetchUserDetails = createAsyncThunk<
   ThunkApiConfigType
 >("userData/fetchUserDetails", async (_, { rejectWithValue }) => {
   try {
-    const response = await usersApi.get("/userDetails");
+    const response = await clientApi.get("/users/userDetails");
     return response.data.data;
   } catch (error) {
     return rejectWithValue("Something went wrong with downloading your data");

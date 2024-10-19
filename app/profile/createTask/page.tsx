@@ -12,7 +12,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
-import tasksApi from "@/apiClients/tasksApi";
+import clientApi from "@/apiClients/clientApi";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Form from "@/components/Form/Form";
@@ -29,6 +29,7 @@ export default function CreateTask() {
   const [importanceIsSelected, setImportanceIsSelected] = useState(false);
   const [showError, setShowError] = useState(false);
   const userData = useAppSelector(getUserData);
+  const userID = userData.userId;
 
   const handleOnChange =
     (field: keyof TaskType) =>
@@ -58,7 +59,10 @@ export default function CreateTask() {
       importanceIsSelected
     ) {
       try {
-        await tasksApi.post("", { userID: userData.userId, task: task });
+        await clientApi.post("/usersTasks", {
+          userID,
+          task,
+        });
         setTask({
           title: "",
           description: "",

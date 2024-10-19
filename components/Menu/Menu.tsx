@@ -9,7 +9,7 @@ import { logout } from "@/redux/slices/authSlice/authSlice";
 import { Josefin_Sans } from "next/font/google";
 import { getAuth } from "@/redux/slices/authSlice/authSelectors";
 import Button from "../Button/Button";
-import usersApi from "@/apiClients/usersAPi";
+import clientApi from "@/apiClients/clientApi";
 import Link from "next/link";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import clsx from "clsx";
@@ -49,7 +49,7 @@ export default function Menu() {
   };
   const handleLogout = async () => {
     try {
-      await usersApi.get("/logout");
+      await clientApi.get("/users/logout");
       console.log("logout successful!!!");
       sessionStorage.removeItem("userState");
       router.push("/");

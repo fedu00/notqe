@@ -15,22 +15,3 @@ export async function GET(request: NextRequest) {
   const task = await MyTask.find({ userID });
   return NextResponse.json({ myTasks: task }, { status: 200 });
 }
-
-export async function DELETE(request: NextRequest) {
-  const id = request.nextUrl.searchParams.get("id");
-  await connectMongoDB();
-  await MyTask.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Topic deleted" }, { status: 200 });
-}
-
-export async function PUT(request: NextRequest) {
-  const id = request.nextUrl.searchParams.get("id");
-  const body = await request.json();
-  const { userID, task } = body;
-  await connectMongoDB();
-  await MyTask.findByIdAndUpdate(id, {
-    userID,
-    task,
-  });
-  return NextResponse.json({ message: "task update!" }, { status: 200 });
-}

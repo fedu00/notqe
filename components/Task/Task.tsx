@@ -12,7 +12,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import { finishUserTask } from "@/redux/slices/userSlice/userThunk/finishUserTask";
-import tasksApi from "@/apiClients/tasksApi";
+import clientApi from "@/apiClients/clientApi";
 import clsx from "clsx";
 
 interface TaskComponentType {
@@ -97,7 +97,8 @@ export default function Task({
   };
 
   const handleDeleteTask = async () => {
-    await tasksApi.delete(`?id=${id}`);
+    //
+    await clientApi.delete(`/usersTasks/${id}`);
     setTasksData((prevValue) => {
       return prevValue.filter((task) => task._id !== id);
     });
@@ -106,13 +107,14 @@ export default function Task({
   };
 
   const handleEditTask = async () => {
+    const task = currentTask;
     if (edit) {
       setEdit(false);
       setShowDescription(false);
       try {
-        const response = await tasksApi.put(`?id=${id}`, {
-          userID: userID,
-          task: currentTask,
+        const response = await clientApi.put(`/usersTasks/${id}`, {
+          userID,
+          task,
         });
         if (!response.statusText) {
           throw new Error("Failed to update topic");

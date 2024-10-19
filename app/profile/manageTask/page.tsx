@@ -8,7 +8,7 @@ import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevel
 import { getUserId } from "@/redux/slices/userSlice/userSelectors";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import Select from "@/components/Select/Select";
-import tasksApi from "@/apiClients/tasksApi";
+import clientApi from "@/apiClients/clientApi";
 import Task from "@/components/Task/Task";
 import Loader from "@/components/Loader/Loader";
 
@@ -69,7 +69,9 @@ export default function ManageTask() {
 
   const getTask = async (userID: string) => {
     try {
-      const response = await tasksApi.get(`?userID=${userID}`);
+      const response = await clientApi.get(`/usersTasks`, {
+        params: { userID },
+      });
       const dataTasks: { myTasks: DataType[] | [] } = await response.data;
       setTasksData(dataTasks.myTasks);
       return response;
