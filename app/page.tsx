@@ -1,46 +1,44 @@
 "use client";
-import "./globals.css";
-import "./mainPage.css";
+import "./mainPage.scss";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button/Button";
-import Logo from "@/components/Logo/Logo";
-import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import { login } from "@/redux/slices/authSlice/authSlice";
+import Button from "@/components/Button/Button";
+import clientApi from "@/apiClients/clientApi";
+import Loader from "@/components/Loader/Loader";
+
+const TEST_USER_ACCOUNT = {
+  email: "test4@test4.pl",
+  password: "test4",
+};
 
 export default function Home() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const handleLoginTestAccount = async () => {
-    const user = {
-      email: "test@test.com",
-      password: "test",
-    };
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/users/login", user);
+      await clientApi.post("/users/login", TEST_USER_ACCOUNT);
       router.push("/profile");
+      dispatch(login());
     } catch (error: any) {
       setIsLoading(false);
       console.log("login failed", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <main className="main_page_container">
-      <Logo bigSize={true} />
+    <div>
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <div className="button_container">
+        <div className="main-page">
           <Button
             text="sign up"
             onClick={() => {
@@ -55,11 +53,11 @@ export default function Home() {
           />
           <Button
             text="try test account"
-            test={true}
+            grayButton={true}
             onClick={handleLoginTestAccount}
           />
         </div>
       )}
-    </main>
+    </div>
   );
 }

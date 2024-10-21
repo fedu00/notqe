@@ -1,0 +1,55 @@
+[theme-mode="light"] {
+  --text-color: #{$primary-dark-400};
+  --button-color: #{$primary-light-100};
+  --form-field-color: #{$primary-dark-300};
+}
+[theme-mode="dark"] {
+  --text-color: #{$primary-light-100};
+  --button-color: #{$primary-dark-400};
+  --form-field-color: #{$primary-light-100};
+}
+
+html {
+  font-size: $font-size-m;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-color);
+}
+h2 {
+  font-weight: 500;
+  margin-top: $margin-xxxl;
+  margin-bottom: $margin-xl;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+p {
+  color: var(--text-color);
+}
+
+span {
+  font-size: $font-size-s;
+}
+
+button {
+  color: var(--button-color);
+}
+select,
+textarea,
+input {
+  color: var(--form-field-color);
+}
+
+.task__importance {
+  color: var(--form-field-color);
+}

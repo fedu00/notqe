@@ -1,120 +1,121 @@
 "use client";
-import "./Task.css";
+import "./Task.scss";
 import { useState, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { TaskComponentType, DoneTasksType, TaskType } from "@/types/types";
-import axios from "axios";
+import { DataType } from "@/types/DataType";
+import { TaskType } from "@/types/TaskType";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Dispatch, SetStateAction } from "react";
+import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
+import { finishUserTask } from "@/redux/slices/userSlice/userThunk/finishUserTask";
+import clientApi from "@/apiClients/clientApi";
+import clsx from "clsx";
 
-type ImportanceType =
-  | "veryImportant"
-  | "important"
-  | "medium"
-  | "lesImportant"
-  | "noImportant"
-  | "";
+interface TaskComponentType {
+  task: TaskType;
+  id: string;
+  userID: string;
+  handleUpdateTasks(id: string): void;
+  setTasksData: Dispatch<SetStateAction<DataType[] | []>>;
+}
+const importanceTaskNumber: {
+  [key in ImportanceLevelTasksType]: string;
+} = {
+  [ImportanceLevelTasksType.VERY_IMPORTANT]: "5",
+  [ImportanceLevelTasksType.IMPORTANT]: "4",
+  [ImportanceLevelTasksType.MEDIUM]: "3",
+  [ImportanceLevelTasksType.LESS_IMPORTANT]: "2",
+  [ImportanceLevelTasksType.NO_IMPORTANT]: "1",
+};
+
+const importanceTaskValue: {
+  [key in ImportanceLevelTasksType]: string;
+} = {
+  [ImportanceLevelTasksType.VERY_IMPORTANT]: "veryImportant",
+  [ImportanceLevelTasksType.IMPORTANT]: "important",
+  [ImportanceLevelTasksType.MEDIUM]: "mediumImportant",
+  [ImportanceLevelTasksType.LESS_IMPORTANT]: "lessImportant",
+  [ImportanceLevelTasksType.NO_IMPORTANT]: "noImportant",
+};
+
+const getImportanceTaskNumber = (
+  importance: ImportanceLevelTasksType
+): string => {
+  return importanceTaskNumber[importance];
+};
+
+const getTaskImportance = (importance: ImportanceLevelTasksType): string => {
+  return importanceTaskValue[importance];
+};
+
+const MIN_TEXTAREA_HEIGHT: number = 32;
 
 export default function Task({
   task,
   id,
-  userId,
+  userID,
   handleUpdateTasks,
+  setTasksData,
 }: TaskComponentType) {
-  const jsonDonteTasksData = sessionStorage.getItem("userNotqeDoneTasks");
-  const doneTasksData: DoneTasksType = JSON.parse(jsonDonteTasksData!);
-
-  const { title, description, category, importance } = task;
-  const [testTasks, setTestTasks] = useState<DoneTasksType>(doneTasksData);
+  const { title, description, category, importanceLevel } = task;
   const [currentTask, setCurrentTask] = useState<TaskType>({
     title,
     description,
     category,
-    importance,
+    importanceLevel,
   });
-  const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [edit, setEdit] = useState<boolean>(false);
-  const [textareaHeaight, setTextareaHeaight] = useState<number>(32);
+  const [showDescription, setShowDescription] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(MIN_TEXTAREA_HEIGHT);
 
-  const textareaRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const doneTasks = useAppSelector(getUserDoneTasks);
+  const inputRef = useRef<null | HTMLInputElement>(null);
 
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    if (event.target.scrollHeight > textareaHeaight) {
-      setTextareaHeaight(event.target.scrollHeight);
+    if (event.target.scrollHeight > textareaHeight) {
+      setTextareaHeight(event.target.scrollHeight);
     }
   };
 
-  const selectHowImportantIsTask = (importance: string): ImportanceType => {
-    switch (importance) {
-      case "5":
-        return "veryImportant";
-      case "4":
-        return "important";
-      case "3":
-        return "medium";
-      case "2":
-        return "lesImportant";
-      case "1":
-        return "noImportant";
-      default:
-        return "";
-    }
-  };
+  const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
   const handleFinishTask = async () => {
-    const selectedImportance: ImportanceType =
-      selectHowImportantIsTask(importance);
-    const updateDoneTasks: DoneTasksType = { ...testTasks };
-
-    const increaseCategoryValue: number = updateDoneTasks[category] + 1;
-    const increaseImportanceValue: number =
-      updateDoneTasks[selectedImportance] + 1;
-
-    updateDoneTasks[category] = increaseCategoryValue;
-    updateDoneTasks[selectedImportance] = increaseImportanceValue;
-    setTestTasks(updateDoneTasks);
-
-    sessionStorage.setItem(
-      "userNotqeDoneTasks",
-      JSON.stringify(updateDoneTasks)
+    const taskImportance = getTaskImportance(importanceLevel);
+    setTasksData((prevValue) => {
+      return prevValue.filter((task) => task._id !== id);
+    });
+    dispatch(
+      finishUserTask({ taskId: id, category, taskImportance, doneTasks })
     );
-    try {
-      const response = await axios.put("/api/users/login", {
-        userId,
-        doneTasks: updateDoneTasks,
-      });
-
-      const responseDeleteTask = await axios.delete(
-        `https://notqe.vercel.app/api/usersTasks?id=${id}`
-      );
-      handleUpdateTasks(id);
-    } catch (error: any) {
-      console.log("login failed", error.message);
-    }
   };
 
   const handleDeleteTask = async () => {
-    const response = await axios.delete(
-      `https://notqe.vercel.app/api/usersTasks?id=${id}`
-    );
+    //
+    await clientApi.delete(`/usersTasks/${id}`);
+    setTasksData((prevValue) => {
+      return prevValue.filter((task) => task._id !== id);
+    });
+
     handleUpdateTasks(id);
   };
 
   const handleEditTask = async () => {
+    const task = currentTask;
     if (edit) {
       setEdit(false);
       setShowDescription(false);
       try {
-        const response = await axios.put(
-          `https://notqe.vercel.app/api/usersTasks?id=${id}`,
-          {
-            userEmail: "test@test.com",
-            task: currentTask,
-          }
-        );
+        const response = await clientApi.put(`/usersTasks/${id}`, {
+          userID,
+          task,
+        });
         if (!response.statusText) {
           throw new Error("Failed to update topic");
         }
@@ -128,53 +129,57 @@ export default function Task({
   };
 
   return (
-    <div className={`task ${category} ${edit ? "edit_mode" : ""}`}>
+    <div
+      className={clsx(
+        "task",
+        `task--${category}-bgc`,
+        edit && "task--edit-mode"
+      )}
+    >
       <input
-        ref={textareaRef}
+        ref={inputRef}
         value={currentTask.title}
         disabled={!edit}
         maxLength={25}
+        className="task__input"
         onChange={(event) => {
           setCurrentTask({ ...currentTask, title: event.target.value });
         }}
       />
       <textarea
         value={currentTask.description}
-        style={{ height: showDescription ? textareaHeaight + "px" : "0px" }}
+        style={{ height: showDescription ? textareaHeight + "px" : "0px" }}
         disabled={!edit}
+        className="task__textarea"
         onChange={(event) => {
           handleTextareaHeight(event);
           setCurrentTask({ ...currentTask, description: event.target.value });
         }}
       />
 
-      <div className="task_icons_container">
+      <div className="task__icons-container">
         <AiFillCaretDown
           title={showDescription ? "hide description" : "show description"}
           onClick={() => {
             setShowDescription(!showDescription);
           }}
-          size={"30px"}
-          className={showDescription ? "show_description" : ""}
+          size="30px"
+          className={clsx(showDescription && "task__icon--show-description")}
         />
         <AiFillCheckCircle
-          size={"30px"}
+          size="30px"
           onClick={handleFinishTask}
           title="finish task"
         />
         <MdEdit
-          size={"30px"}
+          size="30px"
           title="edit task"
-          className={edit ? "edit" : ""}
+          className={clsx(edit && "task__icon--edit")}
           onClick={handleEditTask}
         />
-        <MdDelete
-          title="delete task"
-          size={"30px"}
-          onClick={handleDeleteTask}
-        />
+        <MdDelete title="delete task" size="30px" onClick={handleDeleteTask} />
       </div>
-      <div className="task_importance">{importance}</div>
+      <div className="task__importance">{importanceNumber}</div>
     </div>
   );
 }

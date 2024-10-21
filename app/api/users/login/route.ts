@@ -8,8 +8,8 @@ connectMongoDB();
 
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = await request.json();
-    const { email, password } = reqBody;
+    const body = await request.json();
+    const { email, password } = body;
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -47,9 +47,12 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json();
-  const { userId, doneTasks } = body;
+  const { userId, category, taskImportance } = body;
   await User.findByIdAndUpdate(userId, {
-    doneTasks: doneTasks,
+    $inc: {
+      [`doneTasks.categories.${category}`]: 1,
+      [`doneTasks.importanceLevel.${taskImportance}`]: 1,
+    },
   });
 
   return NextResponse.json({ message: "user update!" }, { status: 200 });

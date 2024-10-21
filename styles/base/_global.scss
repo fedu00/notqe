@@ -1,0 +1,88 @@
+[theme-mode="light"] {
+  --primary-background-color: #{$primary-light-200};
+  --secondary-background-color: #{$primary-light-100};
+  --button-background-color: #{$primary-dark-200};
+  --button-hover-background-color: #{$primary-dark-300};
+  --gray-button-background-color: #{$primary-dark-100};
+  --gray-button-hover-background-color: #{$primary-dark-200};
+  --primary-svg-color: #{$primary-dark-300};
+  --sun-svg-color: #{$primary-light-200};
+  --svg-background-position: #{$svg-background-left-spacing-small};
+  --svg-background-color: #{$primary-dark-400};
+}
+
+[theme-mode="dark"] {
+  --primary-background-color: #{$primary-dark-400};
+  --secondary-background-color: #{$primary-dark-300};
+  --button-background-color: #{$orange-color};
+  --button-hover-background-color: #{$light-orange-color};
+  --gray-button-background-color: #{$primary-dark-100};
+  --gray-button-hover-background-color: #{$primary-dark-200};
+  --primary-svg-color: #{$primary-light-100};
+  --sun-svg-color: #{$light-orange-color};
+  --svg-background-position: #{$svg-background-left-spacing-medium};
+  --svg-background-color: #{$light-orange-color};
+}
+
+body {
+  background-color: var(--primary-background-color);
+  transition: background-color $transition-duration-slow;
+  ul {
+    background-color: var(--primary-background-color);
+    transition: background-color $transition-duration-slow;
+  }
+  button {
+    background-color: var(--button-background-color);
+  }
+  button:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  .button--gray {
+    background-color: var(--gray-button-background-color);
+  }
+  .button--gray:hover {
+    background-color: var(--gray-button-hover-background-color);
+  }
+
+  select,
+  textarea,
+  input {
+    background-color: var(--secondary-background-color);
+  }
+  svg {
+    color: var(--primary-svg-color);
+  }
+  svg:hover {
+    color: var(--secondary-background-color);
+  }
+  .task__icon--edit {
+    color: var(--secondary-background-color);
+  }
+  .switch-button {
+    background-color: var(--primary-background-color);
+    border-color: var(--svg-background-color);
+  }
+  .switch-button__icon-moon {
+    color: $primary-dark-400;
+  }
+  .switch-button__icon-sun {
+    color: var(--sun-svg-color);
+  }
+  .switch-button:after {
+    background-color: var(--svg-background-color);
+    left: var(--svg-background-position);
+  }
+  .menu__hamburger-icon:hover {
+    color: var(--primary-svg-color);
+  }
+  .task__importance {
+    border-color: var(--primary-svg-color);
+  }
+  .task--edit-mode {
+    border-color: var(--primary-svg-color);
+  }
+
+  .theme-background {
+    background-color: var(--secondary-background-color);
+  }
+}

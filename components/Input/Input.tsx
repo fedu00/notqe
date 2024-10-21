@@ -1,4 +1,6 @@
-import "./Input.css";
+"use client";
+import "./Input.scss";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 interface InputType {
   type: string;
   value: string;
@@ -17,16 +19,16 @@ export default function Input({
   showError = false,
 }: InputType) {
   return (
-    <div className="input_container">
+    <div className="input">
       <input
         autoComplete="new-password"
-        className={`${showError ? "error_active" : ""} input_form`}
+        className="input__field"
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {showError && <p className="error_message">{errorMessage}</p>}
+      <ErrorMessage errorMessage={errorMessage} showError={showError} />
     </div>
   );
 }
