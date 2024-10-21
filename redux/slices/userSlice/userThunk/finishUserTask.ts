@@ -25,23 +25,13 @@ export const finishUserTask = createAsyncThunk<
     { taskId, category, taskImportance },
     { getState, rejectWithValue }
   ) => {
+    const { userId } = getState().userData;
     try {
       await clientApi.delete(`/usersTasks/${taskId}`);
-      const { userId, doneTasks } = getState().userData;
-
       await clientApi.put("/users/login", {
-        userId: userId,
-        doneTasks: {
-          ...doneTasks,
-          categories: {
-            ...doneTasks.categories,
-            [category]: doneTasks.categories[category] + 1,
-          },
-          importanceLevel: {
-            ...doneTasks.importanceLevel,
-            [taskImportance]: doneTasks.importanceLevel[taskImportance] + 1,
-          },
-        },
+        userId,
+        category,
+        taskImportance,
       });
 
       return { category, taskImportance };

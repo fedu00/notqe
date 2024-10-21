@@ -22,8 +22,10 @@ export default function Experience() {
   } = importanceLevel;
 
   useEffect(() => {
-    setIsLoading(false);
-  }, []);
+    if (doneTasks) {
+      setIsLoading(false);
+    }
+  }, [doneTasks]);
 
   return (
     <div className="experience">

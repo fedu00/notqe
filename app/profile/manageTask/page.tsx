@@ -6,11 +6,9 @@ import { useAppSelector } from "@/redux/hooks";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 import { getUserId } from "@/redux/slices/userSlice/userSelectors";
-import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import Select from "@/components/Select/Select";
 import clientApi from "@/apiClients/clientApi";
 import Task from "@/components/Task/Task";
-import Loader from "@/components/Loader/Loader";
 
 const FULL_TASK_CATEGORY_LIST: Omit<
   ExtendedCategoryTaskType[],
@@ -33,7 +31,6 @@ const FULL_TASK_LVL_IMPORTANCE_LIST: ExtendedImportanceLevelTaskType[] = [
 ];
 
 export default function ManageTask() {
-  const [isLoading, setIsLoading] = useState(true);
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState(
     ExtendedCategoryTaskType.ALL
@@ -41,7 +38,6 @@ export default function ManageTask() {
   const [currentImportance, setCurrentImportance] = useState("all");
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
   const userId = useAppSelector(getUserId);
-  const doneTasks = useAppSelector(getUserDoneTasks);
 
   const getFilteredTasks = () => {
     if (
@@ -93,7 +89,6 @@ export default function ManageTask() {
 
   useEffect(() => {
     if (userId != null && userId != "") {
-      setIsLoading(false);
       getTask(userId);
     } else {
       console.log("we can not find your ID");
@@ -113,59 +108,53 @@ export default function ManageTask() {
 
   return (
     <div className="manage-tasks">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="manage-tasks__tasks-container">
-          <div className="manage-tasks__filters">
-            <h2 className="manage_tasks__title">manage your tasks</h2>
-            <Select
-              data={FULL_TASK_CATEGORY_LIST}
-              value={
-                currentCategory === ExtendedCategoryTaskType.ALL
-                  ? "default"
-                  : currentCategory
-              }
-              onChange={(event) =>
-                setCurrentCategory(
-                  event.target.value as ExtendedCategoryTaskType
-                )
-              }
-              placeholder="select category"
-            />
-            <Select
-              data={FULL_TASK_LVL_IMPORTANCE_LIST}
-              value={
-                currentImportance === ExtendedImportanceLevelTaskType.ALL
-                  ? "default"
-                  : currentImportance
-              }
-              onChange={(event) =>
-                setCurrentImportance(
-                  event.target.value as ExtendedImportanceLevelTaskType
-                )
-              }
-              placeholder="select task importance"
-            />
-          </div>
-          <div className="manage-tasks__tasks-list theme-background">
-            {currentTasksData.length > 0 ? (
-              currentTasksData.map((task: DataType) => (
-                <Task
-                  key={task._id}
-                  id={task._id}
-                  task={task.task}
-                  userID={userId!}
-                  handleUpdateTasks={handleUpdateTasks}
-                  setTasksData={setTasksData}
-                />
-              ))
-            ) : (
-              <p>you don't have such tasks</p>
-            )}
-          </div>
+      <div className="manage-tasks__tasks-container">
+        <div className="manage-tasks__filters">
+          <h2 className="manage_tasks__title">manage your tasks</h2>
+          <Select
+            data={FULL_TASK_CATEGORY_LIST}
+            value={
+              currentCategory === ExtendedCategoryTaskType.ALL
+                ? "default"
+                : currentCategory
+            }
+            onChange={(event) =>
+              setCurrentCategory(event.target.value as ExtendedCategoryTaskType)
+            }
+            placeholder="select category"
+          />
+          <Select
+            data={FULL_TASK_LVL_IMPORTANCE_LIST}
+            value={
+              currentImportance === ExtendedImportanceLevelTaskType.ALL
+                ? "default"
+                : currentImportance
+            }
+            onChange={(event) =>
+              setCurrentImportance(
+                event.target.value as ExtendedImportanceLevelTaskType
+              )
+            }
+            placeholder="select task importance"
+          />
         </div>
-      )}
+        <div className="manage-tasks__tasks-list theme-background">
+          {currentTasksData.length > 0 ? (
+            currentTasksData.map((task: DataType) => (
+              <Task
+                key={task._id}
+                id={task._id}
+                task={task.task}
+                userID={userId!}
+                handleUpdateTasks={handleUpdateTasks}
+                setTasksData={setTasksData}
+              />
+            ))
+          ) : (
+            <p>you don't have such tasks</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -13,12 +13,10 @@ import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
 import clientApi from "@/apiClients/clientApi";
-import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Form from "@/components/Form/Form";
 
 export default function CreateTask() {
-  const [isLoading, setIsLoading] = useState(true);
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
@@ -79,51 +77,41 @@ export default function CreateTask() {
     }
   };
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   return (
     <div className="create-task">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="create-task__title-container">
-            <h2 className="create-task__title">Create a new task</h2>
-            <Button onClick={handleAddTask} text="create task" />
-          </div>
-          <Form>
-            <Input
-              type="text"
-              value={task.title}
-              onChange={handleOnChange("title")}
-              placeholder="enter title"
-            />
-            <Textarea
-              value={task.description}
-              onChange={handleOnChange("description")}
-              placeholder="description..."
-            />
-            <Select
-              data={TASK_CATEGORY_LIST}
-              value={task.category}
-              placeholder="select category"
-              onChange={handleOnChange("category")}
-            />
-            <Select
-              data={TASK_LVL_IMPORTANCE_LIST}
-              value={task.importanceLevel}
-              placeholder="select importance level"
-              onChange={handleOnChange("importanceLevel")}
-            />
-            <ErrorMessage
-              showError={showError}
-              errorMessage="You must complete all fields!"
-            />
-          </Form>
-        </>
-      )}
+      <div className="create-task__title-container">
+        <h2 className="create-task__title">Create a new task</h2>
+        <Button onClick={handleAddTask} text="create task" />
+      </div>
+      <Form>
+        <Input
+          type="text"
+          value={task.title}
+          onChange={handleOnChange("title")}
+          placeholder="enter title"
+        />
+        <Textarea
+          value={task.description}
+          onChange={handleOnChange("description")}
+          placeholder="description..."
+        />
+        <Select
+          data={TASK_CATEGORY_LIST}
+          value={task.category}
+          placeholder="select category"
+          onChange={handleOnChange("category")}
+        />
+        <Select
+          data={TASK_LVL_IMPORTANCE_LIST}
+          value={task.importanceLevel}
+          placeholder="select importance level"
+          onChange={handleOnChange("importanceLevel")}
+        />
+        <ErrorMessage
+          showError={showError}
+          errorMessage="You must complete all fields!"
+        />
+      </Form>
     </div>
   );
 }
