@@ -1,0 +1,4 @@
+@mixin theme-container {
+  transition: background-color $transition-duration-slow;
+  border-radius: $border-radius-s;
+}

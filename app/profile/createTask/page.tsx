@@ -1,140 +1,117 @@
 "use client";
-import "./createTask.css";
+import "./createTask.scss";
 import { useState, useEffect } from "react";
-import {
-  CREATE_TASK_CATEGORY_DATA,
-  IMPORTANCE_DATA,
-} from "@/constans/constans";
-import { TaskType } from "@/types/types";
-import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
+import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
+import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
+import { TaskType } from "@/types/TaskType";
+import { useAppSelector } from "@/redux/hooks";
+import { CategoryTasksType } from "@/types/CategoryTasksType";
+import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { getUserData } from "@/redux/slices/userSlice/userSelectors";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-// import DateInput from "@/components/DateInput/DateInput"; //save for next app version
 import Textarea from "@/components/TextArea/Textarea";
 import Select from "@/components/Select/Select";
-import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
-
-type TaskErrorType = {
-  title: boolean;
-  description: boolean;
-};
+import clientApi from "@/apiClients/clientApi";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Form from "@/components/Form/Form";
 
 export default function CreateTask() {
-  const [email, setEmail] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
-    category: "health",
-    importance: "1",
-    // deadline: "",
+    category: CategoryTasksType.OTHER,
+    importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
   });
+  const [categoryIsSelected, setCategoryIsSelected] = useState(false);
+  const [importanceIsSelected, setImportanceIsSelected] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const userData = useAppSelector(getUserData);
+  const userID = userData.userId;
 
-  const [showError, setShowError] = useState<TaskErrorType>({
-    title: false,
-    description: false,
-  });
+  const handleOnChange =
+    (field: keyof TaskType) =>
+    (
+      event: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
+      setTask((prev) => ({ ...task, [field]: event.target.value }));
+      setShowError(false);
+      if (field === "category") {
+        setCategoryIsSelected(true);
+      }
+      if (field === "importanceLevel") {
+        setImportanceIsSelected(true);
+      }
+    };
 
-  useEffect(() => {
-    getdataFromSessionStorage("userNotqeEmail", setIsLoading, setEmail, true);
-  }, []);
-
-  const handleOnChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTask({ ...task, title: event.target.value });
-    setShowError({ ...showError, title: false });
-  };
-  const handleOnChangeDescription = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setTask({ ...task, description: event.target.value });
-    setShowError({ ...showError, description: false });
-  };
-
-  const handleAddNote = async () => {
+  const handleAddTask = async () => {
     const titleIsnotEmpty: boolean = task.title.length > 0;
     const descriptionIsnotEmptyy: boolean = task.description.length > 0;
-    if (titleIsnotEmpty && descriptionIsnotEmptyy) {
+
+    if (
+      titleIsnotEmpty &&
+      descriptionIsnotEmptyy &&
+      categoryIsSelected &&
+      importanceIsSelected
+    ) {
       try {
-        const response = await axios.post(
-          `https://notqe.vercel.app/api/usersTasks`,
-          // "http://localhost:3000/api/usersTasks",
-          { userEmail: email, task: task }
-        );
+        await clientApi.post("/usersTasks", {
+          userID,
+          task,
+        });
         setTask({
           title: "",
           description: "",
-          category: "health",
-          importance: "1",
-          // deadline: "",
+          category: CategoryTasksType.OTHER,
+          importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
         });
+        setCategoryIsSelected(false);
+        setImportanceIsSelected(false);
       } catch (error) {
         console.log(error);
       }
     } else {
-      setShowError({
-        title: !titleIsnotEmpty,
-        description: !descriptionIsnotEmptyy,
-      });
+      setShowError(true);
     }
   };
+
   return (
-    <div className="create_task_page_container">
-      {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
+    <div className="create-task">
+      <div className="create-task__title-container">
+        <h2 className="create-task__title">Create a new task</h2>
+        <Button onClick={handleAddTask} text="create task" />
+      </div>
+      <Form>
+        <Input
+          type="text"
+          value={task.title}
+          onChange={handleOnChange("title")}
+          placeholder="enter title"
         />
-      ) : (
-        <>
-          <div className="title_container">
-            <h1>Create a new task</h1>
-            <Button onClick={handleAddNote} text="create task" />
-          </div>
-          <div className="create_task_form_container">
-            <Input
-              type="text"
-              value={task.title}
-              showError={showError.title}
-              errorMessage="this field cannot be empty"
-              onChange={(event) => handleOnChangeTitle(event)}
-              placeholder="enter title"
-            />
-            <Textarea
-              value={task.description}
-              showError={showError.description}
-              errorMessage="this field cannot be empty"
-              onChange={(event) => handleOnChangeDescription(event)}
-              placeholder="description..."
-            />
-            <Select
-              data={CREATE_TASK_CATEGORY_DATA}
-              value={task.category}
-              onChange={(event) => {
-                setTask({ ...task, category: event.target.value });
-              }}
-            />
-            <Select
-              data={IMPORTANCE_DATA}
-              value={task.importance}
-              onChange={(event) => {
-                setTask({ ...task, importance: event.target.value });
-              }}
-            />
-            {/* save this for future version app */}
-            {/* <DateInput
-          onChange={(event) => {
-            setTask({ ...task, deadline: event.target.value });
-          }}
-        /> */}
-          </div>
-        </>
-      )}
+        <Textarea
+          value={task.description}
+          onChange={handleOnChange("description")}
+          placeholder="description..."
+        />
+        <Select
+          data={TASK_CATEGORY_LIST}
+          value={task.category}
+          placeholder="select category"
+          onChange={handleOnChange("category")}
+        />
+        <Select
+          data={TASK_LVL_IMPORTANCE_LIST}
+          value={task.importanceLevel}
+          placeholder="select importance level"
+          onChange={handleOnChange("importanceLevel")}
+        />
+        <ErrorMessage
+          showError={showError}
+          errorMessage="You must complete all fields!"
+        />
+      </Form>
     </div>
   );
 }

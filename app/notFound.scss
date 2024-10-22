@@ -1,0 +1,33 @@
+.error-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    padding: $padding-xl;
+    border-radius: $border-radius-s;
+    background-color: $primary-dark-300;
+    color: $primary-light-100;
+    @media (max-width: $breakpoint-xl) {
+      padding: $padding-m;
+    }
+  }
+
+  &__message {
+    font-size: $font-size-xxxl;
+    color: $error-color;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__text {
+    font-size: $padding-xl;
+    margin-top: $margin-l;
+    @media (max-width: $breakpoint-xl) {
+      font-size: $padding-m;
+    }
+  }
+}

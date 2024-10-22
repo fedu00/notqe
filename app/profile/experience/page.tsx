@@ -1,71 +1,66 @@
 "use client";
-import UserExperience from "@/components/UserExperience/UserExperience";
-import "./experience.css";
-import TaskScore from "@/components/TaskScore/TaskScore";
-import { DoneTasksType } from "@/types/types";
+import "./experience.scss";
 import { useState, useEffect } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
-import { DONE_TASKS_DATA } from "@/constans/constans";
-import { getdataFromSessionStorage } from "@/helpers/getDataFromSessionStorage";
+import { useAppSelector } from "@/redux/hooks";
+import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
+import UserExperience from "@/components/UserExperience/UserExperience";
+import Loader from "@/components/Loader/Loader";
+import TaskScore from "@/components/TaskScore/TaskScore";
 
 export default function Experience() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [doneTasksData, setDoneTasksData] =
-    useState<DoneTasksType>(DONE_TASKS_DATA);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    getdataFromSessionStorage(
-      "userNotqeDoneTasks",
-      setIsLoading,
-      setDoneTasksData
-    );
-  }, []);
-
+  const doneTasks = useAppSelector(getUserDoneTasks);
+  const { categories, importanceLevel } = doneTasks;
+  const { health, other, study, work } = categories;
   const {
-    health,
-    other,
-    study,
-    work,
     noImportant,
-    lesImportant,
-    medium,
+    lessImportant,
+    mediumImportant,
     important,
     veryImportant,
-  } = doneTasksData;
+  } = importanceLevel;
+
+  useEffect(() => {
+    if (doneTasks) {
+      setIsLoading(false);
+    }
+  }, [doneTasks]);
 
   return (
-    <div className="experience_container">
+    <div className="experience">
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
         <>
-          <div className="tasks-experience_container">
-            <div className="category_tasks">
+          <div className="experience__scores-container">
+            <div className="experience__scores-group">
               <TaskScore
                 score={health}
                 title={"health"}
-                selectClass={"health"}
+                selectedClass={"health"}
               />
-              <TaskScore score={work} title={"work"} selectClass={"work"} />
-              <TaskScore score={study} title={"study"} selectClass={"study"} />
-              <TaskScore score={other} title={"other"} selectClass={"other"} />
+              <TaskScore score={work} title={"work"} selectedClass={"work"} />
+              <TaskScore
+                score={study}
+                title={"study"}
+                selectedClass={"study"}
+              />
+              <TaskScore
+                score={other}
+                title={"other"}
+                selectedClass={"other"}
+              />
             </div>
-            <div className="importance_tasks">
+            <div className="experience__scores-group">
               <TaskScore score={noImportant} title={"no important"} />
-              <TaskScore score={lesImportant} title={"less important"} />
-              <TaskScore score={medium} title={"medium"} />
+              <TaskScore score={lessImportant} title={"less important"} />
+              <TaskScore score={mediumImportant} title={"medium"} />
               <TaskScore score={important} title={"important"} />
               <TaskScore score={veryImportant} title={"very important"} />
             </div>
           </div>
-          <UserExperience doneTasksData={doneTasksData} />
+          <UserExperience doneTasksData={doneTasks} />
         </>
       )}
     </div>

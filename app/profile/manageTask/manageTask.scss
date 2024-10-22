@@ -1,0 +1,45 @@
+@import "../../../styles/utils/mixins";
+
+.theme-background {
+  @include theme-container();
+}
+
+.manage-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: $breakpoint-xl) {
+    width: 90%;
+  }
+
+  &__tasks-container {
+    @media (max-width: $breakpoint-xl) {
+      width: 100%;
+    }
+  }
+
+  &__filters,
+  &__tasks-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__tasks-list {
+    padding: $padding-m;
+    max-height: 500px;
+    overflow: auto;
+    @media (max-width: $breakpoint-xl) {
+      width: 100%;
+      padding: $padding-s;
+    }
+  }
+  &__tasks-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  &_title {
+    margin-top: 0;
+    margin-bottom: $margin-m;
+  }
+}

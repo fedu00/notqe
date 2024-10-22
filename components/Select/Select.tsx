@@ -1,18 +1,31 @@
 "use client";
-import "./Select.css";
-
+import "./Select.scss";
+import { BiSolidDownArrow } from "react-icons/bi";
+import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
+import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 interface SelectType {
-  data: string[];
+  data: ExtendedCategoryTaskType[] | ExtendedImportanceLevelTaskType[];
   onChange(event: React.ChangeEvent<HTMLSelectElement>): void;
   value: string;
+  placeholder: string;
 }
-
-export default function Select({ data, onChange, value }: SelectType) {
+export default function Select({
+  data,
+  onChange,
+  value,
+  placeholder = "default",
+}: SelectType) {
   return (
-    <select onChange={onChange} value={value}>
-      {data.map((category: string) => (
-        <option key={category}>{category}</option>
-      ))}
-    </select>
+    <div className="select">
+      <select className="select__field" onChange={onChange} value={value}>
+        <option value="default" disabled>
+          {placeholder}
+        </option>
+        {data.map((category: string) => (
+          <option key={category}>{category}</option>
+        ))}
+      </select>
+      <BiSolidDownArrow className="select__arrow-icon" />
+    </div>
   );
 }

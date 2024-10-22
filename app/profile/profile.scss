@@ -1,0 +1,23 @@
+@import "../../styles/utils/mixins";
+
+.theme-background {
+  @include theme-container();
+}
+
+.profile {
+  max-width: 600px;
+  padding: $padding-m;
+  @media (max-width: $breakpoint-xl) {
+    max-width: unset;
+    width: 80%;
+    padding: $padding-s;
+  }
+
+  @media (max-width: $breakpoint-l) {
+    width: 90%;
+  }
+
+  &__title {
+    margin-top: 0px;
+  }
+}

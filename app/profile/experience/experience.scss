@@ -1,0 +1,24 @@
+.experience {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: $breakpoint-xxxl) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  &__scores-container {
+    margin-right: $margin-l;
+    @media (max-width: $breakpoint-xxxl) {
+      margin-right: 0px;
+    }
+  }
+
+  &__scores-group {
+    display: flex;
+    justify-content: center;
+    @media (max-width: $breakpoint-xl) {
+      flex-wrap: wrap;
+    }
+  }
+}

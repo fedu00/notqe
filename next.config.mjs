@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+import path from "path";
+const nextConfig = {
+  reactStrictMode: false,
+  sassOptions: {
+    includePaths: [path.join(process.cwd(), "styles")],
+    prependData: `@import 'utils/variables.scss';`,
+  },
+};
 
 export default nextConfig;

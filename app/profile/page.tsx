@@ -1,37 +1,30 @@
 "use client";
-import "./profile.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import "./profile.scss";
+import { useEffect } from "react";
+import { fetchUserDetails } from "@/redux/slices/userSlice/userThunk/fetchUserDetails";
+import { getUserName } from "@/redux/slices/userSlice/userSelectors";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export default function ProfilePage() {
-  const [username, setUsername] = useState<string>("unknow");
-
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+  const username = useAppSelector(getUserName);
+  const dispatch = useAppDispatch();
 
   const getUserDetails = async () => {
-    const response = await axios.get("/api/users/userDetails");
-    sessionStorage.setItem("userNotqeEmail", response.data.data.email);
-    sessionStorage.setItem("userNotqeId", response.data.data._id);
-    sessionStorage.setItem(
-      "userNotqeDoneTasks",
-      JSON.stringify(response.data.data.doneTasks)
-    );
-    setUsername(response.data.data.username);
+    dispatch(fetchUserDetails());
   };
+  useEffect(() => {
+    getUserDetails();
+  }, [dispatch]);
 
   return (
-    <div className="profile-container">
-      <div className="profile_message">
-        <h1>welcome on your account {username}</h1>
-        <p>
-          Build your future brick by brick. The NOTQE application can help you
-          with this - organize your tasks and check your plans for today before
-          you start taking action. Check your progress and how much work you
-          have done in the "experience" tab.
-        </p>
-      </div>
+    <div className="profile theme-background">
+      <h2 className="profile__title">welcome on your account {username}</h2>
+      <p>
+        Build your future brick by brick. The NOTQE application can help you
+        with this - organize your tasks and check your plans for today before
+        you start taking action. Check your progress and how much work you have
+        done in the "experience" tab.
+      </p>
     </div>
   );
 }

@@ -1,13 +1,15 @@
 "use client";
-import "./login.css";
+import "./login.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import axios from "axios";
+import { useAppDispatch } from "@/redux/hooks";
+import { login } from "@/redux/slices/authSlice/authSlice";
+import clientApi from "@/apiClients/clientApi";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-import Logo from "@/components/Logo/Logo";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "@/components/Loader/Loader";
+import Form from "@/components/Form/Form";
 
 type UserType = {
   email: string;
@@ -16,24 +18,33 @@ type UserType = {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [showError, setShowError] = useState<boolean>(false);
-  const [user, setuser] = useState<UserType>({
+  const [showError, setShowError] = useState(false);
+  const [user, setUser] = useState<UserType>({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleOnChange =
+    (field: keyof UserType) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setUser((prev) => ({ ...prev, [field]: event.target.value }));
+      setShowError(false);
+    };
+
+  const validateUserCredentials = (): boolean => {
+    return validateEmail(user.email) && user.password.length >= 4;
+  };
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
 
-    const emailValidation: boolean = validateEmail(user.email);
-    const passwordValidation: boolean = user.password.length >= 4;
-
-    if (emailValidation && passwordValidation) {
+    if (validateUserCredentials()) {
       try {
         setIsLoading(true);
-        const response = await axios.post("/api/users/login", user);
+        await clientApi.post("/users/login", user);
         router.push("/profile");
+        dispatch(login());
       } catch (error: any) {
         setIsLoading(false);
         setShowError(true);
@@ -45,48 +56,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-container">
-      <Logo bigSize={true} />
+    <div className="login">
       <h2>Login your account</h2>
       {isLoading ? (
-        <ClipLoader
-          color={"#ffa868"}
-          loading={true}
-          size={60}
-          speedMultiplier={0.4}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Loader />
       ) : (
-        <form
-          onSubmit={(event) => {
-            handleLogin(event);
-          }}
-        >
+        <Form onSubmit={handleLogin}>
           <Input
             type="text"
             placeholder="enter your email"
             value={user.email}
-            onChange={(event) => {
-              setuser({ ...user, email: event.target.value });
-              setShowError(false);
-            }}
+            onChange={handleOnChange("email")}
             errorMessage="invalid email"
             showError={showError}
           />
           <Input
-            type="text"
+            type="password"
             placeholder="enter your password"
             value={user.password}
-            onChange={(event) => {
-              setuser({ ...user, password: event.target.value });
-              setShowError(false);
-            }}
-            errorMessage="invalid email"
+            onChange={handleOnChange("password")}
+            errorMessage="invalid password"
             showError={showError}
           />
           <Button text="log in" type="submit" />
-        </form>
+        </Form>
       )}
     </div>
   );

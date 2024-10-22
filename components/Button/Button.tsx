@@ -1,18 +1,19 @@
 "use client";
-import "./Button.css";
+import "./Button.scss";
 import { useRef } from "react";
+import clsx from "clsx";
 interface ButtonType {
   text: string;
-  onClick?: () => any | undefined;
+  onClick?: () => void;
   type?: "submit" | "reset" | "button";
-  test?: boolean;
+  grayButton?: boolean;
 }
 
 export default function Button({
   text,
   onClick = () => {},
   type,
-  test,
+  grayButton,
 }: ButtonType) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -20,18 +21,17 @@ export default function Button({
     if (onClick != undefined) {
       onClick();
     }
-
-    buttonRef.current?.classList.add("show-animation");
-
+    buttonRef.current?.classList.add("button--animation");
     setTimeout(() => {
-      buttonRef.current?.classList.remove("show-animation");
+      buttonRef.current?.classList.remove("button--animation");
     }, 301);
   };
+
   return (
     <button
       ref={buttonRef}
       type={type}
-      className={`${test ? "test_button" : ""} button`}
+      className={clsx("button", grayButton && "button--gray")}
       onClick={handleOnClick}
     >
       {text}
