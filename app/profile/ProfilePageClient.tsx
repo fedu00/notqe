@@ -2,10 +2,14 @@
 import "./profile.scss";
 import { useAppDispatch } from "@/redux/hooks";
 import { updateUserData } from "@/redux/slices/userSlice/userSlice";
+import { useEffect } from "react";
 
 export default function ProfilePageClient({ user }) {
   const dispatch = useAppDispatch();
-  dispatch(updateUserData(user));
+  useEffect(() => {
+    dispatch(updateUserData(user));
+  }, []);
+
   const { username } = user;
   return (
     <div className="profile theme-background">
