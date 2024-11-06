@@ -7,6 +7,7 @@ import { login } from "@/redux/slices/authSlice/authSlice";
 import Button from "@/components/Button/Button";
 import clientApi from "@/apiClients/clientApi";
 import Loader from "@/components/Loader/Loader";
+import axios from "axios";
 
 const TEST_USER_ACCOUNT = {
   email: "test4@test4.pl",
@@ -22,7 +23,18 @@ export default function Home() {
   const handleLoginTestAccount = async () => {
     try {
       setIsLoading(true);
-      await clientApi.post("/users/login", TEST_USER_ACCOUNT);
+      // await clientApi.post("/users/login", TEST_USER_ACCOUNT);
+      await axios.post(
+        "http://localhost:3000/api/users/login",
+        TEST_USER_ACCOUNT,
+        {
+          withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+            "Access-Control-Allow-Credentials": "true",
+          },
+        }
+      );
       router.push("/profile");
       dispatch(login());
     } catch (error: any) {

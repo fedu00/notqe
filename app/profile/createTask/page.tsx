@@ -1,6 +1,6 @@
 "use client";
 import "./createTask.scss";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
 import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
 import { TaskType } from "@/types/TaskType";
