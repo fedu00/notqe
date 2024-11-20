@@ -11,6 +11,7 @@ export const getDataFromHeader = (request: NextRequest) => {
     if (!token) {
       throw new Error("Token not provided");
     }
+
     const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
     return decodedToken.id;
   } catch (error: any) {

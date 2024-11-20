@@ -2,20 +2,15 @@ import { connectMongoDB } from "@/dbConfig/dbConfig";
 import { NextResponse, NextRequest } from "next/server";
 import { getDataFromHeader } from "@/helpers/getDataFromHeader";
 import User from "@/models/userModel";
-import { cookies } from "next/headers";
 
 export async function GET(request: NextRequest) {
   try {
     connectMongoDB();
     const userId = await getDataFromHeader(request);
+
     if (!userId) {
       throw new Error("We can't get user ID");
     }
-
-    // const myCookieValue = request.cookies.get("myCookie")?.value;
-    // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // console.log("sprawdzam nowego cookies", myCookieValue);
-
     const user = await User.findOne({ _id: userId }).select("-password");
     if (!user) {
       throw new Error("Can't find this user!");

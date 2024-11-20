@@ -19,11 +19,6 @@ export async function GET() {
       httpOnly: true,
       expires: new Date(0),
     });
-    response.cookies.set("myCookie", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
-
     return response;
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
