@@ -19,11 +19,20 @@ clientWithTokenApi.interceptors.request.use(
     const token = cookies().get("token")?.value;
     if (token) {
       const isTokenExpired = validateTokenExpiry(token);
+
       if (!isTokenExpired) {
         config.headers["authorization"] = `Bearer ${token}`;
       } else {
         const refreshedToken = await refreshToken();
-        config.headers["authorization"] = `Bearer ${refreshedToken}`;
+
+        if (refreshedToken && !refreshedToken.failedRefreshToken) {
+          config.headers["authorization"] = `Bearer ${refreshedToken}`;
+        } else {
+          return Promise.reject({
+            message: "Failed to refresh token.",
+            failedRefreshToken: true,
+          });
+        }
       }
     }
     return config;

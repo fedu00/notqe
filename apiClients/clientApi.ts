@@ -6,6 +6,8 @@ const clientApi = axios.create({
   // baseURL: `https://notqe.vercel.app/api/usersTasks?id=${id}`,
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Access-Control-Allow-Credentials": "true",
   },
 });
 

@@ -1,22 +1,21 @@
-import axios from "axios";
+import clientApi from "@/apiClients/clientApi";
 import { cookies } from "next/headers";
 
 export default async function refreshToken() {
   try {
     const refreshToken = cookies().get("refreshToken")?.value;
-    const newToken = await axios.post(
-      "http://localhost:3000/api/users/auth/refresh",
-      { refreshToken: refreshToken },
+    if (!refreshToken) {
+      return { failedRefreshToken: true, error: "Token refresh failed." };
+    }
+    const newToken = await clientApi.post(
+      "/users/auth/refresh",
+      { refreshToken },
       {
         withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-          "Access-Control-Allow-Credentials": "true",
-        },
       }
     );
     return newToken.data.newAccessToken;
   } catch (error) {
-    throw new Error("We can not refresh your token");
+    return { failedRefreshToken: true, error: "Token refresh failed." };
   }
 }

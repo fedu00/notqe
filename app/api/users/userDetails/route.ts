@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     if (!user) {
       throw new Error("Can't find this user!");
     }
-
     return NextResponse.json({
       message: "user found",
       data: user,
