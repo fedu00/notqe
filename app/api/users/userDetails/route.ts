@@ -1,14 +1,20 @@
-import { getDataFromToken } from "@/helpers/getDataFromToken";
 import { connectMongoDB } from "@/dbConfig/dbConfig";
 import { NextResponse, NextRequest } from "next/server";
+import { getDataFromHeader } from "@/helpers/getDataFromHeader";
 import User from "@/models/userModel";
-
-connectMongoDB();
 
 export async function GET(request: NextRequest) {
   try {
-    const userId = await getDataFromToken(request);
+    connectMongoDB();
+    const userId = await getDataFromHeader(request);
+
+    if (!userId) {
+      throw new Error("We can't get user ID");
+    }
     const user = await User.findOne({ _id: userId }).select("-password");
+    if (!user) {
+      throw new Error("Can't find this user!");
+    }
     return NextResponse.json({
       message: "user found",
       data: user,
@@ -18,7 +24,7 @@ export async function GET(request: NextRequest) {
       {
         error: error.message,
       },
-      { status: 400 }
+      { status: 401 }
     );
   }
 }

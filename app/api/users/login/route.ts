@@ -3,6 +3,7 @@ import User from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 connectMongoDB();
 
@@ -29,15 +30,23 @@ export async function POST(request: NextRequest) {
       email: user.email,
     };
     const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-      expiresIn: "1d",
+      expiresIn: "45m",
     });
+
+    const refreshToken = await jwt.sign(
+      tokenData,
+      process.env.REFRESH_TOKEN_SECRET!,
+      { expiresIn: "200m" }
+    );
+
+    cookies().set("token", token, { httpOnly: true });
+    cookies().set("refreshToken", refreshToken, { httpOnly: true });
 
     const response = NextResponse.json({
       message: "login successful",
       success: true,
+      tokens: { token, refreshToken },
     });
-
-    response.cookies.set("token", token, { httpOnly: true });
 
     return response;
   } catch (error: any) {

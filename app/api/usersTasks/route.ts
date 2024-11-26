@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/dbConfig/dbConfig";
 import MyTask from "@/models/taskModel";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(request: any) {
+export async function POST(request: NextRequest) {
   const { userID, task } = await request.json();
   await connectMongoDB();
   await MyTask.create({ userID, task });

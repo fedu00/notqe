@@ -1,24 +1,20 @@
-"use client";
 import "./profile.scss";
-import { useEffect } from "react";
-import { fetchUserDetails } from "@/redux/slices/userSlice/userThunk/fetchUserDetails";
-import { getUserName } from "@/redux/slices/userSlice/userSelectors";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { getUserDetails } from "@/helpers/getUserDetails";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
-  const username = useAppSelector(getUserName);
-  const dispatch = useAppDispatch();
+export default async function ProfilePage() {
+  const user = await getUserDetails();
+  const failedUserData = user.failedRefreshToken;
 
-  const getUserDetails = async () => {
-    dispatch(fetchUserDetails());
-  };
-  useEffect(() => {
-    getUserDetails();
-  }, [dispatch]);
+  if (failedUserData) {
+    redirect("/login");
+  }
 
   return (
     <div className="profile theme-background">
-      <h2 className="profile__title">welcome on your account {username}</h2>
+      <h2 className="profile__title">
+        Welcome on your account {user.username || "unknow"}
+      </h2>
       <p>
         Build your future brick by brick. The NOTQE application can help you
         with this - organize your tasks and check your plans for today before
