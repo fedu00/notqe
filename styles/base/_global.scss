@@ -31,9 +31,11 @@ body {
     background-color: var(--primary-background-color);
     transition: background-color $transition-duration-slow;
   }
+  .main-page__link,
   button {
     background-color: var(--button-background-color);
   }
+  .main-page__link:hover,
   button:hover {
     background-color: var(--button-hover-background-color);
   }

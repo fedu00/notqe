@@ -3,12 +3,20 @@ import "./ThemeSwitch.scss";
 import { FaRegMoon } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
 import { useTheme } from "@/context/themeContext";
+import clsx from "clsx";
 
-export default function ThemeSwitch() {
+export default function ThemeSwitch({
+  positionFix,
+}: {
+  positionFix?: boolean;
+}) {
   const { toggleTheme } = useTheme();
 
   return (
-    <div className="switch-button" onClick={toggleTheme}>
+    <div
+      className={clsx(positionFix && "switch-button--fixed", "switch-button")}
+      onClick={toggleTheme}
+    >
       <FaRegSun className="switch-button__icon-sun" size="24px" />
       <FaRegMoon className="switch-button__icon-moon" size="24" />
     </div>

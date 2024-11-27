@@ -8,6 +8,7 @@ import Button from "@/components/Button/Button";
 import clientApi from "@/apiClients/clientApi";
 import Loader from "@/components/Loader/Loader";
 import Form from "@/components/Form/Form";
+import ThemeSwitch from "@/components/ThemeSwitch/ThemeSwitch";
 
 type FullUserType = {
   username: string;
@@ -77,6 +78,7 @@ export default function SignUpPage() {
   };
   return (
     <div className="signup">
+      <ThemeSwitch positionFix={true} />
       <h2>Create Account</h2>
       {isLoading ? (
         <Loader />

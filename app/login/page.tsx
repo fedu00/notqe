@@ -10,6 +10,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loader from "@/components/Loader/Loader";
 import Form from "@/components/Form/Form";
+import ThemeSwitch from "@/components/ThemeSwitch/ThemeSwitch";
 
 type UserType = {
   email: string;
@@ -57,6 +58,7 @@ export default function LoginPage() {
 
   return (
     <div className="login">
+      <ThemeSwitch positionFix={true} />
       <h2>Login your account</h2>
       {isLoading ? (
         <Loader />

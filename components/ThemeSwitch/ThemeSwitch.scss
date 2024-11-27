@@ -39,3 +39,13 @@
     margin-right: 2px;
   }
 }
+
+.switch-button--fixed {
+  position: fixed;
+  top: $button-position-top-l;
+  right: $button-position-top-xl;
+  @media (max-width: $breakpoint-xl) {
+    top: $button-position-top-s;
+    right: $button-position-top-m;
+  }
+}
