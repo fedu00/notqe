@@ -22,8 +22,9 @@ export default function Home() {
   const handleLoginTestAccount = async () => {
     try {
       setIsLoading(true);
-      await clientApi.post("/users/login", TEST_USER_ACCOUNT);
-      router.push("/profile");
+      const user = await clientApi.post("/users/login", TEST_USER_ACCOUNT);
+      const userID = user.data.userID;
+      router.push(`/profile/${userID}`);
       dispatch(login());
     } catch (error: any) {
       setIsLoading(false);
@@ -34,11 +35,11 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="main-page">
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="main-page">
+        <div className="main-page__button-wrapper">
           <Button
             text="sign up"
             onClick={() => {
