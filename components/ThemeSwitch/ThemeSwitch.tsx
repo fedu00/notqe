@@ -5,11 +5,11 @@ import { FaRegSun } from "react-icons/fa";
 import { useTheme } from "@/context/themeContext";
 import clsx from "clsx";
 
-export default function ThemeSwitch({
-  positionFix,
-}: {
+type ThemeSwitchType = {
   positionFix?: boolean;
-}) {
+};
+
+export default function ThemeSwitch({ positionFix }: ThemeSwitchType) {
   const { toggleTheme } = useTheme();
 
   return (

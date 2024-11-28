@@ -17,9 +17,11 @@ export default function TestAccountButton() {
   const handleLoginTestAccount = async () => {
     try {
       const user = await clientApi.post("/users/login", TEST_USER_ACCOUNT);
-      const userID = user.data.userID;
-      router.push(`/profile/${userID}`);
-      dispatch(login());
+      if (user) {
+        const userID = user.data.userID;
+        router.push(`/profile/${userID}`);
+        dispatch(login());
+      }
     } catch (error: any) {
       console.log("login failed", error.message);
     } finally {
@@ -28,7 +30,7 @@ export default function TestAccountButton() {
   return (
     <Button
       text="try test account"
-      grayButton={true}
+      grayButton
       onClick={handleLoginTestAccount}
     />
   );

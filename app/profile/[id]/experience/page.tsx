@@ -20,21 +20,17 @@ export default async function Experience() {
       <>
         <div className="experience__scores-container">
           <div className="experience__scores-group">
-            <TaskScore
-              score={health}
-              title={"health"}
-              selectedClass={"health"}
-            />
-            <TaskScore score={work} title={"work"} selectedClass={"work"} />
-            <TaskScore score={study} title={"study"} selectedClass={"study"} />
-            <TaskScore score={other} title={"other"} selectedClass={"other"} />
+            <TaskScore score={health} title="health" selectedClass="health" />
+            <TaskScore score={work} title="work" selectedClass="work" />
+            <TaskScore score={study} title="study" selectedClass="study" />
+            <TaskScore score={other} title="other" selectedClass="other" />
           </div>
           <div className="experience__scores-group">
-            <TaskScore score={noImportant} title={"no important"} />
-            <TaskScore score={lessImportant} title={"less important"} />
-            <TaskScore score={mediumImportant} title={"medium"} />
-            <TaskScore score={important} title={"important"} />
-            <TaskScore score={veryImportant} title={"very important"} />
+            <TaskScore score={noImportant} title="no important" />
+            <TaskScore score={lessImportant} title="less important" />
+            <TaskScore score={mediumImportant} title="medium" />
+            <TaskScore score={important} title="important" />
+            <TaskScore score={veryImportant} title="very important" />
           </div>
         </div>
         <UserExperience doneTasksData={doneTasks} />
