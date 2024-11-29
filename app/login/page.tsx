@@ -1,5 +1,4 @@
 "use client";
-import "./login.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -10,6 +9,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loader from "@/components/Loader/Loader";
 import Form from "@/components/Form/Form";
+import ThemeWrapper from "@/components/ThemeWrapper/ThemeWrapper";
 
 type UserType = {
   email: string;
@@ -56,7 +56,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login">
+    <ThemeWrapper directionColumn>
       <h2>Login your account</h2>
       {isLoading ? (
         <Loader />
@@ -81,6 +81,6 @@ export default function LoginPage() {
           <Button text="log in" type="submit" />
         </Form>
       )}
-    </div>
+    </ThemeWrapper>
   );
 }

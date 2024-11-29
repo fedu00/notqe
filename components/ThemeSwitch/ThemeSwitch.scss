@@ -12,6 +12,16 @@
   justify-content: space-between;
   margin: 0;
 
+  &--fixed {
+    position: fixed;
+    top: $button-position-top-l;
+    right: $button-position-top-xl;
+    @media (max-width: $breakpoint-xl) {
+      top: $button-position-top-s;
+      right: $button-position-top-m;
+    }
+  }
+
   &:after {
     content: "";
     position: absolute;

@@ -17,7 +17,6 @@ export default function Body({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={clsx(inter.className, "body")}>
-        <Menu />
         <main>{children}</main>
       </body>
     </html>

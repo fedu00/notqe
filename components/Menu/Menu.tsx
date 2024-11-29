@@ -20,25 +20,26 @@ import clsx from "clsx";
 const baseUrl = "http://localhost:3000";
 
 type MenuElementsType = { href: string; text: string };
-const menuElements: MenuElementsType[] = [
-  { href: "/profile/createTask", text: "create task" },
-  { href: "/profile/manageTask", text: "manage task" },
-  { href: "/profile/experience", text: "experience" },
-  { href: "/profile", text: "profile" },
-];
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: "200",
 });
 
-export default function Menu() {
+export default function Menu({ id }: { id: string }) {
   const router = useRouter();
   const [showmenu, setShowMenu] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
   const dispatch = useAppDispatch();
   const { isUserLogIn } = useAppSelector(getAuth);
+
+  const menuElements: MenuElementsType[] = [
+    { href: `/profile/${id}/createTask`, text: "create task" },
+    { href: `/profile/${id}/manageTask`, text: "manage task" },
+    { href: `/profile/${id}/experience`, text: "experience" },
+    { href: `/profile/${id}`, text: "profile" },
+  ];
 
   const handleMenuClick = () => {
     setShowMenu(false);

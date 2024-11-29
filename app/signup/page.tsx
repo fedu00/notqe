@@ -1,5 +1,4 @@
 "use client";
-import "./signup.scss";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
@@ -8,6 +7,7 @@ import Button from "@/components/Button/Button";
 import clientApi from "@/apiClients/clientApi";
 import Loader from "@/components/Loader/Loader";
 import Form from "@/components/Form/Form";
+import ThemeWrapper from "@/components/ThemeWrapper/ThemeWrapper";
 
 type FullUserType = {
   username: string;
@@ -76,7 +76,7 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className="signup">
+    <ThemeWrapper directionColumn>
       <h2>Create Account</h2>
       {isLoading ? (
         <Loader />
@@ -115,6 +115,6 @@ export default function SignUpPage() {
           <Button type="submit" text="create account" />
         </Form>
       )}
-    </div>
+    </ThemeWrapper>
   );
 }
