@@ -21,7 +21,10 @@ const FULL_TASK_CATEGORY_LIST: Omit<
   ExtendedCategoryTaskType.OTHER,
 ];
 
-const FULL_TASK_LVL_IMPORTANCE_LIST: ExtendedImportanceLevelTaskType[] = [
+const FULL_TASK_LVL_IMPORTANCE_LIST: Omit<
+  ExtendedImportanceLevelTaskType[],
+  ExtendedImportanceLevelTaskType.DEFAULT
+> = [
   ExtendedImportanceLevelTaskType.ALL,
   ExtendedImportanceLevelTaskType.NO_IMPORTANT,
   ExtendedImportanceLevelTaskType.LESS_IMPORTANT,
@@ -33,17 +36,23 @@ const FULL_TASK_LVL_IMPORTANCE_LIST: ExtendedImportanceLevelTaskType[] = [
 export default function ManageTask() {
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState(
-    ExtendedCategoryTaskType.ALL
+    ExtendedCategoryTaskType.DEFAULT
   );
-  const [currentImportance, setCurrentImportance] = useState("all");
+  const [currentImportance, setCurrentImportance] = useState(
+    ExtendedImportanceLevelTaskType.DEFAULT
+  );
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
   const userId = useAppSelector(getUserId);
 
   const getFilteredTasks = () => {
-    if (
-      currentCategory === ExtendedCategoryTaskType.ALL &&
-      currentImportance === ExtendedImportanceLevelTaskType.ALL
-    ) {
+    const showAllCategory =
+      currentCategory === ExtendedCategoryTaskType.ALL ||
+      currentCategory === ExtendedCategoryTaskType.DEFAULT;
+
+    const showAllImportanceLevel =
+      currentImportance === ExtendedImportanceLevelTaskType.ALL ||
+      currentImportance === ExtendedImportanceLevelTaskType.DEFAULT;
+    if (showAllCategory && showAllImportanceLevel) {
       setCurrentTasksData(tasksData);
     } else {
       const categoryFilteredTasks = tasksData.filter((task: DataType) => {
@@ -51,14 +60,22 @@ export default function ManageTask() {
         const taskCategory = ExtendedCategoryTaskType[categoryUpperCase];
         return (
           currentCategory === taskCategory ||
-          currentCategory === ExtendedCategoryTaskType.ALL
+          currentCategory === ExtendedCategoryTaskType.ALL ||
+          currentCategory === ExtendedCategoryTaskType.DEFAULT
         );
       });
-      const filteredTasks = categoryFilteredTasks.filter(
-        (task: DataType) =>
-          task.task.importanceLevel === currentImportance ||
-          currentImportance === ExtendedImportanceLevelTaskType.ALL
-      );
+      const filteredTasks = categoryFilteredTasks.filter((task: DataType) => {
+        const importanceLevelUpperCase =
+          task.task.importanceLevel.toUpperCase();
+        const importanceLevelKey = importanceLevelUpperCase.replace(/ /g, "_");
+        const taskImportance =
+          ExtendedImportanceLevelTaskType[importanceLevelKey];
+        return (
+          currentImportance === taskImportance ||
+          currentImportance === ExtendedImportanceLevelTaskType.ALL ||
+          currentImportance === ExtendedImportanceLevelTaskType.DEFAULT
+        );
+      });
       setCurrentTasksData(filteredTasks);
     }
   };
@@ -113,11 +130,7 @@ export default function ManageTask() {
           <h2 className="manage_tasks__title">manage your tasks</h2>
           <Select
             data={FULL_TASK_CATEGORY_LIST}
-            value={
-              currentCategory === ExtendedCategoryTaskType.ALL
-                ? "default"
-                : currentCategory
-            }
+            value={currentCategory}
             onChange={(event) =>
               setCurrentCategory(event.target.value as ExtendedCategoryTaskType)
             }
@@ -125,11 +138,7 @@ export default function ManageTask() {
           />
           <Select
             data={FULL_TASK_LVL_IMPORTANCE_LIST}
-            value={
-              currentImportance === ExtendedImportanceLevelTaskType.ALL
-                ? "default"
-                : currentImportance
-            }
+            value={currentImportance}
             onChange={(event) =>
               setCurrentImportance(
                 event.target.value as ExtendedImportanceLevelTaskType

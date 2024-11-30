@@ -1,8 +1,8 @@
-import { ImportanceLevelTasksType } from "./ImportanceLevelTasksType";
-import { CategoryTasksType } from "./CategoryTasksType";
+import { SelectCategoryTaskType } from "./SelectCategoryTaskType";
+import { SelectImportanceLevelTasksType } from "./SelectImportanceLevelTasksType";
 export type TaskType = {
   title: string;
   description: string;
-  category: CategoryTasksType;
-  importanceLevel: ImportanceLevelTasksType;
+  category: SelectCategoryTaskType;
+  importanceLevel: SelectImportanceLevelTasksType;
 };

@@ -5,8 +5,8 @@ import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
 import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
 import { TaskType } from "@/types/TaskType";
 import { useAppSelector } from "@/redux/hooks";
-import { CategoryTasksType } from "@/types/CategoryTasksType";
-import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { SelectCategoryTaskType } from "@/types/SelectCategoryTaskType";
+import { SelectImportanceLevelTasksType } from "@/types/SelectImportanceLevelTasksType";
 import { getUserData } from "@/redux/slices/userSlice/userSelectors";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -20,8 +20,8 @@ export default function CreateTask() {
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
-    category: CategoryTasksType.OTHER,
-    importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
+    category: SelectCategoryTaskType.DEFAULT,
+    importanceLevel: SelectImportanceLevelTasksType.DEFAULT,
   });
   const [categoryIsSelected, setCategoryIsSelected] = useState(false);
   const [importanceIsSelected, setImportanceIsSelected] = useState(false);
@@ -64,8 +64,8 @@ export default function CreateTask() {
         setTask({
           title: "",
           description: "",
-          category: CategoryTasksType.OTHER,
-          importanceLevel: ImportanceLevelTasksType.NO_IMPORTANT,
+          category: SelectCategoryTaskType.DEFAULT,
+          importanceLevel: SelectImportanceLevelTasksType.DEFAULT,
         });
         setCategoryIsSelected(false);
         setImportanceIsSelected(false);
