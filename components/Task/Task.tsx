@@ -10,6 +10,7 @@ import { TaskType } from "@/types/TaskType";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Dispatch, SetStateAction } from "react";
 import { ImportanceLevelTasksType } from "@/types/ImportanceLevelTasksType";
+import { SelectImportanceLevelTasksType } from "@/types/SelectImportanceLevelTasksType";
 import { getUserDoneTasks } from "@/redux/slices/userSlice/userSelectors";
 import { finishUserTask } from "@/redux/slices/userSlice/userThunk/finishUserTask";
 import clientApi from "@/apiClients/clientApi";
@@ -43,12 +44,14 @@ const importanceTaskValue: {
 };
 
 const getImportanceTaskNumber = (
-  importance: ImportanceLevelTasksType
+  importance: SelectImportanceLevelTasksType
 ): string => {
   return importanceTaskNumber[importance];
 };
 
-const getTaskImportance = (importance: ImportanceLevelTasksType): string => {
+const getTaskImportance = (
+  importance: SelectImportanceLevelTasksType
+): string => {
   return importanceTaskValue[importance];
 };
 
@@ -84,6 +87,7 @@ export default function Task({
     }
   };
 
+  //argument defaultowo ma typ ImportanceLevelTasksType
   const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
   const handleFinishTask = async () => {
