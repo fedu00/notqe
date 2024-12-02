@@ -3,7 +3,6 @@ import "./Body.scss";
 import { useTheme } from "@/context/themeContext";
 import { Inter } from "next/font/google";
 import clsx from "clsx";
-import Menu from "../Menu/Menu";
 import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });

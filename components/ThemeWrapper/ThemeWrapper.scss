@@ -4,7 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   &--direction-column {
     flex-direction: column;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    padding: 0 $padding-s;
   }
 }
