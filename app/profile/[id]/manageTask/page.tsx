@@ -55,8 +55,8 @@ export default function ManageTask() {
     if (showAllCategory && showAllImportanceLevel) {
       setCurrentTasksData(tasksData);
     } else {
-      const categoryFilteredTasks = tasksData.filter((task: DataType) => {
-        const categoryUpperCase = task.task.category.toUpperCase();
+      const categoryFilteredTasks = tasksData.filter(({ task }: DataType) => {
+        const categoryUpperCase = task.category.toUpperCase();
         const taskCategory = ExtendedCategoryTaskType[categoryUpperCase];
         return (
           currentCategory === taskCategory ||
@@ -64,18 +64,22 @@ export default function ManageTask() {
           currentCategory === ExtendedCategoryTaskType.DEFAULT
         );
       });
-      const filteredTasks = categoryFilteredTasks.filter((task: DataType) => {
-        const importanceLevelUpperCase =
-          task.task.importanceLevel.toUpperCase();
-        const importanceLevelKey = importanceLevelUpperCase.replace(/ /g, "_");
-        const taskImportance =
-          ExtendedImportanceLevelTaskType[importanceLevelKey];
-        return (
-          currentImportance === taskImportance ||
-          currentImportance === ExtendedImportanceLevelTaskType.ALL ||
-          currentImportance === ExtendedImportanceLevelTaskType.DEFAULT
-        );
-      });
+      const filteredTasks = categoryFilteredTasks.filter(
+        ({ task }: DataType) => {
+          const importanceLevelUpperCase = task.importanceLevel.toUpperCase();
+          const importanceLevelKey = importanceLevelUpperCase.replace(
+            / /g,
+            "_"
+          );
+          const taskImportance =
+            ExtendedImportanceLevelTaskType[importanceLevelKey];
+          return (
+            currentImportance === taskImportance ||
+            currentImportance === ExtendedImportanceLevelTaskType.ALL ||
+            currentImportance === ExtendedImportanceLevelTaskType.DEFAULT
+          );
+        }
+      );
       setCurrentTasksData(filteredTasks);
     }
   };

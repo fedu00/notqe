@@ -16,12 +16,15 @@ import clientApi from "@/apiClients/clientApi";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Form from "@/components/Form/Form";
 
+const defaultCategory = SelectCategoryTaskType.DEFAULT;
+const defaultImportanceLevel = SelectImportanceLevelTasksType.DEFAULT;
+
 export default function CreateTask() {
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
-    category: SelectCategoryTaskType.DEFAULT,
-    importanceLevel: SelectImportanceLevelTasksType.DEFAULT,
+    category: defaultCategory,
+    importanceLevel: defaultImportanceLevel,
   });
   const [categoryIsSelected, setCategoryIsSelected] = useState(false);
   const [importanceIsSelected, setImportanceIsSelected] = useState(false);
@@ -64,8 +67,8 @@ export default function CreateTask() {
         setTask({
           title: "",
           description: "",
-          category: SelectCategoryTaskType.DEFAULT,
-          importanceLevel: SelectImportanceLevelTasksType.DEFAULT,
+          category: defaultCategory,
+          importanceLevel: defaultImportanceLevel,
         });
         setCategoryIsSelected(false);
         setImportanceIsSelected(false);
