@@ -4,10 +4,7 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/slices/authSlice/authSlice";
 import { Josefin_Sans } from "next/font/google";
-import { getAuth } from "@/redux/slices/authSlice/authSelectors";
 import Button from "../Button/Button";
 import clientApi from "@/apiClients/clientApi";
 import Link from "next/link";
@@ -31,8 +28,6 @@ export default function Menu({ id }: { id: string }) {
   const [showmenu, setShowMenu] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobileSize: boolean = useMediaQuery({ query: "(max-width: 800px)" });
-  const dispatch = useAppDispatch();
-  const { isUserLogIn } = useAppSelector(getAuth);
 
   const menuElements: MenuElementsType[] = [
     { href: `/profile/${id}/createTask`, text: "create task" },
@@ -54,7 +49,6 @@ export default function Menu({ id }: { id: string }) {
       console.log("logout successful!!!");
       sessionStorage.removeItem("userState");
       router.push("/");
-      dispatch(logout());
     } catch (error: any) {
       console.log("logout failed", error.message);
     }
@@ -68,10 +62,7 @@ export default function Menu({ id }: { id: string }) {
     if (!isMobileSize && showmenu) {
       setShowMenu(false);
     }
-    if (!isUserLogIn) {
-      setShowMenu(false);
-    }
-  }, [isMobileSize, showmenu, isUserLogIn]);
+  }, [isMobileSize, showmenu]);
 
   if (!isMounted) {
     return null;
@@ -80,7 +71,7 @@ export default function Menu({ id }: { id: string }) {
   return (
     <div className="menu">
       <h1 className={clsx(josefin.className, "menu__logo")}>notqe</h1>
-      {isMobileSize && isUserLogIn && (
+      {isMobileSize && (
         <RxHamburgerMenu
           className="menu__hamburger-icon"
           onClick={toggleShowMenu}
@@ -88,39 +79,30 @@ export default function Menu({ id }: { id: string }) {
         />
       )}
       <div className="menu__menu-container">
-        {isUserLogIn && (
-          <>
-            <ul
-              className={clsx(
-                "menu__list",
-                showmenu && "menu__list--show-menu"
-              )}
-            >
-              {menuElements.map((menuElement) => (
-                <li className="menu__element" key={menuElement.href}>
-                  <Link
-                    href={`${baseUrl}${menuElement.href}`}
-                    onClick={handleMenuClick}
-                  >
-                    {menuElement.text}
-                  </Link>
-                </li>
-              ))}
-              <li className="menu__element">
-                <Button
-                  onClick={handleLogout}
-                  text="log out"
-                  grayButton={true}
-                />
+        <>
+          <ul
+            className={clsx("menu__list", showmenu && "menu__list--show-menu")}
+          >
+            {menuElements.map((menuElement) => (
+              <li className="menu__element" key={menuElement.href}>
+                <Link
+                  href={`${baseUrl}${menuElement.href}`}
+                  onClick={handleMenuClick}
+                >
+                  {menuElement.text}
+                </Link>
               </li>
-              {isMobileSize && (
-                <li>
-                  <ThemeSwitch />
-                </li>
-              )}
-            </ul>
-          </>
-        )}
+            ))}
+            <li className="menu__element">
+              <Button onClick={handleLogout} text="log out" grayButton={true} />
+            </li>
+            {isMobileSize && (
+              <li>
+                <ThemeSwitch />
+              </li>
+            )}
+          </ul>
+        </>
         {!isMobileSize && <ThemeSwitch />}
       </div>
     </div>

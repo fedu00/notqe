@@ -1,7 +1,5 @@
 "use client";
-import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { login } from "@/redux/slices/authSlice/authSlice";
 import Button from "../Button/Button";
 import clientApi from "@/apiClients/clientApi";
 
@@ -11,7 +9,6 @@ const TEST_USER_ACCOUNT = {
 };
 
 export default function TestAccountButton() {
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleLoginTestAccount = async () => {
@@ -20,7 +17,6 @@ export default function TestAccountButton() {
       if (user) {
         const userID = user.data.userID;
         router.push(`/profile/${userID}`);
-        dispatch(login());
       }
     } catch (error: any) {
       console.log("login failed", error.message);
