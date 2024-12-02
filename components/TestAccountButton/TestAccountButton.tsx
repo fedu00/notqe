@@ -13,9 +13,12 @@ export default function TestAccountButton() {
 
   const handleLoginTestAccount = async () => {
     try {
-      const user = await clientApi.post("/users/login", TEST_USER_ACCOUNT);
-      if (user) {
-        const userID = user.data.userID;
+      const loggingUser = await clientApi.post(
+        "/users/login",
+        TEST_USER_ACCOUNT
+      );
+      if (loggingUser) {
+        const userID = loggingUser.data.userID;
         router.push(`/profile/${userID}`);
       }
     } catch (error: any) {

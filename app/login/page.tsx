@@ -39,8 +39,11 @@ export default function LoginPage() {
     if (validateUserCredentials()) {
       try {
         setIsLoading(true);
-        await clientApi.post("/users/login", user);
-        router.push("/profile");
+        const loggingUser = await clientApi.post("/users/login", user);
+        if (loggingUser) {
+          const userID = loggingUser.data.userID;
+          router.push(`/profile/${userID}`);
+        }
       } catch (error: any) {
         setIsLoading(false);
         setShowError(true);
