@@ -131,7 +131,7 @@ export default function ManageTask() {
     <div className="manage-tasks">
       <div className="manage-tasks__tasks-container">
         <div className="manage-tasks__filters">
-          <h2 className="manage_tasks__title">manage your tasks</h2>
+          <h2 className="manage-tasks__title">manage your tasks</h2>
           <Select
             data={FULL_TASK_CATEGORY_LIST}
             value={currentCategory}
