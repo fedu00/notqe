@@ -2,8 +2,6 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/helpers/validateEmail";
-import { useAppDispatch } from "@/redux/hooks";
-import { login } from "@/redux/slices/authSlice/authSlice";
 import clientApi from "@/apiClients/clientApi";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -24,7 +22,6 @@ export default function LoginPage() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
 
   const handleOnChange =
     (field: keyof UserType) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +41,6 @@ export default function LoginPage() {
         setIsLoading(true);
         await clientApi.post("/users/login", user);
         router.push("/profile");
-        dispatch(login());
       } catch (error: any) {
         setIsLoading(false);
         setShowError(true);
