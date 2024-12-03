@@ -4,10 +4,10 @@ import refreshToken from "@/helpers/refreshToken";
 import { validateTokenExpiry } from "@/helpers/validateTokenExpiry";
 
 const clientWithTokenApi = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_BASE_URL,
     "Access-Control-Allow-Credentials": "true",
   },
   withCredentials: true,

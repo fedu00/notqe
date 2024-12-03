@@ -11,10 +11,7 @@ import Link from "next/link";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import clsx from "clsx";
 
-// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-// const baseUrl = https://notqe.vercel.app/profile/createTask || 'http://localhost:3000';
-// const baseUrl = "http://localhost:3000" || process.env.NEXT_PUBLIC_BASE_URL;
-const baseUrl = "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 type MenuElementsType = { href: string; text: string };
 
