@@ -2,10 +2,9 @@
 import "./manageTask.scss";
 import { useEffect, useState } from "react";
 import { DataType } from "@/types/DataType";
-import { useAppSelector } from "@/redux/hooks";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
-import { getUserId } from "@/redux/slices/userSlice/userSelectors";
+import { useParams } from "next/navigation";
 import Select from "@/components/Select/Select";
 import clientApi from "@/apiClients/clientApi";
 import Task from "@/components/Task/Task";
@@ -34,6 +33,8 @@ const FULL_TASK_LVL_IMPORTANCE_LIST: Omit<
 ];
 
 export default function ManageTask() {
+  const params = useParams();
+  const userId: string = params.id as string;
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
   const [currentCategory, setCurrentCategory] = useState(
     ExtendedCategoryTaskType.DEFAULT
@@ -42,7 +43,6 @@ export default function ManageTask() {
     ExtendedImportanceLevelTaskType.DEFAULT
   );
   const [currentTasksData, setCurrentTasksData] = useState<DataType[]>([]);
-  const userId = useAppSelector(getUserId);
 
   const getFilteredTasks = () => {
     const showAllCategory =

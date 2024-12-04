@@ -4,10 +4,9 @@ import { useState } from "react";
 import { TASK_LVL_IMPORTANCE_LIST } from "@/constants/taskLvlImportanceList";
 import { TASK_CATEGORY_LIST } from "@/constants/taskCategoryList";
 import { TaskType } from "@/types/TaskType";
-import { useAppSelector } from "@/redux/hooks";
 import { SelectCategoryTaskType } from "@/types/SelectCategoryTaskType";
 import { SelectImportanceLevelTasksType } from "@/types/SelectImportanceLevelTasksType";
-import { getUserData } from "@/redux/slices/userSlice/userSelectors";
+import { useParams } from "next/navigation";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Textarea from "@/components/TextArea/Textarea";
@@ -20,6 +19,9 @@ const defaultCategory = SelectCategoryTaskType.DEFAULT;
 const defaultImportanceLevel = SelectImportanceLevelTasksType.DEFAULT;
 
 export default function CreateTask() {
+  const params = useParams();
+  const userID = params?.id;
+
   const [task, setTask] = useState<TaskType>({
     title: "",
     description: "",
@@ -29,8 +31,6 @@ export default function CreateTask() {
   const [categoryIsSelected, setCategoryIsSelected] = useState(false);
   const [importanceIsSelected, setImportanceIsSelected] = useState(false);
   const [showError, setShowError] = useState(false);
-  const userData = useAppSelector(getUserData);
-  const userID = userData.userId;
 
   const handleOnChange =
     (field: keyof TaskType) =>
