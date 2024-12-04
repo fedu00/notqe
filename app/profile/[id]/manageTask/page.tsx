@@ -5,6 +5,8 @@ import { DataType } from "@/types/DataType";
 import { ExtendedCategoryTaskType } from "@/types/ExtendedCategoryTaskType";
 import { ExtendedImportanceLevelTaskType } from "@/types/ExtendedImportanceLevelTaskType";
 import { useParams } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { fetchUserDetails } from "@/redux/slices/userSlice/userThunk/fetchUserDetails";
 import Select from "@/components/Select/Select";
 import clientApi from "@/apiClients/clientApi";
 import Task from "@/components/Task/Task";
@@ -33,6 +35,7 @@ const FULL_TASK_LVL_IMPORTANCE_LIST: Omit<
 ];
 
 export default function ManageTask() {
+  const dispatch = useAppDispatch();
   const params = useParams();
   const userId: string = params.id as string;
   const [tasksData, setTasksData] = useState<DataType[] | []>([]);
@@ -115,6 +118,10 @@ export default function ManageTask() {
       console.log("we can not find your ID");
     }
   }, [userId]);
+
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+  }, []);
 
   const emptyTasksData = tasksData.length === 0;
   if (emptyTasksData) {

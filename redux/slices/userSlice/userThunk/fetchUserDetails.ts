@@ -16,7 +16,11 @@ export const fetchUserDetails = createAsyncThunk<
   ThunkApiConfigType
 >("userData/fetchUserDetails", async (_, { rejectWithValue }) => {
   try {
-    const response = await clientApi.get("/users/userDetails");
+    const response = await clientApi.get("/users/userDetails", {
+      headers: {
+        useDataFromToken: "true",
+      },
+    });
     return response.data.data;
   } catch (error) {
     return rejectWithValue("Something went wrong with downloading your data");
