@@ -1,5 +1,4 @@
 import clientWithTokenApi from "@/apiClients/clientWithTokenApi";
-import axios from "axios";
 
 export async function getUserDetails() {
   try {

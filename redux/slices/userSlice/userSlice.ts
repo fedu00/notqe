@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { userSliceInitialState } from "./userSliceInitialState";
 import { finishUserTask } from "./userThunk/finishUserTask";
 import { fetchUserDetails } from "./userThunk/fetchUserDetails";
+import { LoadingStates } from "./UserSliceInitialState.Type";
 
 const userSlice = createSlice({
   name: "userData",
-  initialState: userSliceInitialState.userData,
+  initialState: userSliceInitialState,
   reducers: {
     updateUserData: (state, { payload }) => {
+      state.loading = LoadingStates.IDLE;
       state.username = payload.username;
       state.email = payload.email;
       state.userId = payload._id;
@@ -15,7 +17,11 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchUserDetails.pending, (state) => {
+      state.loading = LoadingStates.PENDING;
+    });
     builder.addCase(fetchUserDetails.fulfilled, (state, { payload }) => {
+      state.loading = LoadingStates.SUCCEEDED;
       state.username = payload.username;
       state.email = payload.email;
       state.userId = payload._id;

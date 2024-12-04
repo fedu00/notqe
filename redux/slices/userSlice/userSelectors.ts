@@ -5,3 +5,4 @@ export const getUserName = (state: RootState) => state.userData.username;
 export const getUserId = (state: RootState) => state.userData.userId;
 export const getUserEmail = (state: RootState) => state.userData.email;
 export const getUserDoneTasks = (state: RootState) => state.userData.doneTasks;
+export const getUserLoadingState = (state: RootState) => state.userData.loading;

@@ -87,7 +87,6 @@ export default function Task({
     }
   };
 
-  //argument defaultowo ma typ ImportanceLevelTasksType
   const importanceNumber = getImportanceTaskNumber(importanceLevel);
 
   const handleFinishTask = async () => {
@@ -101,7 +100,6 @@ export default function Task({
   };
 
   const handleDeleteTask = async () => {
-    //
     await clientApi.delete(`/usersTasks/${id}`);
     setTasksData((prevValue) => {
       return prevValue.filter((task) => task._id !== id);
